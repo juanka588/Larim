@@ -5,11 +5,9 @@ package com.unal.larim.LN;
  */
 public class Notice {
     String title;
-    String name;
     String content;
 
-    public Notice(String title, String name, String content) {
-        this.name = name;
+    public Notice(String title, String content) {
         this.title = title;
         this.content = content;
     }

@@ -1,11 +1,15 @@
 package com.unal.larim.LN;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unal.larim.R;
 
@@ -17,9 +21,8 @@ import java.util.List;
  */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
-
     private List<Notice> noticias;
-
+    private Context context;
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,9 +37,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(NewsViewHolder holder, int i) {
+    public void onBindViewHolder(final NewsViewHolder holder, int i) {
         holder.title.setText(noticias.get(i).title);
-        holder.name.setText(noticias.get(i).name);
         holder.content.setText(noticias.get(i).content);
     }
 
@@ -50,22 +52,35 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         return noticias.size();
     }
 
-    public NewsRecyclerViewAdapter(ArrayList<Notice> noticias) {
+    public NewsRecyclerViewAdapter(ArrayList<Notice> noticias, Context context) {
         this.noticias = noticias;
+        this.context = context;
     }
 
-    public class NewsViewHolder extends RecyclerView.ViewHolder {
+    public void delete(int position) {
+        noticias.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView title;
-        TextView name;
         TextView content;
 
         NewsViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.card_view);
             title = (TextView) itemView.findViewById(R.id.NoticeTitle);
-            name = (TextView) itemView.findViewById(R.id.NoticeName);
             content = (TextView) itemView.findViewById(R.id.NoticeContent);
+            cv.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(context, "Eliminado: " + title.getText() + " pos: " + getPosition(), Toast.LENGTH_SHORT).show();
+            delete(getPosition());
+        }
+
+
     }
 }
