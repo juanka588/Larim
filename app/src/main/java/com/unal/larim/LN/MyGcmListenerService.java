@@ -27,7 +27,6 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
-import com.unal.larim.MainActivity;
 import com.unal.larim.NewsActivity;
 import com.unal.larim.R;
 
