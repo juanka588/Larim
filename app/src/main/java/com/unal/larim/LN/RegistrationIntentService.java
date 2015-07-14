@@ -52,6 +52,11 @@ public class RegistrationIntentService extends IntentService {
                 // are local.
                 // [START get_token]
                 InstanceID instanceID = InstanceID.getInstance(this);
+                // String authorizedEntity = "larim-991"; // Project id from Google Developers Console
+                // String scope = "GCM"; // e.g. communicating using GCM, but you can use any
+                // URL-safe characters up to a maximum of 1000, or
+                // you can also leave it blank.
+                //String token = InstanceID.getInstance(getApplicationContext()).getToken(authorizedEntity, scope);
                 String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                 // [END get_token]
@@ -81,7 +86,6 @@ public class RegistrationIntentService extends IntentService {
 
     /**
      * Persist registration to third-party servers.
-     * <p/>
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
      *

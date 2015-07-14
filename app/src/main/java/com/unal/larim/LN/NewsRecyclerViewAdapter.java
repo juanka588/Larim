@@ -1,6 +1,8 @@
 package com.unal.larim.LN;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unal.larim.NewsActivity;
 import com.unal.larim.R;
 
 import java.util.ArrayList;
@@ -56,8 +59,19 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     }
 
     public void delete(int position) {
-        noticias.remove(position);
+        if (position == -1) {
+            return;
+        }
+        Notice remove = noticias.remove(position);
         notifyItemRemoved(position);
+        LinnaeusDatabase lb = new LinnaeusDatabase(context);
+        SQLiteDatabase db = context.openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
+                context.MODE_WORLD_READABLE, null);
+        ContentValues cv = new ContentValues();
+        cv.put(NewsActivity.column_names[2], true);
+        long retrived = db.update(NewsActivity.table_name, cv, " _id = " + remove.id, null);
+        Util.log("Eliminado", "titulo " + remove.title + " total: " + retrived);
+        Toast.makeText(context, "Eliminado: titulo " + remove.title + " total: " + retrived, Toast.LENGTH_SHORT).show();
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -75,7 +89,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(context, "Eliminado: " + title.getText() + " pos: " + getPosition(), Toast.LENGTH_SHORT).show();
             delete(getPosition());
         }
 
