@@ -68,7 +68,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         SQLiteDatabase db = context.openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
                 context.MODE_WORLD_READABLE, null);
         ContentValues cv = new ContentValues();
-        cv.put(NewsActivity.column_names[2], true);
+        cv.put(NewsActivity.column_names[3], "1");
         long retrived = db.update(NewsActivity.table_name, cv, " _id = " + remove.id, null);
         Util.log("Eliminado", "titulo " + remove.title + " total: " + retrived);
         Toast.makeText(context, "Eliminado: titulo " + remove.title + " total: " + retrived, Toast.LENGTH_SHORT).show();

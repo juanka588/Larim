@@ -51,8 +51,7 @@ public class NewsActivity extends ActionBarActivity {
     }
 
     private ArrayList<Notice> initializeData(SQLiteDatabase db) {
-        Cursor c = db.query(table_name, column_names, column_names[3] + "=?", new String[]{"true"}, null, null, null);
-        Util.log("query", c.toString());
+        Cursor c = db.query(table_name, column_names, column_names[3] + "=?", new String[]{"0"}, null, null, null);
         String[][] mat = Util.imprimirLista(c);
         ArrayList<Notice> noticias = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {

@@ -1,0 +1,33 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="LARIMTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textViewStyle">@style/TextStyle</item>
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+    </style>
+    <!-- ActionBar styles -->
+    <style name="MyActionBar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@drawable/fondoinf</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="TextStyle" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:textColor">#011052</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="ButtonYellowStyle" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:textColor">#011052</item>
+        <item name="android:background">@drawable/fondo1</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+
+    <style name="ButtonBlueStyle" parent="@android:style/Widget.Holo.Light.Button">
+        <item name="android:textColor">#C39408</item>
+        <item name="android:background">@drawable/fondo2</item>
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?android:attr/selectableItemBackground</item>
+    </style>
+</resources>

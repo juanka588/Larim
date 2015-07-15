@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".DetailConference">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textHour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hora: 13:40" />
+
+        <TextView
+            android:id="@+id/textPaperName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Astrophisics Objects" />
+
+        <TextView
+            android:id="@+id/textPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auditorio A: Edificio 202" />
+
+        <TextView
+            android:id="@+id/textAutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autor: Carlos Villarian" />
+
+        <TextView
+            android:id="@+id/textChairman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chairman: Mario Higuera" />
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/pdfConference"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="5" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:onClick="schedule"
+        android:src="@drawable/common_signin_btn_icon_focus_dark" />
+
+</LinearLayout>

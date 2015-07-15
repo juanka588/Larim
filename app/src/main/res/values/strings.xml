@@ -1,0 +1,45 @@
+<resources>
+    <string name="app_name">LARIM</string>
+
+    <string name="title_activity_maps">Mapa</string>
+    <string name="main_menu_1">Auditorio</string>
+    <string name="main_menu_2">Programa</string>
+    <string name="main_menu_3">Mapa</string>
+    <string name="main_menu_4">Participantes</string>
+    <string name="main_menu_5">Informacion</string>
+    <string name="main_menu_6">Apoyo</string>
+    <string name="explanation">prueba</string>
+    <string name="title_activity_web"></string>
+    <string name="menu_volver">volver</string>
+    <string name="menu_Recargar">recargar</string>
+    <string name="menu_adelante">adelante</string>
+    <string name="menu_URL" />
+    <string name="network_exception">No hay conexion a la red</string>
+    <string name="expanded_app_name">LARIM</string>
+    <string name="acept_dialog">Aceptar</string>
+    <string name="cancel_dialog">Cancelar</string>
+    <string name="title_activity_cronograma">Cronograma</string>
+
+
+    <string name="title_section1">Domingo</string>
+    <string name="title_section2">Lunes</string>
+    <string name="title_section3">Martes</string>
+    <string name="title_section4">Miercoles</string>
+    <string name="title_section5">Jueves</string>
+    <string name="title_section6">Viernes</string>
+    <string name="database">Base de Datos Actualizada</string>
+    <string name="data_exception">No se han encontrado los datos</string>
+    <string name="title_user_list">Usuarios</string>
+    <string name="title_user_detail">Detalles</string>
+    <string name="title_activity_detail_conference">Conferencia</string>
+    <string name="title_activity_sponsors">Sponsors</string>
+
+    <string name="organizators">Organizadores</string>
+    <string name="gcm_send_message">TokenID enviado</string>
+    <string name="token_error_message">Error TokenID</string>
+    <string name="title_activity_news">Noticias</string>
+    <string name="gcm_defaultSenderId">224088768895</string>
+    <string name="satelite">Satelite</string>
+    <string name="informacion">Información</string>
+    <string name="web_site">Sitio Web</string>
+</resources>
