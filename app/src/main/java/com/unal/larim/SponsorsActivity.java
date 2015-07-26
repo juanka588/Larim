@@ -1,20 +1,25 @@
 package com.unal.larim;
 
 import android.app.Activity;
-import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
-import com.unal.larim.LN.Sponsor;
+import com.unal.larim.Data.Sponsor;
+import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.SponsorsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
 
 public class SponsorsActivity extends Activity {
+
+    public static String table_name = "sponsor";
+    public static String column_names[] = new String[]{"name", "icon", "website", "type"};
+
     private RecyclerView listSponsor;
     private RecyclerView listOrganizators;
 
@@ -36,36 +41,27 @@ public class SponsorsActivity extends Activity {
         listOrganizators = (RecyclerView) findViewById(R.id.listOrganizators);
         listSponsor.setLayoutManager(gridLayoutManager);
         listOrganizators.setLayoutManager(gridLayoutManager2);
-
-        String[] titles = new String[]{"Avianca", "Colciencias"};
-        String[] images = new String[]{"avianca", "colciencias"};
-        String[] urls = new String[]{"http://www.avianca.com",
-                "http://www.colciencias.gov.co"};
-        ArrayList<Sponsor> sponsorList = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + images[i], null, this.getPackageName());
-            Sponsor s = new Sponsor(titles[i], icon, urls[i]);
-            sponsorList.add(s);
-        }
-        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(sponsorList, this);
+        LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
+        SQLiteDatabase db = openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db, "0"), this);
         listSponsor.setAdapter(adapter);
-        String[] titles2 = new String[]{"Observatorio Astronomico Nacional", "Universidad Nacional de Colombia",
-                "Academia Colombiana de Ciencias Fisicas y Naturales", "Universidad de los Andes",
-                "Universidad de Antioquia", "Universidad de Cartagena", "Universidad Industrial de Santander"};
-        String[] images2 = new String[]{"escudo_oan", "un", "acefyn", "uniandes",
-                "udea", "cartagena", "uis"};
-        String[] urls2 = new String[]{"http://ciencias.bogota.unal.edu.co/oan/", "http://unal.edu.co", "http://www.accefyn.org.co/",
-                "http://www.uniandes.edu.co", "http://www.udea.edu.co/",
-                "http://www.unicartagena.edu.co/", "http://www.uis.edu.co/"};
-
-        ArrayList<Sponsor> organizatorList = new ArrayList<>();
-        for (int i = 0; i < titles2.length; i++) {
-            int icon2 = this.getResources().getIdentifier("drawable/" + images2[i], null, this.getPackageName());
-            Sponsor s = new Sponsor(titles2[i], icon2, urls2[i]);
-            organizatorList.add(s);
-        }
-        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(organizatorList, this);
+        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db, "1"), this);
         listOrganizators.setAdapter(adapter2);
+    }
+
+    private ArrayList<Sponsor> initializeData(SQLiteDatabase db, String filter) {
+        Cursor c = db.query(table_name, column_names, column_names[3] + "=?", new String[]{filter}, null, null, null);
+        String[][] mat = Util.imprimirLista(c);
+        ArrayList<Sponsor> sponsors = new ArrayList<>();
+        for (int i = 0; i < mat.length; i++) {
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][2], null, this.getPackageName());
+            sponsors.add(new Sponsor(mat[i][1], icon, mat[i][3]));
+        }
+        c.close();
+        db.close();
+        Util.log("Sponsors size", sponsors.size() + "");
+        return sponsors;
     }
 
 }
