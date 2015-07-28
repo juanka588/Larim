@@ -1,4 +1,4 @@
-package com.unal.larim.LN;
+package com.unal.larim.Data;
 
 import java.io.Serializable;
 
@@ -10,19 +10,18 @@ public class Notice implements Serializable {
     public String content;
     public boolean checked;
     public String id;
+    public String url;
 
-    public Notice(String title, String content, boolean checked, String id) {
+    public Notice(String title, String content, boolean checked, String id, String url) {
         this.title = title;
         this.content = content;
         this.checked = checked;
         this.id = id;
+        this.url = url;
     }
 
-    public Notice(String title, String content, String checked, String id) {
-        this.title = title;
-        this.content = content;
-        this.checked = checked.equals("true");
-        this.id = id;
+    public Notice(String title, String content, String checked, String id, String url) {
+        this(title, content, checked.equals("true"), id, url);
     }
 }
 

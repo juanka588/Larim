@@ -16,6 +16,12 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/textDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2015-07-25" />
+
+        <TextView
             android:id="@+id/textHour"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -46,12 +52,12 @@
             android:text="Chairman: Mario Higuera" />
 
         <ImageButton
-            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:layout_marginTop="30dp"
             android:onClick="schedule"
-            android:src="@drawable/common_signin_btn_icon_focus_dark" />
+            android:src="@drawable/ic_calendar" />
 
     </LinearLayout>
 

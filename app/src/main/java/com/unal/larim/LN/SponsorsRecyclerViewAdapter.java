@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.unal.larim.Data.Sponsor;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -40,7 +41,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         Sponsor s = sponsors.get(i);
         holder.name.setText(s.name);
         holder.icon.setImageResource(s.icon);
-        //Util.log("Adapter",s.icon+"");
         holder.icon.setEnabled(false);
     }
 

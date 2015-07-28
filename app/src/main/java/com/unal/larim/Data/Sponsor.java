@@ -1,12 +1,12 @@
-package com.unal.larim.LN;
+package com.unal.larim.Data;
 
 /**
  * Created by JuanCamilo on 09/07/2015.
  */
 public class Sponsor {
-    protected String name;
-    protected int icon;
-    protected String url;
+    public String name;
+    public int icon;
+    public String url;
 
     public Sponsor(String name, int icon, String url) {
         this.name = name;

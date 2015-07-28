@@ -44,10 +44,11 @@ public class SponsorsActivity extends Activity {
         LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
         SQLiteDatabase db = openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
                 MODE_PRIVATE, null);
-        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db, "0"), this);
+        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db, "false"), this);
         listSponsor.setAdapter(adapter);
-        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db, "1"), this);
+        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db, "true"), this);
         listOrganizators.setAdapter(adapter2);
+        db.close();
     }
 
     private ArrayList<Sponsor> initializeData(SQLiteDatabase db, String filter) {
@@ -55,11 +56,10 @@ public class SponsorsActivity extends Activity {
         String[][] mat = Util.imprimirLista(c);
         ArrayList<Sponsor> sponsors = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][2], null, this.getPackageName());
-            sponsors.add(new Sponsor(mat[i][1], icon, mat[i][3]));
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null, this.getPackageName());
+            sponsors.add(new Sponsor(mat[i][0], icon, mat[i][2]));
         }
         c.close();
-        db.close();
         Util.log("Sponsors size", sponsors.size() + "");
         return sponsors;
     }

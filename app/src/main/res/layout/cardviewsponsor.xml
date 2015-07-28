@@ -4,6 +4,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:clickable="true"
+    android:background="@android:color/white"
     android:foreground="?android:attr/selectableItemBackground"
     android:layout_margin="5dp"
     card_view:cardCornerRadius="1dp"

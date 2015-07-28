@@ -19,13 +19,13 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.unal.larim.LN.Notice;
+import com.unal.larim.Data.Notice;
 import com.unal.larim.LN.QuickstartPreferences;
 import com.unal.larim.LN.RegistrationIntentService;
 import com.unal.larim.LN.Util;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends Activity {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "MainActivity";
@@ -94,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void sitio(View v) {
         final String[] items = {this.getString(R.string.web_site), this.getString(R.string.title_activity_news)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         final Activity act = this;
         builder.setTitle(this.getString(R.string.main_menu_5)).setItems(items,
                 new DialogInterface.OnClickListener() {
@@ -127,7 +127,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void detalles(View v) {
-        Intent participantes = new Intent(this, userListActivity.class);
+        Intent participantes = new Intent(this, ParticipantActivity.class);
         startActivity(participantes);
         //Toast.makeText(getApplicationContext(),"Aun no implementado",Toast.LENGTH_SHORT).show();
     }
@@ -139,7 +139,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void noticias(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-        news.putExtra("notice", new Notice("Desde MainAct", "Contenidos", false, "1"));
+        news.putExtra("notice", new Notice("Desde Main Activity", "Contenidos", false, "1", "http://www.google.com"));
         startActivity(news);
     }
 }

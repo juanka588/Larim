@@ -27,6 +27,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
+import com.unal.larim.Data.Notice;
 import com.unal.larim.MainActivity;
 import com.unal.larim.NewsActivity;
 import com.unal.larim.R;
@@ -45,9 +46,12 @@ public class MyGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        String title = data.getString("title");
         String message = data.getString("message");
+        String url = data.getString("url");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "URL: " + url);
 
         /**
          * Production applications would usually process the message here.
@@ -60,7 +64,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(title, message, url);
     }
     // [END receive_message]
 
@@ -69,18 +73,19 @@ public class MyGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String title, String message, String url) {
         Intent intent = new Intent(this, NewsActivity.class);
         //TODO: change the new content for a JSON server object
-        intent.putExtra("notice",new Notice(message,"Nuevo Contendido",false,"0"));
+        intent.putExtra("notice", new Notice(message, title, false, "0", url));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("LARIM mensaje")
+                .setContentTitle(title)
                 .setContentText(message)
+                .setContentInfo(url)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

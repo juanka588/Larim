@@ -121,11 +121,13 @@ public class Util {
     }
 
     public static String toString(String[] getcolumn) {
-        String cad = "";
-        for (int i = 0; i < getcolumn.length; i++) {
-            cad += getcolumn[i] + " ";
+        StringBuilder cad = new StringBuilder();
+        for (int i = 0; i < getcolumn.length - 1; i++) {
+            cad.append(getcolumn[i]);
+            cad.append(",");
         }
-        return cad;
+        cad.append(getcolumn[getcolumn.length - 1]);
+        return cad.toString();
     }
 
     public static String toString(double[] getcolumn) {
@@ -169,7 +171,7 @@ public class Util {
 		 */
     }
 
-    public static void addEventToCalendar(Activity activity, String date,
+    public static void addEventToCalendar(Activity activity, String date, int hour, int minute,
                                           String title, String description, String location) {
         Calendar cal = Calendar.getInstance();
         String cad[] = date.split("-");
@@ -177,8 +179,8 @@ public class Util {
         cal.set(Calendar.MONTH, Integer.parseInt(cad[1]));
         cal.set(Calendar.YEAR, Integer.parseInt(cad[0]));
 
-        cal.set(Calendar.HOUR_OF_DAY, 22);
-        cal.set(Calendar.MINUTE, 45);
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, minute);
 
         Intent intent = new Intent(Intent.ACTION_EDIT);
         intent.setType("vnd.android.cursor.item/event");

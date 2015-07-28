@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.unal.larim.Data.Participant;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     @Override
     public ParticipantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewsponsor, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewparticipant, parent, false);
         ParticipantViewHolder pvh = new ParticipantViewHolder(v);
         return pvh;
     }
@@ -58,11 +59,11 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         this.act = act;
     }
 
-    public void openWeb(int position) {
+    public void sendEmail(int position) {
         Util.enviar(act, participants.get(position).email, "", "", "");
     }
 
-    public class ParticipantViewHolder extends RecyclerView.ViewHolder {// implements View.OnClickListener {
+    public class ParticipantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView name;
         TextView country;
@@ -71,16 +72,16 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         ParticipantViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.card_view_participant);
-            name = (TextView) itemView.findViewById(R.id.textPaperName);
+            name = (TextView) itemView.findViewById(R.id.textParticipantName);
             country = (TextView) itemView.findViewById(R.id.textNationality);
             institution = (TextView) itemView.findViewById(R.id.textParticipantInstitution);
-            //cv.setOnClickListener(this);
+            cv.setOnClickListener(this);
         }
 
-       /* @Override
+        @Override
         public void onClick(View v) {
-            openWeb(getPosition());
+            sendEmail(getPosition());
         }
-        */
+
     }
 }

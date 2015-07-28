@@ -1,5 +1,6 @@
 package com.unal.larim.LN;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unal.larim.Data.Notice;
 import com.unal.larim.NewsActivity;
 import com.unal.larim.R;
 
@@ -24,6 +26,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private List<Notice> noticias;
     private Context context;
+    private Activity activity;
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,9 +56,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         return noticias.size();
     }
 
-    public NewsRecyclerViewAdapter(ArrayList<Notice> noticias, Context context) {
+    public NewsRecyclerViewAdapter(ArrayList<Notice> noticias, Activity activity) {
         this.noticias = noticias;
-        this.context = context;
+        this.context = activity.getApplicationContext();
+        this.activity = activity;
     }
 
     public void delete(int position) {
@@ -74,6 +78,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         Toast.makeText(context, "Eliminado: titulo " + remove.title + " total: " + retrived, Toast.LENGTH_SHORT).show();
     }
 
+    public void irWeb(int position) {
+        Util.irA(noticias.get(position).url, activity);
+    }
+
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView title;
@@ -89,7 +97,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
         @Override
         public void onClick(View v) {
-            delete(getPosition());
+            irWeb(getPosition());
         }
 
 

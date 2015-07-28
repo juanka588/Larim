@@ -10,7 +10,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,11 @@ import android.widget.TextView;
 
 import com.unal.larim.LN.ExpandableSesionAdapter;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -120,13 +123,13 @@ public class Cronograma extends ActionBarActivity implements ActionBar.TabListen
         @Override
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            // Return a DayFragment (defined as a static inner class below).
+            return DayFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
+            // Show 6 total pages.
             return 6;
         }
 
@@ -151,81 +154,5 @@ public class Cronograma extends ActionBarActivity implements ActionBar.TabListen
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        private TextView dayTitle;
-        private ExpandableListView sections;
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_cronograma, container, false);
-            dayTitle = (TextView) rootView.findViewById(R.id.textDayTitle);
-            sections = (ExpandableListView) rootView.findViewById(R.id.expandableSections);
-            ArrayList<String> sesions = new ArrayList<>();
-            ArrayList<List> papers = new ArrayList<>();
-            ArrayList<String> paper = new ArrayList<>();
-            for (int i = 0; i < 10; i++) {
-                sesions.add((7 + i) + ":00");
-                paper.add("Objects " + i);
-                paper.add(i + " Abb,Solar System, things");
-                papers.add(paper);
-                paper = new ArrayList<>();
-            }
-            ExpandableSesionAdapter adapter = new ExpandableSesionAdapter(sesions, papers);
-            adapter.setInflater(
-                    (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),
-                    getActivity());
-            sections.setAdapter(adapter);
-            Bundle bundle = this.getArguments();
-            if (bundle != null) {
-                int selected = bundle.getInt(ARG_SECTION_NUMBER);
-                switch (selected - 1) {
-                    case 0:
-                        dayTitle.setText(R.string.title_section1);
-                        break;
-                    case 1:
-                        dayTitle.setText(R.string.title_section2);
-                        break;
-                    case 2:
-                        dayTitle.setText(R.string.title_section3);
-                        break;
-                    case 3:
-                        dayTitle.setText(R.string.title_section4);
-                        break;
-                    case 4:
-                        dayTitle.setText(R.string.title_section5);
-                        break;
-                    case 5:
-                        dayTitle.setText(R.string.title_section6);
-                        break;
-                }
-            }
-            return rootView;
-        }
-    }
 
 }

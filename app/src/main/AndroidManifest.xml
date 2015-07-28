@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unal.larim">
 
@@ -46,7 +47,7 @@
         </activity>
         <activity
             android:name=".WebActivity"
-            android:label="@string/title_activity_web"></activity>
+            android:label="@string/title_activity_web" />
         <activity
             android:name=".Cronograma"
             android:label="@string/title_activity_cronograma"
@@ -54,22 +55,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unal.larim.MainActivity" />
-        </activity>
-        <activity
-            android:name=".userListActivity"
-            android:label="@string/title_user_list"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
-        </activity>
-        <activity
-            android:name=".userDetailActivity"
-            android:label="@string/title_user_detail"
-            android:parentActivityName=".userListActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.userListActivity" />
         </activity>
         <activity
             android:name=".DetailConference"
@@ -126,6 +111,14 @@
         <activity
             android:name=".NewsActivity"
             android:label="@string/title_activity_news"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unal.larim.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ParticipantActivity"
+            android:label="@string/title_activity_participant"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
