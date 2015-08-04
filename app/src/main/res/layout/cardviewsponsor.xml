@@ -30,7 +30,7 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/sponsorImage"
             android:gravity="center"
-            android:paddingBottom="10dp"
+            android:padding="4dp"
             android:text="Surname"
             style="@style/Base.TextAppearance.AppCompat.Small" />
     </RelativeLayout>

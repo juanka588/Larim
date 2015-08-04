@@ -24,7 +24,7 @@
             android:gravity="left"
             android:text="item"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="#011052" />
+            android:textColor="@color/darkblue_selector" />
 
         <TextView
             android:id="@+id/textItemSub"
@@ -35,7 +35,7 @@
             android:paddingRight="8dp"
             android:text="subItem"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="#C39408" />
+            android:textColor="@color/darkyellow_selector" />
     </LinearLayout>
 
 </LinearLayout>
