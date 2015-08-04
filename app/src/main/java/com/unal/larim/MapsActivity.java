@@ -1,5 +1,8 @@
 package com.unal.larim;
 
+import android.app.Activity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -12,7 +15,11 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.unal.larim.DataSource.SponsorContent;
+import com.unal.larim.LN.LinnaeusDatabase;
+import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
 
@@ -20,7 +27,8 @@ public class MapsActivity extends ActionBarActivity {
 
     private GoogleMap mapa;
     private ArrayList<LatLng> marcadores = new ArrayList<LatLng>();
-
+    private static final String MAP_MARKER_TYPE = "2";
+    private Activity act;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +78,29 @@ public class MapsActivity extends ActionBarActivity {
      * This should only be called once and when we are sure that {@link #mapa} is not null.
      */
     private void setUpMap() {
-        LatLng point = new LatLng(10.421036, -75.548923);
-        animarCamara(point, 17);
-        mostrarMarcador(point, "LARIM", "Evento del Añol", 0);
+        getMapData();
+        act = this;
+        animarCamara(marcadores.get(0), 17);
+        mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Util.irA(marker.getSnippet(), act);
+            }
+        });
+    }
 
+    private void getMapData() {
+        LinnaeusDatabase ln = new LinnaeusDatabase(this);
+        SQLiteDatabase db = ln.dataBase;
+        Cursor cursor = db.query(SponsorContent.table_name, SponsorContent.column_names2,
+                SponsorContent.column_type + "=?", new String[]{MAP_MARKER_TYPE}, null, null, null);
+        String mat[][] = Util.imprimirLista(cursor);
+        for (int i = 0; i < mat.length; i++) {
+            mostrarMarcador(new LatLng(Double.parseDouble(mat[i][2] + ""), Double.parseDouble(mat[i][3] + "")),
+                    mat[i][0] + "", mat[i][1] + "", 0);
+        }
+        cursor.close();
+        db.close();
     }
 
     private void mostrarMarcador(LatLng latLng, String title, String desc,

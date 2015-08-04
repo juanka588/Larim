@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.unal.larim.InformationActivity">
+    <item
+        android:id="@+id/ItemWEB"
+        android:icon="@drawable/ic_goto_web"
+        app:showAsAction="ifRoom"
+        android:title="@string/web_site"
+        android:visible="true"></item>
+
+</menu>

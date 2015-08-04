@@ -76,18 +76,20 @@ public class MyGcmListenerService extends GcmListenerService {
     private void sendNotification(String title, String message, String url) {
         Intent intent = new Intent(this, NewsActivity.class);
         //TODO: change the new content for a JSON server object
-        intent.putExtra("notice", new Notice(message, title, false, "0", url));
+        intent.putExtra("notice", new Notice("0", message, title, false, url));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        //Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri customSound = Uri.parse("android.resource://"
+                + getPackageName() + "/" + R.raw.din3);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setContentInfo(url)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
+                .setSound(customSound)
                 .setContentIntent(pendingIntent);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

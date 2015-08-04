@@ -2,11 +2,11 @@
     <string name="app_name">LARIM</string>
 
     <string name="title_activity_maps">Mapa</string>
-    <string name="main_menu_1">Auditorio</string>
+    <string name="main_menu_1">Bienvenido</string>
     <string name="main_menu_2">Programa</string>
     <string name="main_menu_3">Mapa</string>
-    <string name="main_menu_4">Participantes</string>
-    <string name="main_menu_5">Informacion</string>
+    <string name="main_menu_4">Auditorio</string>
+    <string name="main_menu_5">Participantes</string>
     <string name="main_menu_6">Apoyo</string>
     <string name="explanation">prueba</string>
     <string name="title_activity_web"></string>
@@ -53,4 +53,5 @@
     <string name="author">Autor:</string>
     <string name="chairman">Chairman:</string>
     <string name="date">Fecha:</string>
+    <string name="title_activity_information">Informacion</string>
 </resources>

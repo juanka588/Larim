@@ -12,7 +12,7 @@ public class Notice implements Serializable {
     public String id;
     public String url;
 
-    public Notice(String title, String content, boolean checked, String id, String url) {
+    public Notice(String id, String title, String content, boolean checked, String url) {
         this.title = title;
         this.content = content;
         this.checked = checked;
@@ -20,8 +20,8 @@ public class Notice implements Serializable {
         this.url = url;
     }
 
-    public Notice(String title, String content, String checked, String id, String url) {
-        this(title, content, checked.equals("true"), id, url);
+    public Notice(String id, String title, String content, String checked, String url) {
+        this(id, title, content, checked.equals("true"), url);
     }
 }
 

@@ -11,7 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.unal.larim.Data.Session;
+import com.unal.larim.Data.Conference;
+import com.unal.larim.DataSource.ConferenceContent;
 import com.unal.larim.LN.ExpandableSesionAdapter;
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
@@ -21,15 +22,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by JuanCamilo on 26/07/2015.
  */
 public class DayFragment extends Fragment {
 
-    public static String table_names[] = new String[]{"session", "code", "conference"};
-    public static String column_names[] = new String[]{"date", "initials", "description", "title",
-            "place", "hour"};
     /**
      * The fragment argument representing the section number for this
      * fragment.
@@ -67,21 +66,20 @@ public class DayFragment extends Fragment {
         sections = (ExpandableListView) rootView.findViewById(R.id.expandableSections);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date today = Calendar.getInstance().getTime();
+        Util.log("fecha de hoy en int", today.toString());
         String date = df.format(today);
         currentDay.setText(getString(R.string.today) + " " + date);
 
         Bundle bundle = this.getArguments();
         int selected = bundle.getInt(ARG_SECTION_NUMBER);
-
-            /*TODO: replace with database data*/
         LinnaeusDatabase lb = new LinnaeusDatabase(rootView.getContext());
-        SQLiteDatabase db = rootView.getContext().openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
-                rootView.getContext().MODE_PRIVATE, null);
+        SQLiteDatabase db = lb.dataBase;
         ExpandableSesionAdapter adapter = new ExpandableSesionAdapter(initializeData(db));
         adapter.setInflater(
                 (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),
                 getActivity());
         sections.setAdapter(adapter);
+        db.close();
         int suma = 0;
         /*TODO: configurar suma para que cuadren los dias*/
         if (bundle != null) {
@@ -114,17 +112,40 @@ public class DayFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList<Session> initializeData(SQLiteDatabase db) {
-        Cursor c = db.query(Util.toString(table_names), column_names, column_names[3] + "=?", new String[]{"0"}, null, null, null);
+    private ArrayList<List> initializeData(SQLiteDatabase db) {
+        Cursor c = db.query(ConferenceContent.table_name_conference + " a inner join " +
+                        ConferenceContent.table_name_code
+                        + " b on a." + ConferenceContent.column_code_id
+                        + "=b._id inner join " + ConferenceContent.table_name_chairman
+                        + " c on c._id=a."
+                        + ConferenceContent.column_chairman_id, ConferenceContent.column_names,
+                /*TODO: utilize date filter*/
+                null,//selection
+                null,//args
+                null,//group by
+                null,//having
+                ConferenceContent.column_hour//order by
+        );
         String[][] mat = Util.imprimirLista(c);
-        ArrayList<Session> sesions = new ArrayList<>();
+        ArrayList<List> hours = new ArrayList<>();
+        ArrayList<Conference> conferences = new ArrayList<>();
+        Conference conference;
+        String hour = mat[0][3], currentHour;
         for (int i = 0; i < mat.length; i++) {
-            // sesions.add(new Notice(mat[i][1], mat[i][2], mat[i][3], mat[i][0],mat[i][4]));
-        }
-        c.close();
-        db.close();
-        Util.log("Sesiones size", sesions.size() + "");
-        return sesions;
-    }
+            currentHour = mat[i][3];
+            if (!hour.equals(currentHour)) {
+                hours.add(conferences);
+                conferences = new ArrayList<>();
+                hour = currentHour;
+            }
+            conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][4],
+                    mat[i][5], mat[i][6], mat[i][7], mat[i][8]);
+            conferences.add(conference);
 
+        }
+        hours.add(conferences);
+        c.close();
+        Util.log("hours size", hours.size() + "");
+        return hours;
+    }
 }

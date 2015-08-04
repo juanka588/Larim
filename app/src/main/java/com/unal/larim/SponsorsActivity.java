@@ -1,24 +1,24 @@
 package com.unal.larim;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.unal.larim.Data.Sponsor;
+import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.SponsorsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
 
-public class SponsorsActivity extends Activity {
-
-    public static String table_name = "sponsor";
-    public static String column_names[] = new String[]{"name", "icon", "website", "type"};
+public class SponsorsActivity extends ActionBarActivity {
 
     private RecyclerView listSponsor;
     private RecyclerView listOrganizators;
@@ -42,22 +42,22 @@ public class SponsorsActivity extends Activity {
         listSponsor.setLayoutManager(gridLayoutManager);
         listOrganizators.setLayoutManager(gridLayoutManager2);
         LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-        SQLiteDatabase db = openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
-                MODE_PRIVATE, null);
-        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db, "false"), this);
+        SQLiteDatabase db = lb.dataBase;
+        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db, "1"), this);
         listSponsor.setAdapter(adapter);
-        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db, "true"), this);
+        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db, "0"), this);
         listOrganizators.setAdapter(adapter2);
         db.close();
     }
 
     private ArrayList<Sponsor> initializeData(SQLiteDatabase db, String filter) {
-        Cursor c = db.query(table_name, column_names, column_names[3] + "=?", new String[]{filter}, null, null, null);
+        Cursor c = db.query(SponsorContent.table_name, SponsorContent.column_names,
+                SponsorContent.column_type + "=?", new String[]{filter}, null, null, null);
         String[][] mat = Util.imprimirLista(c);
         ArrayList<Sponsor> sponsors = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
             int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null, this.getPackageName());
-            sponsors.add(new Sponsor(mat[i][0], icon, mat[i][2]));
+            sponsors.add(new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]));
         }
         c.close();
         Util.log("Sponsors size", sponsors.size() + "");

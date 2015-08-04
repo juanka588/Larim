@@ -1,17 +1,16 @@
 package com.unal.larim;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +19,9 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.unal.larim.Data.Notice;
+import com.unal.larim.Data.Sponsor;
+import com.unal.larim.DataSource.SponsorContent;
+import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.QuickstartPreferences;
 import com.unal.larim.LN.RegistrationIntentService;
 import com.unal.larim.LN.Util;
@@ -28,6 +30,7 @@ import com.unal.larim.LN.Util;
 public class MainActivity extends Activity {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String WELCOME_IDENTIFIER = "3";
     private static final String TAG = "MainActivity";
     public static final boolean DEBUG = true;
     public static int notification_counter;
@@ -92,44 +95,41 @@ public class MainActivity extends Activity {
         startActivity(map);
     }
 
-    public void sitio(View v) {
-        final String[] items = {this.getString(R.string.web_site), this.getString(R.string.title_activity_news)};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final Activity act = this;
-        builder.setTitle(this.getString(R.string.main_menu_5)).setItems(items,
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int item) {
-                        if (item == 0) {
-                            Util.irA("http://larim.unal.edu.co/", act);
-                        }
-                        if (item == 1) {
-                            noticias(null);
-                        }
-                    }
-                });
-
-        builder.setNegativeButton(this.getText(R.string.cancel_dialog), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.show();
-    }
-
-    public void sitio2(View v) {
+    public void site(View v) {
         Util.irA("http://www.cccartagena.com", this);
     }
 
-    public void cronograma(View v) {
+    public void welcome(View v) {
+        Intent info = new Intent(this, InformationActivity.class);
+        info.putExtra(InformationActivity.ARG_TAG, getWelcomeInfo());
+        startActivity(info);
+
+    }
+
+    private Sponsor getWelcomeInfo() {
+        LinnaeusDatabase ln = new LinnaeusDatabase(getApplicationContext());
+        SQLiteDatabase database = ln.dataBase;
+        Cursor cursor = database.query(SponsorContent.table_name, SponsorContent.column_names,
+                SponsorContent.column_type + "=?", new String[]{WELCOME_IDENTIFIER}, null, null, null);
+        String[][] mat = Util.imprimirLista(cursor);
+        Sponsor sponsor = null;
+        for (int i = 0; i < mat.length; i++) {
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null, this.getPackageName());
+            sponsor = new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]);
+        }
+        cursor.close();
+        database.close();
+        return sponsor;
+    }
+
+    public void program(View v) {
         Intent cron = new Intent(this, Cronograma.class);
         startActivity(cron);
     }
 
-    public void detalles(View v) {
+    public void details(View v) {
         Intent participantes = new Intent(this, ParticipantActivity.class);
         startActivity(participantes);
-        //Toast.makeText(getApplicationContext(),"Aun no implementado",Toast.LENGTH_SHORT).show();
     }
 
 
@@ -139,7 +139,7 @@ public class MainActivity extends Activity {
 
     public void noticias(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-        news.putExtra("notice", new Notice("Desde Main Activity", "Contenidos", false, "1", "http://www.google.com"));
+        news.putExtra("notice", new Notice("1", "Desde Main Activity", "Contenidos", false, "http://www.google.com"));
         startActivity(news);
     }
 }

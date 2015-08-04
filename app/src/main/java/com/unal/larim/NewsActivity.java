@@ -9,9 +9,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.unal.larim.Data.Notice;
+import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.NewsRecyclerViewAdapter;
-import com.unal.larim.Data.Notice;
 import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
@@ -19,8 +20,6 @@ import java.util.ArrayList;
 
 public class NewsActivity extends ActionBarActivity {
 
-    public static String table_name = "notice";
-    public static String column_names[] = new String[]{"_id", "title", "content", "checked", "url"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,15 +29,15 @@ public class NewsActivity extends ActionBarActivity {
         Bundle b = this.getIntent().getExtras();
         Notice notice = (Notice) b.getSerializable("notice");
         LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-        SQLiteDatabase db = openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
-                MODE_PRIVATE, null);
+        SQLiteDatabase db = lb.dataBase;
         if (notice != null) {
+            db.beginTransaction();
             ContentValues cv = new ContentValues();
-            cv.put(column_names[1], notice.title);
-            cv.put(column_names[2], notice.content);
-            cv.put(column_names[3], false);
-            cv.put(column_names[4], notice.url);
-            long retrived = db.insert(table_name, null, cv);
+            cv.put(NoticeContent.column_title, notice.title);
+            cv.put(NoticeContent.column_content, notice.content);
+            cv.put(NoticeContent.column_checked, false);
+            cv.put(NoticeContent.column_url, notice.url);
+            long retrived = db.insert(NoticeContent.table_name, null, cv);
             Util.log("Fue Exitoso?", retrived + "");
         }
         recList.setHasFixedSize(true);
@@ -52,13 +51,16 @@ public class NewsActivity extends ActionBarActivity {
     }
 
     private ArrayList<Notice> initializeData(SQLiteDatabase db) {
-        Cursor c = db.query(table_name, column_names, column_names[3] + "=?", new String[]{"0"}, null, null, null);
+        Cursor c = db.query(NoticeContent.table_name, NoticeContent.column_names,
+                null, null, null, null, null);
         String[][] mat = Util.imprimirLista(c);
         ArrayList<Notice> noticias = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            noticias.add(new Notice(mat[i][1], mat[i][2], mat[i][3], mat[i][0], mat[i][4]));
+            noticias.add(new Notice(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
         }
         c.close();
+        db.setTransactionSuccessful();
+        db.endTransaction();
         db.close();
         Util.log("Noticias size", noticias.size() + "");
         return noticias;

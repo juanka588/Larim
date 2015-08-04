@@ -42,7 +42,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="sitio2"
+                    android:onClick="welcome"
                     android:text="@string/main_menu_1" />
 
                 <Button
@@ -52,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="cronograma"
+                    android:onClick="program"
                     android:text="@string/main_menu_2" />
 
                 <Button
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="detalles"
+                    android:onClick="site"
                     android:text="@string/main_menu_4" />
             </LinearLayout>
 
@@ -79,7 +79,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="sitio"
+                    android:onClick="details"
                     android:text="@string/main_menu_5" />
 
                 <Button

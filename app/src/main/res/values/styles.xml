@@ -13,25 +13,30 @@
     </style>
 
     <style name="TextStyle" parent="@android:style/Widget.Holo.Light.TextView">
-        <item name="android:textColor">#011052</item>
+        <item name="android:textColor">@color/darkblue</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
+    <style name="TextStyleBig" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:textColor">@color/darkblue</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+    </style>
+
     <style name="TextStyleSmall" parent="@android:style/Widget.Holo.Light.TextView">
-        <item name="android:textColor">#011052</item>
+        <item name="android:textColor">@color/gray</item>
         <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
     </style>
 
     <style name="ButtonYellowStyle" parent="@android:style/Widget.Holo.Light.Button">
-        <item name="android:textColor">#011052</item>
-        <item name="android:background">@drawable/fondo1</item>
+        <item name="android:textColor">@color/darkyellow_selector</item>
+        <item name="android:background">@drawable/darkyellow_selector</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>
 
     <style name="ButtonBlueStyle" parent="@android:style/Widget.Holo.Light.Button">
-        <item name="android:textColor">#C39408</item>
-        <item name="android:background">@drawable/fondo2</item>
+        <item name="android:textColor">@color/darkblue_selector</item>
+        <item name="android:background">@drawable/darkblue_selector</item>
         <item name="android:clickable">true</item>
         <item name="android:foreground">?android:attr/selectableItemBackground</item>
     </style>

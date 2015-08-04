@@ -5,40 +5,59 @@ import com.unal.larim.LN.Util;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by JuanCamilo on 20/07/2015.
  */
 public class Conference implements Serializable {
-    public String session;
-    public String hour;
     public String title;
     public String place;
+    public String hour;
+    public Date date;
     public String chairman;
     public boolean scheduled;
-    public Date date;
-    public Participant author;
+    public String paperID;
+    public String initials;
+    public String description;
 
-    /*@param session indicates the session abbreviation
+    /*@param title indicates the conference title
     * @param hour text in format HH:MM:SS
     * @param date in format YYYY-MM-DD*/
-    public Conference(String session, String hour, String title, String place, String chairman,
-                      String date, boolean scheduled, Participant author) {
-        this.session = session;
+    public Conference(String paperID, String title, String place, String hour, String date, String chairman
+            , String scheduled, String initials, String description) {
         this.hour = hour;
         this.title = title;
         this.place = place;
         this.chairman = chairman;
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            Date newdate = dateformat.parse(date);
-            this.date = newdate;
+            this.date = dateformat.parse(date);
         } catch (ParseException e) {
+            this.date = Calendar.getInstance().getTime();
             Util.log("Error Fechas", e.toString());
         }
-        this.scheduled = scheduled;
-        this.author = author;
+        this.scheduled = scheduled.equals("true");
+        this.paperID = paperID;
+        this.initials = initials;
+        this.description = description;
 
+    }
+
+    /*@param session indicates the session abbreviation
+    * @param hour text in number format
+    * @param scheduled references if the conference is active or not*/
+    public Conference(String paperID, String title, String place, String hour, Date date, String chairman
+            , boolean scheduled, String initials, String description) {
+        this.hour = hour;
+        this.title = title;
+        this.place = place;
+        this.chairman = chairman;
+        this.date = date;
+        this.scheduled = scheduled;
+        this.paperID = paperID;
+        this.initials = initials;
+        this.description = description;
     }
 }

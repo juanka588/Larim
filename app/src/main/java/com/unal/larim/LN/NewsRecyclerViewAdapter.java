@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.provider.BaseColumns;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unal.larim.Data.Notice;
-import com.unal.larim.NewsActivity;
+import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.R;
 
 import java.util.ArrayList;
@@ -44,6 +45,8 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(final NewsViewHolder holder, int i) {
         holder.title.setText(noticias.get(i).title);
         holder.content.setText(noticias.get(i).content);
+        holder.title.setBackgroundColor(context.getResources().getColor(
+                noticias.get(i).checked ? R.color.darkblue : R.color.darkyellow));
     }
 
     @Override
@@ -69,16 +72,21 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         Notice remove = noticias.remove(position);
         notifyItemRemoved(position);
         LinnaeusDatabase lb = new LinnaeusDatabase(context);
-        SQLiteDatabase db = context.openOrCreateDatabase(LinnaeusDatabase.DATABASE_NAME,
-                context.MODE_WORLD_READABLE, null);
+        SQLiteDatabase db = lb.dataBase;
         ContentValues cv = new ContentValues();
-        cv.put(NewsActivity.column_names[3], "1");
-        long retrived = db.update(NewsActivity.table_name, cv, " _id = " + remove.id, null);
-        Util.log("Eliminado", "titulo " + remove.title + " total: " + retrived);
-        Toast.makeText(context, "Eliminado: titulo " + remove.title + " total: " + retrived, Toast.LENGTH_SHORT).show();
+        cv.put(NoticeContent.column_checked, "1");
+        long retrived = db.update(NoticeContent.table_name, cv, BaseColumns._ID + " = " + remove.id, null);
     }
 
     public void irWeb(int position) {
+        Notice remove = noticias.get(position);
+        LinnaeusDatabase lb = new LinnaeusDatabase(context);
+        SQLiteDatabase db = lb.dataBase;
+        ContentValues cv = new ContentValues();
+        cv.put(NoticeContent.column_checked, "1");
+        long retrived = db.update(NoticeContent.table_name, cv, BaseColumns._ID + " = " + remove.id, null);
+        notifyItemChanged(position);
+        Util.log("Item Cambiado", noticias.get(position).title + " con id " + retrived);
         Util.irA(noticias.get(position).url, activity);
     }
 

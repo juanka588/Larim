@@ -2,6 +2,7 @@ package com.unal.larim.LN;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Sponsor;
+import com.unal.larim.InformationActivity;
+import com.unal.larim.InformationActivityFragment;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -61,7 +64,9 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     }
 
     public void openWeb(int position) {
-        Util.irA(sponsors.get(position).url, act);
+        Intent info = new Intent(act, InformationActivity.class);
+        info.putExtra(InformationActivity.ARG_TAG, sponsors.get(position));
+        act.startActivity(info);
     }
 
     public class SponsorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
