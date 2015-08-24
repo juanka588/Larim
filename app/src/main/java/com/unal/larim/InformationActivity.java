@@ -2,21 +2,21 @@ package com.unal.larim;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.LN.Util;
 
-public class InformationActivity extends ActionBarActivity {
-    public static final String ARG_TAG = "information";
+public class InformationActivity extends AppCompatActivity {
     public static Sponsor information;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        information = (Sponsor) bundle.getSerializable(ARG_TAG);
+        information = (Sponsor) bundle.getSerializable(getString(R.string.ARG_TAG_INFORMATION));
         getSupportActionBar().setTitle(information.name + "");
         setContentView(R.layout.activity_information);
     }

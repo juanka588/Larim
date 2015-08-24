@@ -42,8 +42,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="fill_horizontal"
+                android:lineSpacingMultiplier="1.2"
                 android:padding="16dp"
-                android:text="algo" />
+                android:text="algo"
+                android:elegantTextHeight="true"
+                android:linksClickable="true" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

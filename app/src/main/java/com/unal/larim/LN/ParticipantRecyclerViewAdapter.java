@@ -21,7 +21,6 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     private List<Participant> participants;
     private Context context;
-    private Activity act;
 
     @Override
     public ParticipantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -53,14 +52,13 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
         return participants.size();
     }
 
-    public ParticipantRecyclerViewAdapter(List<Participant> participants, Activity act) {
+    public ParticipantRecyclerViewAdapter(List<Participant> participants, Context context) {
         this.participants = participants;
-        this.context = act.getApplicationContext();
-        this.act = act;
+        this.context = context;
     }
 
     public void sendEmail(int position) {
-        Util.enviar(act, participants.get(position).email, "", "", "");
+        Util.enviar(context, participants.get(position).email, "", "", "");
     }
 
     public class ParticipantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

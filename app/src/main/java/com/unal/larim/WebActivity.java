@@ -36,7 +36,7 @@ public class WebActivity extends ActionBarActivity {
         });
         if (savedInstanceState == null) {
             Bundle b = getIntent().getExtras();
-            URL = b.getString("paginaWeb");
+            URL = b.getString(getString(R.string.ARG_WEB_PAGE));
             browser.loadUrl(URL);
             if (!Util.isOnline(this)) {
                 Util.notificarRed(this);

@@ -54,7 +54,8 @@ public class ExpandableSesionAdapter extends
             @Override
             public void onClick(View v) {
                 Intent details = new Intent(activity, DetailConference.class);
-                details.putExtra(DetailConference.TAG_CONFERENCE, conference);
+                details.putExtra(activity.getString(R.string.TAG_CONFERENCE),
+                        conference);
                 activity.startActivity(details);
             }
         });

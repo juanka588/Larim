@@ -65,7 +65,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
 
     public void openWeb(int position) {
         Intent info = new Intent(act, InformationActivity.class);
-        info.putExtra(InformationActivity.ARG_TAG, sponsors.get(position));
+        info.putExtra(act.getString(R.string.ARG_TAG_INFORMATION), sponsors.get(position));
         act.startActivity(info);
     }
 

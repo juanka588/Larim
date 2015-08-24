@@ -15,6 +15,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.text.format.Time;
 import android.util.Log;
 
 import com.unal.larim.MainActivity;
@@ -240,7 +241,7 @@ public class Util {
         activity.startActivity(intent);
     }
 
-    public static void enviar(Activity act, String[] to, String[] cc,
+    public static void enviar(Context context, String[] to, String[] cc,
                               String asunto, String mensaje) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
@@ -249,23 +250,27 @@ public class Util {
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, asunto);
         emailIntent.putExtra(Intent.EXTRA_TEXT, mensaje);
         emailIntent.setType("message/rfc822");
-        act.startActivity(Intent.createChooser(emailIntent, "Email "));
+        context.startActivity(Intent.createChooser(emailIntent, "Email "));
     }
 
-    public static void enviar(Activity act, String to, String cc,
+    public static void enviar(Context context, String to, String cc,
                               String asunto, String mensaje) {
-        enviar(act, new String[]{to}, new String[]{cc}, asunto, mensaje);
+        enviar(context, new String[]{to}, new String[]{cc}, asunto, mensaje);
     }
 
     public static void irA(String url, Activity act) {
         Intent deta = new Intent(act, WebActivity.class);
-        if (url.contains("Sitio Web")) {
-            return;
-        }
-        deta.putExtra("paginaWeb", url);
+        deta.putExtra(act.getString(R.string.ARG_WEB_PAGE), url);
         act.startActivity(deta);
     }
 
+    public static long normalizeDate(long startDate) {
+        // normalize the start date to the beginning of the (UTC) day
+        Time time = new Time();
+        time.set(startDate);
+        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
+        return time.setJulianDay(julianDay);
+    }
     public static CharSequence toCammelCase(String lowerCase) {
         String cad = "";
         String[] palabras = lowerCase.split(" ");

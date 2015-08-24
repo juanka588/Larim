@@ -1,4 +1,13 @@
-<menu xmlns:tools="http://schemas.android.com/tools"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.unal.larim.ParticipantActivity">
 
+
+    <item
+        android:id="@+id/action_busqueda"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="@string/participant_search"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="always" />
 </menu>

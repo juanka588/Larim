@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String WELCOME_IDENTIFIER = "3";
-    private static final String TAG = "MainActivity";
+    private final String TAG = MainActivity.this.getClass().getSimpleName();
     public static final boolean DEBUG = true;
     public static int notification_counter;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -101,7 +101,7 @@ public class MainActivity extends Activity {
 
     public void welcome(View v) {
         Intent info = new Intent(this, InformationActivity.class);
-        info.putExtra(InformationActivity.ARG_TAG, getWelcomeInfo());
+        info.putExtra(getString(R.string.ARG_TAG_INFORMATION), getWelcomeInfo());
         startActivity(info);
 
     }
@@ -114,7 +114,8 @@ public class MainActivity extends Activity {
         String[][] mat = Util.imprimirLista(cursor);
         Sponsor sponsor = null;
         for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null, this.getPackageName());
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null,
+                    this.getPackageName());
             sponsor = new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]);
         }
         cursor.close();
@@ -139,7 +140,8 @@ public class MainActivity extends Activity {
 
     public void noticias(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-        news.putExtra("notice", new Notice("1", "Desde Main Activity", "Contenidos", false, "http://www.google.com"));
+        news.putExtra("notice", new Notice("1", "Desde Main Activity", "Contenidos",
+                false, "http://www.google.com"));
         startActivity(news);
     }
 }

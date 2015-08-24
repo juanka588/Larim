@@ -54,4 +54,9 @@
     <string name="chairman">Chairman:</string>
     <string name="date">Fecha:</string>
     <string name="title_activity_information">Informacion</string>
+    <string name="TAG_CONFERENCE">conference</string>
+    <string name="ARG_TAG_INFORMATION">information</string>
+    <string name="ARG_WEB_PAGE">paginaWEB</string>
+    <string name="participant_search">Busqueda</string>
+    <string name="ARG_NOTICE">notice</string>
 </resources>

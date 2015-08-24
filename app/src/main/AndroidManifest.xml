@@ -128,6 +128,12 @@
             android:name=".InformationActivity"
             android:label="@string/title_activity_information">
         </activity>
+
+        <provider
+            android:name=".DataSource.LARIMContentProvider"
+            android:authorities="com.unal.larim"
+            android:enabled="true"
+            android:exported="true"></provider>
     </application>
 
 </manifest>

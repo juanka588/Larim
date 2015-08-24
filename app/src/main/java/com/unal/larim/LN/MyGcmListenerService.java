@@ -85,15 +85,16 @@ public class MyGcmListenerService extends GcmListenerService {
                 + getPackageName() + "/" + R.raw.din3);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle(title)
-                .setContentText(message)
+                .setContentTitle(message)
+                .setContentText(title)
                 .setContentInfo(url)
                 .setAutoCancel(true)
                 .setSound(customSound)
                 .setContentIntent(pendingIntent);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(MainActivity.notification_counter /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(MainActivity.notification_counter /* ID of notification */,
+                notificationBuilder.build());
         MainActivity.notification_counter++;
     }
 }

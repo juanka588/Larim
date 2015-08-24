@@ -1,5 +1,8 @@
 package com.unal.larim.DataSource;
 
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -25,4 +28,18 @@ public class ConferenceContent implements BaseColumns {
     public static final String column_names[] = new String[]{column_paper_id, column_title,
             column_place, column_hour, column_date, column_chaiman_name,
             column_scheduled, column_code_initials, column_code_description};
+    public static final String CONFERENCE_PATH = "conference";
+
+    public static final Uri CONTENT_URI =
+            LARIMContentProvider.BASE_CONTENT_URI.buildUpon().appendPath(CONFERENCE_PATH).build();
+    public static final String CONTENT_TYPE =
+            ContentResolver.CURSOR_DIR_BASE_TYPE + "/" +
+                    LARIMContentProvider.CONTENT_AUTHORITY + "/" + CONFERENCE_PATH;
+    public static final String CONTENT_ITEM_TYPE =
+            ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" +
+                    LARIMContentProvider.CONTENT_AUTHORITY + "/" + CONFERENCE_PATH;
+
+    public static Uri buildConferenceUri(long id) {
+        return ContentUris.withAppendedId(CONTENT_URI, id);
+    }
 }

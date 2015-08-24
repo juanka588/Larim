@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -23,7 +24,7 @@ import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends ActionBarActivity {
+public class MapsActivity extends AppCompatActivity {
 
     private GoogleMap mapa;
     private ArrayList<LatLng> marcadores = new ArrayList<LatLng>();

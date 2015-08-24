@@ -33,7 +33,7 @@ public class DayFragment extends Fragment {
      * The fragment argument representing the section number for this
      * fragment.
      */
-    private static final String ARG_SECTION_NUMBER = "section_number";
+    public static final String ARG_SECTION_NUMBER = "section_number";
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -59,6 +59,7 @@ public class DayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cronograma, container, false);
+        Context context = rootView.getContext();
         dayTitle = (TextView) rootView.findViewById(R.id.textDayTitle);
         currentDay = (TextView) rootView.findViewById(R.id.textCurrentDate);
         dayDate = (TextView) rootView.findViewById(R.id.textDayDate);
@@ -130,20 +131,21 @@ public class DayFragment extends Fragment {
         ArrayList<List> hours = new ArrayList<>();
         ArrayList<Conference> conferences = new ArrayList<>();
         Conference conference;
-        String hour = mat[0][3], currentHour;
-        for (int i = 0; i < mat.length; i++) {
-            currentHour = mat[i][3];
-            if (!hour.equals(currentHour)) {
-                hours.add(conferences);
-                conferences = new ArrayList<>();
-                hour = currentHour;
+        if (mat.length > 0) {
+            String hour = mat[0][3], currentHour;
+            for (int i = 0; i < mat.length; i++) {
+                currentHour = mat[i][3];
+                if (!hour.equals(currentHour)) {
+                    hours.add(conferences);
+                    conferences = new ArrayList<>();
+                    hour = currentHour;
+                }
+                conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][4],
+                        mat[i][5], mat[i][6], mat[i][7], mat[i][8]);
+                conferences.add(conference);
             }
-            conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][4],
-                    mat[i][5], mat[i][6], mat[i][7], mat[i][8]);
-            conferences.add(conference);
-
+            hours.add(conferences);
         }
-        hours.add(conferences);
         c.close();
         Util.log("hours size", hours.size() + "");
         return hours;

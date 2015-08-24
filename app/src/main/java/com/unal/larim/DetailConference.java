@@ -4,7 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.BaseColumns;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.unal.larim.Data.Conference;
 import com.unal.larim.Data.Paper;
 import com.unal.larim.Data.Participant;
-import com.unal.larim.DataSource.PaperSource;
-import com.unal.larim.DataSource.ParticipantSource;
+import com.unal.larim.DataSource.PaperContent;
+import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
 
@@ -23,9 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
-public class DetailConference extends ActionBarActivity {
+public class DetailConference extends AppCompatActivity {
 
-    public static final String TAG_CONFERENCE = "conference";
     private TextView textDate;
     private TextView textHour;
     private TextView textPaperName;
@@ -52,7 +51,7 @@ public class DetailConference extends ActionBarActivity {
         LinnaeusDatabase ln = new LinnaeusDatabase(getApplicationContext());
         database = ln.getReadableDatabase();
         Bundle b = this.getIntent().getExtras();
-        conference = (Conference) b.getSerializable(TAG_CONFERENCE);
+        conference = (Conference) b.getSerializable(getString(R.string.TAG_CONFERENCE));
         paper = getPaperFromID(conference.paperID);
         pdfConference.loadUrl("http://docs.google.com/gview?embedded=true&url=" +
                 paper.pdfURL);
@@ -81,7 +80,7 @@ public class DetailConference extends ActionBarActivity {
     }
 
     private Paper getPaperFromID(String id) {
-        Cursor cursor = database.query(PaperSource.table_name, PaperSource.column_names,
+        Cursor cursor = database.query(PaperContent.table_name, PaperContent.column_names,
                 BaseColumns._ID + "=?", new String[]{id}, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Paper paper = null;
@@ -93,15 +92,15 @@ public class DetailConference extends ActionBarActivity {
     }
 
     private Participant getAuthorFromID(String id) {
-        Cursor cursor = database.query(ParticipantSource.table_name_participant + " a inner join " +
-                        ParticipantSource.table_name_country + " b on a." + ParticipantSource.table_name_country
+        Cursor cursor = database.query(ParticipantContent.table_name_participant + " a inner join " +
+                        ParticipantContent.table_name_country + " b on a." + ParticipantContent.table_name_country
                         + "=b." + BaseColumns._ID,
-                ParticipantSource.column_names,
+                ParticipantContent.column_names,
                 "a." + BaseColumns._ID + "=?", new String[]{id}, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Participant participant = null;
         for (int i = 0; i < mat.length; i++) {
-            participant = new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3]);
+            participant = new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]);
         }
         cursor.close();
         return participant;

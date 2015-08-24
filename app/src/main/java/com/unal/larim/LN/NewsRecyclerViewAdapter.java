@@ -1,6 +1,7 @@
 package com.unal.larim.LN;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unal.larim.Data.Notice;
 import com.unal.larim.DataSource.NoticeContent;
@@ -71,22 +71,24 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         }
         Notice remove = noticias.remove(position);
         notifyItemRemoved(position);
-        LinnaeusDatabase lb = new LinnaeusDatabase(context);
-        SQLiteDatabase db = lb.dataBase;
+        ContentResolver contentResolver = context.getContentResolver();
         ContentValues cv = new ContentValues();
-        cv.put(NoticeContent.column_checked, "1");
-        long retrived = db.update(NoticeContent.table_name, cv, BaseColumns._ID + " = " + remove.id, null);
+        cv.put(NoticeContent.column_checked, true);
+        long retrived = contentResolver.update(
+                NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
+                , new String[]{remove.id});
     }
 
     public void irWeb(int position) {
         Notice remove = noticias.get(position);
-        LinnaeusDatabase lb = new LinnaeusDatabase(context);
-        SQLiteDatabase db = lb.dataBase;
         ContentValues cv = new ContentValues();
-        cv.put(NoticeContent.column_checked, "1");
-        long retrived = db.update(NoticeContent.table_name, cv, BaseColumns._ID + " = " + remove.id, null);
+        cv.put(NoticeContent.column_checked, true);
+        ContentResolver contentResolver = context.getContentResolver();
+        long retrived = contentResolver.update(
+                NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
+                , new String[]{remove.id});
         notifyItemChanged(position);
-        Util.log("Item Cambiado", noticias.get(position).title + " con id " + retrived);
+        Util.log("Item Cambiado", retrived + " " + noticias.get(position).title + " con id " + retrived);
         Util.irA(noticias.get(position).url, activity);
     }
 
