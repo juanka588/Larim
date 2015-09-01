@@ -16,7 +16,8 @@ public class ConferenceContent implements BaseColumns {
             table_name_chairman, table_name_code};
     public static final String column_title = "title";
     public static final String column_place = "place";
-    public static final String column_hour = "hour";
+    public static final String column_hour_start = "start";
+    public static final String column_hour_end = "end";
     public static final String column_date = "date";
     public static final String column_paper_id = "paper";
     public static final String column_scheduled = "scheduled";
@@ -26,7 +27,7 @@ public class ConferenceContent implements BaseColumns {
     public static final String column_code_initials = "initials";
     public static final String column_code_description = "description";
     public static final String column_names[] = new String[]{column_paper_id, column_title,
-            column_place, column_hour, column_date, column_chaiman_name,
+            column_place, column_hour_start, column_hour_end, column_date, column_chaiman_name,
             column_scheduled, column_code_initials, column_code_description};
     public static final String CONFERENCE_PATH = "conference";
 
@@ -41,5 +42,19 @@ public class ConferenceContent implements BaseColumns {
 
     public static Uri buildConferenceUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
+    }
+
+    public static Uri buildConferenceDateUri(long date) {
+        return ContentUris.withAppendedId(CONTENT_URI, date);
+    }
+
+    /**
+     * @param hour
+     * @param date
+     * @return Build Uri
+     */
+    /*TODO: manejar bien el long*/
+    public static Uri buildConferenceHourDateUri(String hour, long date) {
+        return CONTENT_URI.buildUpon().appendPath(hour).appendPath(Long.toString(date)).build();
     }
 }

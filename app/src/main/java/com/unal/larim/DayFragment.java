@@ -1,5 +1,6 @@
 package com.unal.larim;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -114,40 +115,42 @@ public class DayFragment extends Fragment {
     }
 
     private ArrayList<List> initializeData(SQLiteDatabase db) {
-        Cursor c = db.query(ConferenceContent.table_name_conference + " a inner join " +
-                        ConferenceContent.table_name_code
-                        + " b on a." + ConferenceContent.column_code_id
-                        + "=b._id inner join " + ConferenceContent.table_name_chairman
-                        + " c on c._id=a."
-                        + ConferenceContent.column_chairman_id, ConferenceContent.column_names,
-                /*TODO: utilize date filter*/
-                null,//selection
-                null,//args
-                null,//group by
-                null,//having
-                ConferenceContent.column_hour//order by
-        );
+        ContentResolver contentResolver = getActivity().getContentResolver();
+        Cursor c = contentResolver.query(ConferenceContent.CONTENT_URI,
+                null, null, null, ConferenceContent.column_hour_start);
+//        Cursor c = db.query(ConferenceContent.table_name_conference + " a inner join " +
+//                        ConferenceContent.table_name_code
+//                        + " b on a." + ConferenceContent.column_code_id
+//                        + "=b._id inner join " + ConferenceContent.table_name_chairman
+//                        + " c on c._id=a."
+//                        + ConferenceContent.column_chairman_id, ConferenceContent.column_names,
+//                /*TODO: utilize date filter*/
+//                null,//selection
+//                null,//args
+//                null,//group by
+//                null,//having
+//                ConferenceContent.column_hour_start//order by
+//        );
         String[][] mat = Util.imprimirLista(c);
         ArrayList<List> hours = new ArrayList<>();
         ArrayList<Conference> conferences = new ArrayList<>();
         Conference conference;
         if (mat.length > 0) {
-            String hour = mat[0][3], currentHour;
+            String hour = mat[0][3] + "-" + mat[0][4], currentHour;
             for (int i = 0; i < mat.length; i++) {
-                currentHour = mat[i][3];
+                currentHour = mat[i][3] + "-" + mat[i][4];
                 if (!hour.equals(currentHour)) {
                     hours.add(conferences);
                     conferences = new ArrayList<>();
                     hour = currentHour;
                 }
-                conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][4],
-                        mat[i][5], mat[i][6], mat[i][7], mat[i][8]);
+                conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][5],
+                        mat[i][6], mat[i][7], mat[i][8], mat[i][9]);
                 conferences.add(conference);
             }
             hours.add(conferences);
         }
         c.close();
-        Util.log("hours size", hours.size() + "");
         return hours;
     }
 }

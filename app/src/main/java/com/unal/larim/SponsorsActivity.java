@@ -1,5 +1,6 @@
 package com.unal.larim;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.unal.larim.Data.Sponsor;
+import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.SponsorsRecyclerViewAdapter;
@@ -44,18 +46,20 @@ public class SponsorsActivity extends AppCompatActivity {
         listOrganizators.setLayoutManager(gridLayoutManager2);
         LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
         SQLiteDatabase db = lb.dataBase;
-        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(initializeData(db,
-                SPONSOR_FILTER), this);
+        SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(
+                initializeData(SPONSOR_FILTER), this);
         listSponsor.setAdapter(adapter);
-        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(initializeData(db,
-                ORGANIZER_FILTER), this);
+        SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(
+                initializeData(ORGANIZER_FILTER), this);
         listOrganizators.setAdapter(adapter2);
         db.close();
     }
 
-    private ArrayList<Sponsor> initializeData(SQLiteDatabase db, String filter) {
-        Cursor c = db.query(SponsorContent.table_name, SponsorContent.column_names,
-                SponsorContent.column_type + "=?", new String[]{filter}, null, null, null);
+    private ArrayList<Sponsor> initializeData(String filter) {
+        ContentResolver contentResolver = getContentResolver();
+        Cursor c = contentResolver.query(
+                SponsorContent.buildSponsorUri(filter),
+                null, null, null, null);
         String[][] mat = Util.imprimirLista(c);
         ArrayList<Sponsor> sponsors = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {

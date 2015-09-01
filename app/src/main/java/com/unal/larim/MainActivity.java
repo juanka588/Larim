@@ -2,12 +2,12 @@ package com.unal.larim;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -21,7 +21,6 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.unal.larim.Data.Notice;
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
-import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.QuickstartPreferences;
 import com.unal.larim.LN.RegistrationIntentService;
 import com.unal.larim.LN.Util;
@@ -90,7 +89,7 @@ public class MainActivity extends Activity {
         return true;
     }
 
-    public void mapa(View v) {
+    public void map(View v) {
         Intent map = new Intent(this, MapsActivity.class);
         startActivity(map);
     }
@@ -107,10 +106,9 @@ public class MainActivity extends Activity {
     }
 
     private Sponsor getWelcomeInfo() {
-        LinnaeusDatabase ln = new LinnaeusDatabase(getApplicationContext());
-        SQLiteDatabase database = ln.dataBase;
-        Cursor cursor = database.query(SponsorContent.table_name, SponsorContent.column_names,
-                SponsorContent.column_type + "=?", new String[]{WELCOME_IDENTIFIER}, null, null, null);
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(SponsorContent.buildSponsorUri(WELCOME_IDENTIFIER)
+                , null, null, null, null);
         String[][] mat = Util.imprimirLista(cursor);
         Sponsor sponsor = null;
         for (int i = 0; i < mat.length; i++) {
@@ -119,7 +117,6 @@ public class MainActivity extends Activity {
             sponsor = new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]);
         }
         cursor.close();
-        database.close();
         return sponsor;
     }
 

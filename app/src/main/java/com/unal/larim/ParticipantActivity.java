@@ -10,6 +10,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.LN.Util;
 
@@ -17,8 +18,9 @@ public class ParticipantActivity extends AppCompatActivity {
     private static String TAG = ParticipantActivity.class.getSimpleName();
     private SearchView sv;
     private SimpleCursorAdapter simpleCursorAdapter;
-    private String[] from = new String[]{ParticipantContent.column_name};
-    private int[] to = new int[]{android.R.id.text1};
+    private String[] from = new String[]{ParticipantContent.column_name,
+            ParticipantContent.column_institution};
+    private int[] to = new int[]{android.R.id.text1, android.R.id.text2};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class ParticipantActivity extends AppCompatActivity {
         Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri("_"),
                 null, null, null, null);
         simpleCursorAdapter = new SimpleCursorAdapter(
-                getApplicationContext(), android.R.layout.simple_list_item_1, cursor,
+                getApplicationContext(), android.R.layout.simple_list_item_2, cursor,
                 from, to, 0);
         sv.setSuggestionsAdapter(simpleCursorAdapter);
         sv.setOnSuggestionListener(new SearchView.OnSuggestionListener() {

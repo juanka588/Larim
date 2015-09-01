@@ -72,7 +72,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:background="@drawable/fondo2"
                 android:orientation="vertical">
 
@@ -94,7 +94,7 @@
                     android:layout_weight="1"
                     android:clickable="true"
                     android:gravity="center"
-                    android:onClick="mapa"
+                    android:onClick="map"
                     android:text="@string/main_menu_3"
                     style="@style/ButtonYellowStyle" />
 

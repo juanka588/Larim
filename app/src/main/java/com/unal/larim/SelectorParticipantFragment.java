@@ -21,7 +21,7 @@ public class SelectorParticipantFragment extends Fragment {
     private static final String TAG = SelectorParticipantFragment.class.getSimpleName();
     private ListView recList;
     private String filter;
-    private int layout = android.R.layout.simple_list_item_1;
+    private int layout = android.R.layout.simple_list_item_activated_1;
     private String[] from = new String[]{ParticipantContent.column_type};
     private int[] to = new int[]{android.R.id.text1};
 
@@ -53,6 +53,7 @@ public class SelectorParticipantFragment extends Fragment {
         recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                /*TODO:you must implement the fragment manager */
 //                ParticipantFragment pf = ParticipantFragment.newInstance(
 //                        ParticipantContent.TYPE_LOCAL_ORGANIZING_COMMITTEE);
 //                getFragmentManager().beginTransaction()

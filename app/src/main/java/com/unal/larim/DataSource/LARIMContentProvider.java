@@ -26,6 +26,7 @@ public class LARIMContentProvider extends ContentProvider {
 
     public static final int sponsors = 200;
     public static final int sponsors_by_type = 201;
+    public static final int sponsors_as_map_points = 202;
 
     public static final int papers = 300;
     public static final int paper_by_id = 301;
@@ -219,9 +220,6 @@ public class LARIMContentProvider extends ContentProvider {
                 break;
             case participant_by_column:
                 List<String> list = uri.getPathSegments();
-                for (String cad2 : list) {
-                    Util.log("path", cad2);
-                }
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
                         "a." + list.get(list.size() - 2) + " = ?",
@@ -232,6 +230,41 @@ public class LARIMContentProvider extends ContentProvider {
                         NoticeContent.column_names,
                         selection,
                         selectionArgs, null, null, sortOrder);
+                break;
+            case sponsors_by_type:
+                cursor = db.query(SponsorContent.table_name,
+                        SponsorContent.column_names,
+                        SponsorContent.column_type + "=?",
+                        new String[]{uri.getLastPathSegment()}, null, null, sortOrder);
+                break;
+            case sponsors_as_map_points:
+                cursor = db.query(SponsorContent.table_name,
+                        SponsorContent.column_names2,
+                        SponsorContent.column_type + "=?",
+                        new String[]{uri.getLastPathSegment()}, null, null, sortOrder);
+                break;
+            case conferences:
+                cursor = db.query(getConferenceTableName(),
+                        ConferenceContent.column_names,
+                        null, null, null, null, sortOrder);
+                break;
+            case conferences_by_date:
+                cursor = db.query(getConferenceTableName(),
+                        ConferenceContent.column_names,
+                        ConferenceContent.column_date + "=?", new String[]{uri.getLastPathSegment()},
+                        null, null, sortOrder);
+                break;
+            case conferences_by_hours_and_date:
+                List<String> list2 = uri.getPathSegments();
+                int size = list2.size();
+                cursor = db.query(getConferenceTableName(),
+                        ConferenceContent.column_names,
+                        ConferenceContent.column_date
+                                + " =? and "
+                                + ConferenceContent.column_hour_start
+                                + " =?",
+                        new String[]{uri.getLastPathSegment(), list2.get(size - 2)},
+                        null, null, sortOrder);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -252,7 +285,7 @@ public class LARIMContentProvider extends ContentProvider {
         return ConferenceContent.table_name_conference + " a inner join " +
                 ConferenceContent.table_name_code
                 + " b on a." + ConferenceContent.column_code_id
-                + "=b._id inner join " + ConferenceContent.table_name_chairman
+                + " = b._id inner join " + ConferenceContent.table_name_chairman
                 + " c on c._id=a."
                 + ConferenceContent.column_chairman_id;
     }
@@ -344,6 +377,7 @@ public class LARIMContentProvider extends ContentProvider {
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/*/*", participant_by_column);
 
         matcher.addURI(authority, SponsorContent.SPONSOR_PATH, sponsors);
+        matcher.addURI(authority, SponsorContent.SPONSOR_PATH + "/info/*", sponsors_as_map_points);
         matcher.addURI(authority, SponsorContent.SPONSOR_PATH + "/*", sponsors_by_type);
 
         matcher.addURI(authority, PaperContent.PAPER_PATH, papers);

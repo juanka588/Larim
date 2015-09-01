@@ -34,4 +34,12 @@ public class SponsorContent implements BaseColumns {
     public static Uri buildSponsorUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
     }
+
+    public static Uri buildSponsorUri(String filter) {
+        return CONTENT_URI.buildUpon().appendPath(filter).build();
+    }
+
+    public static Uri buildMapsUri(String filter) {
+        return CONTENT_URI.buildUpon().appendPath("info").appendPath(filter).build();
+    }
 }

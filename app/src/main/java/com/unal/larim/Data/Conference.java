@@ -33,10 +33,11 @@ public class Conference implements Serializable {
         this.chairman = chairman;
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            this.date = dateformat.parse(date);
+            this.date = dateformat.parse(String.valueOf(Util.normalizeDate(Long.parseLong(date))));
         } catch (ParseException e) {
             this.date = Calendar.getInstance().getTime();
             Util.log("Error Fechas", e.toString());
+            Util.log("valor por defecto fecha", dateformat.format(this.date));
         }
         this.scheduled = scheduled.equals("true");
         this.paperID = paperID;

@@ -89,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:onClick="mapa"
+                    android:onClick="map"
                     android:text="@string/main_menu_3" />
 
                 <Button

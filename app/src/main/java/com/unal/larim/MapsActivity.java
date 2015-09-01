@@ -1,10 +1,9 @@
 package com.unal.larim;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +18,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.unal.larim.DataSource.SponsorContent;
-import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
 
 import java.util.ArrayList;
@@ -91,17 +89,15 @@ public class MapsActivity extends AppCompatActivity {
     }
 
     private void getMapData() {
-        LinnaeusDatabase ln = new LinnaeusDatabase(this);
-        SQLiteDatabase db = ln.dataBase;
-        Cursor cursor = db.query(SponsorContent.table_name, SponsorContent.column_names2,
-                SponsorContent.column_type + "=?", new String[]{MAP_MARKER_TYPE}, null, null, null);
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(SponsorContent.buildMapsUri(MAP_MARKER_TYPE)
+                , null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         for (int i = 0; i < mat.length; i++) {
             mostrarMarcador(new LatLng(Double.parseDouble(mat[i][2] + ""), Double.parseDouble(mat[i][3] + "")),
                     mat[i][0] + "", mat[i][1] + "", 0);
         }
         cursor.close();
-        db.close();
     }
 
     private void mostrarMarcador(LatLng latLng, String title, String desc,

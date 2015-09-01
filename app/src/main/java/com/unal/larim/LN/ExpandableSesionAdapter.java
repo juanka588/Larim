@@ -72,17 +72,26 @@ public class ExpandableSesionAdapter extends
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.grupo, parent, false);
         }
-        String cad = ((Conference) getChild(groupPosition, 0)).hour;
-        CheckedTextView ctv = ((CheckedTextView) convertView);
-        ctv.setText("\t\t" + cad + "\n");
-        ctv.setChecked(isExpanded);
+        Conference conference = ((Conference) getChild(groupPosition, 0));
+        if (conference != null) {
+            String cad = conference.hour;
+            CheckedTextView ctv = ((CheckedTextView) convertView);
+            ctv.setText("\t\t" + cad + "\n");
+            ctv.setChecked(isExpanded);
+        }
         return convertView;
 
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return (Conference) hours.get(groupPosition).get(childPosition);
+        ArrayList<Conference> group = (ArrayList<Conference>) hours.get(groupPosition);
+        if (group != null) {
+            if (childPosition < group.size()) {
+                return (Conference) group.get(childPosition);
+            }
+        }
+        return null;
 
     }
 
