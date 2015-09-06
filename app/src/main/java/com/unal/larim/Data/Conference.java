@@ -3,6 +3,7 @@ package com.unal.larim.Data;
 import com.unal.larim.LN.Util;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -33,11 +34,11 @@ public class Conference implements Serializable {
         this.chairman = chairman;
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            this.date = dateformat.parse(String.valueOf(Util.normalizeDate(Long.parseLong(date))));
-        } catch (ParseException e) {
+            this.date = new Date (Long.parseLong(date));
+        } catch (Exception e) {
             this.date = Calendar.getInstance().getTime();
             Util.log("Error Fechas", e.toString());
-            Util.log("valor por defecto fecha", dateformat.format(this.date));
+            Util.log("valor por defecto fecha", this.date.getTime()+"");
         }
         this.scheduled = scheduled.equals("true");
         this.paperID = paperID;

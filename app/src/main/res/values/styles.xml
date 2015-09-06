@@ -2,7 +2,7 @@
 
     <!-- Base application theme. -->
     <style name="LARIMTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:textViewStyle">@style/TextStyle</item>
+        <item name="android:textViewStyle">@style/TextStyleBlue</item>
         <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
     <!-- ActionBar styles -->
@@ -12,8 +12,13 @@
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
-    <style name="TextStyle" parent="@android:style/Widget.Holo.Light.TextView">
+    <style name="TextStyleBlue" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:textColor">@color/darkblue</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+    </style>
+
+    <style name="TextStyleYellow" parent="@android:style/Widget.Holo.Light.TextView">
+        <item name="android:textColor">@color/darkyellow</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
     </style>
 
@@ -24,7 +29,7 @@
 
     <style name="TextStyleMicro" parent="@android:style/Widget.Holo.Light.TextView">
         <item name="android:textColor">@android:color/black</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="ButtonYellowStyle" parent="@android:style/Widget.Holo.Light.Button">

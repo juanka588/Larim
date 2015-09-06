@@ -1,6 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:paddingRight="20dp"
     android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="?android:attr/selectableItemBackground"
     android:orientation="horizontal">
 
     <ImageView
@@ -13,7 +17,6 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:clickable="true"
         android:orientation="vertical">
 
         <TextView
@@ -23,8 +26,7 @@
             android:layout_marginLeft="10dp"
             android:gravity="left"
             android:text="item"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/darkblue_selector" />
+            style="@style/TextStyleYellow" />
 
         <TextView
             android:id="@+id/textItemSub"
@@ -34,8 +36,7 @@
             android:gravity="left"
             android:paddingRight="8dp"
             android:text="subItem"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/darkyellow_selector" />
+            style="@style/TextStyleBlue" />
     </LinearLayout>
 
 </LinearLayout>

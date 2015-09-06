@@ -1,4 +1,4 @@
-package com.unal.larim.LN;
+package com.unal.larim.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,8 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Sponsor;
-import com.unal.larim.InformationActivity;
-import com.unal.larim.InformationActivityFragment;
+import com.unal.larim.GUI.InformationActivity;
 import com.unal.larim.R;
 
 import java.util.List;

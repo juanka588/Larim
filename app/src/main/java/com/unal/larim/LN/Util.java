@@ -18,9 +18,9 @@ import android.provider.CalendarContract;
 import android.text.format.Time;
 import android.util.Log;
 
-import com.unal.larim.MainActivity;
+import com.unal.larim.GUI.MainActivity;
 import com.unal.larim.R;
-import com.unal.larim.WebActivity;
+import com.unal.larim.GUI.WebActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -281,9 +281,10 @@ public class Util {
             if (palabras[i].length() > 3) {
                 palabras[i] = (palabras[i].charAt(0) + "").toUpperCase()
                         + palabras[i].substring(1, palabras[i].length());
-            }
-            if (palabras[i].contains("un")) {
-                palabras[i] = "UN";
+            } else {
+                if (palabras[i].contains("un")) {
+                    palabras[i] = "UN";
+                }
             }
             cad += palabras[i] + " ";
         }

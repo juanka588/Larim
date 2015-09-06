@@ -1,26 +1,32 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import com.unal.larim.Data.Participant;
+import com.unal.larim.Adapters.CustomCursorSearchAdapter;
 import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 public class ParticipantActivity extends AppCompatActivity {
     private static String TAG = ParticipantActivity.class.getSimpleName();
+
     private SearchView sv;
-    private SimpleCursorAdapter simpleCursorAdapter;
+    private CustomCursorSearchAdapter mCursorAdapter;
+    private ContentResolver contentResolver;
+
+    private int layout = R.layout.search_view_participant;
     private String[] from = new String[]{ParticipantContent.column_name,
-            ParticipantContent.column_institution};
-    private int[] to = new int[]{android.R.id.text1, android.R.id.text2};
+            ParticipantContent.column_institution, ParticipantContent.column_country_code};
+    private int[] to = new int[]{R.id.textParticipantName, R.id.textParticipantInstitution,
+            R.id.textNationality};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,31 +50,39 @@ public class ParticipantActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_participant, menu);
         sv = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_busqueda));
-        ContentResolver contentResolver = getContentResolver();
+        contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri("_"),
                 null, null, null, null);
-        simpleCursorAdapter = new SimpleCursorAdapter(
-                getApplicationContext(), android.R.layout.simple_list_item_2, cursor,
+        mCursorAdapter = new CustomCursorSearchAdapter(
+                getApplicationContext(), layout, cursor,
                 from, to, 0);
-        sv.setSuggestionsAdapter(simpleCursorAdapter);
+        sv.setSuggestionsAdapter(mCursorAdapter);
         sv.setOnSuggestionListener(new SearchView.OnSuggestionListener() {
             @Override
             public boolean onSuggestionSelect(int position) {
-                Cursor c = simpleCursorAdapter.getCursor();
-                String cad = c.getColumnName(1);
-                Util.log(TAG, cad);
-                return false;
+                Cursor cursor = (Cursor) sv.getSuggestionsAdapter().getItem(position);
+                String feedName = cursor.getString(1);
+                sv.setQuery(feedName, false);
+                sv.clearFocus();
+                return true;
             }
 
             @Override
             public boolean onSuggestionClick(int position) {
-                Cursor c = simpleCursorAdapter.getCursor();
+                Cursor c = mCursorAdapter.getCursor();
                 if (c.moveToPosition(position)) {
                     String cad = c.getString(1);
                     Util.log(TAG, cad);
                     Util.enviar(ParticipantActivity.this, cad, "", "", "");
+                    sv.clearFocus();
                 }
-                return false;
+                return true;
+            }
+        });
+        sv.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
         sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -81,7 +95,7 @@ public class ParticipantActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextChange(String arg0) {
                 populateAdapter(arg0);
-                return false;
+                return true;
             }
         });
 
@@ -92,11 +106,10 @@ public class ParticipantActivity extends AppCompatActivity {
         if (arg0.equals("")) {
             arg0 = "_";
         }
-        ContentResolver contentResolver = getContentResolver();
         Cursor cursor = contentResolver.query(
                 ParticipantContent.buildParticipantUri(arg0.toLowerCase()),
                 null, null, null, null);
-        simpleCursorAdapter.changeCursorAndColumns(cursor, from, to);
+        mCursorAdapter.changeCursorAndColumns(cursor, from, to);
     }
 
     @Override

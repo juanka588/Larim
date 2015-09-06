@@ -1,4 +1,4 @@
-package com.unal.larim.LN;
+package com.unal.larim.Adapters;
 
 import android.app.ActionBar;
 import android.app.Activity;

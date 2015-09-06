@@ -1,9 +1,8 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,9 +13,9 @@ import android.widget.TextView;
 
 import com.unal.larim.Data.Conference;
 import com.unal.larim.DataSource.ConferenceContent;
-import com.unal.larim.LN.ExpandableSesionAdapter;
-import com.unal.larim.LN.LinnaeusDatabase;
+import com.unal.larim.Adapters.ExpandableSesionAdapter;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -68,20 +67,17 @@ public class DayFragment extends Fragment {
         sections = (ExpandableListView) rootView.findViewById(R.id.expandableSections);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date today = Calendar.getInstance().getTime();
-        Util.log("fecha de hoy en int", today.toString());
+        Util.log("fecha de hoy", today.toString());
         String date = df.format(today);
         currentDay.setText(getString(R.string.today) + " " + date);
 
         Bundle bundle = this.getArguments();
         int selected = bundle.getInt(ARG_SECTION_NUMBER);
-        LinnaeusDatabase lb = new LinnaeusDatabase(rootView.getContext());
-        SQLiteDatabase db = lb.dataBase;
-        ExpandableSesionAdapter adapter = new ExpandableSesionAdapter(initializeData(db));
+        ExpandableSesionAdapter adapter = new ExpandableSesionAdapter(initializeData());
         adapter.setInflater(
                 (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),
                 getActivity());
         sections.setAdapter(adapter);
-        db.close();
         int suma = 0;
         /*TODO: configurar suma para que cuadren los dias*/
         if (bundle != null) {
@@ -114,7 +110,7 @@ public class DayFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList<List> initializeData(SQLiteDatabase db) {
+    private ArrayList<List> initializeData() {
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor c = contentResolver.query(ConferenceContent.CONTENT_URI,
                 null, null, null, ConferenceContent.column_hour_start);

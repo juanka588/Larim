@@ -1,13 +1,13 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 public class InformationActivity extends AppCompatActivity {
     public static Sponsor information;

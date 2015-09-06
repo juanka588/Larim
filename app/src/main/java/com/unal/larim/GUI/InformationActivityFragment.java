@@ -1,4 +1,4 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.unal.larim.R;
 
 /**
  * A placeholder fragment containing a simple view.

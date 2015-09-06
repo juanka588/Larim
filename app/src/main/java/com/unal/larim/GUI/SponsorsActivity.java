@@ -1,8 +1,7 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
 import com.unal.larim.Data.Sponsor;
-import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.DataSource.SponsorContent;
-import com.unal.larim.LN.LinnaeusDatabase;
-import com.unal.larim.LN.SponsorsRecyclerViewAdapter;
+import com.unal.larim.Adapters.SponsorsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 import java.util.ArrayList;
 
@@ -44,15 +42,12 @@ public class SponsorsActivity extends AppCompatActivity {
         listOrganizators = (RecyclerView) findViewById(R.id.listOrganizators);
         listSponsor.setLayoutManager(gridLayoutManager);
         listOrganizators.setLayoutManager(gridLayoutManager2);
-        LinnaeusDatabase lb = new LinnaeusDatabase(getApplicationContext());
-        SQLiteDatabase db = lb.dataBase;
         SponsorsRecyclerViewAdapter adapter = new SponsorsRecyclerViewAdapter(
                 initializeData(SPONSOR_FILTER), this);
         listSponsor.setAdapter(adapter);
         SponsorsRecyclerViewAdapter adapter2 = new SponsorsRecyclerViewAdapter(
                 initializeData(ORGANIZER_FILTER), this);
         listOrganizators.setAdapter(adapter2);
-        db.close();
     }
 
     private ArrayList<Sponsor> initializeData(String filter) {

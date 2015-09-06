@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.unal.larim.LN;
+package com.unal.larim.Services;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,8 +28,8 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 import com.unal.larim.Data.Notice;
-import com.unal.larim.MainActivity;
-import com.unal.larim.NewsActivity;
+import com.unal.larim.GUI.MainActivity;
+import com.unal.larim.GUI.NewsActivity;
 import com.unal.larim.R;
 
 public class MyGcmListenerService extends GcmListenerService {

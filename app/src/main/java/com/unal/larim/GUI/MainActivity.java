@@ -1,4 +1,4 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
@@ -22,7 +22,8 @@ import com.unal.larim.Data.Notice;
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.QuickstartPreferences;
-import com.unal.larim.LN.RegistrationIntentService;
+import com.unal.larim.R;
+import com.unal.larim.Services.RegistrationIntentService;
 import com.unal.larim.LN.Util;
 
 

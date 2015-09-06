@@ -1,11 +1,9 @@
-package com.unal.larim.LN;
+package com.unal.larim.Adapters;
 
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.provider.BaseColumns;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +13,7 @@ import android.widget.TextView;
 
 import com.unal.larim.Data.Notice;
 import com.unal.larim.DataSource.NoticeContent;
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 import java.util.ArrayList;

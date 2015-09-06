@@ -1,4 +1,4 @@
-package com.unal.larim.LN;
+package com.unal.larim.Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,7 +10,8 @@ import android.widget.CheckedTextView;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Conference;
-import com.unal.larim.DetailConference;
+import com.unal.larim.GUI.DetailConference;
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 import java.util.ArrayList;

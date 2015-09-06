@@ -1,4 +1,4 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
@@ -15,6 +15,7 @@ import android.widget.ListView;
 
 import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 
 public class SelectorParticipantFragment extends Fragment {
@@ -42,14 +43,12 @@ public class SelectorParticipantFragment extends Fragment {
         String mat[][] = Util.imprimirLista(cursor);
         String arr[] = new String[mat.length];
         for (int i = 0; i < mat.length; i++) {
-            String cad = mat[i][0] + "";
-            if (cad.equals("null")) {
-                arr[i] = "Normal";
-            } else {
-                arr[i] = mat[i][0] + "";
-            }
+            String cad = ParticipantContent.getTypeString(mat[i][0] + "");
+            arr[i] = cad;
         }
         recList.setAdapter(new ArrayAdapter<String>(context, layout, arr));
+        recList.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        recList.setSelection(0);
         recList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

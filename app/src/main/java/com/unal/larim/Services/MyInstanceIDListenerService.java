@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.unal.larim.LN;
+package com.unal.larim.Services;
 
 import android.content.Intent;
 

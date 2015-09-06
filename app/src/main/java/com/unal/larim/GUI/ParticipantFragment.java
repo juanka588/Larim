@@ -1,10 +1,9 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -16,9 +15,9 @@ import android.view.ViewGroup;
 
 import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.ParticipantContent;
-import com.unal.larim.LN.LinnaeusDatabase;
-import com.unal.larim.LN.ParticipantRecyclerViewAdapter;
+import com.unal.larim.Adapters.ParticipantRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 import java.util.ArrayList;
 
@@ -55,20 +54,18 @@ public class ParticipantFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_participant, container, false);
         Context context = rootView.getContext();
         recList = (RecyclerView) rootView.findViewById(R.id.cardListParticipant);
-        LinnaeusDatabase lb = new LinnaeusDatabase(rootView.getContext());
-        SQLiteDatabase db = lb.dataBase;
         recList.setHasFixedSize(true);
         recList.setItemAnimator(new DefaultItemAnimator());
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
         ParticipantRecyclerViewAdapter adapter =
-                new ParticipantRecyclerViewAdapter(initializeData(db, context), context);
+                new ParticipantRecyclerViewAdapter(initializeData(context), context);
         recList.setAdapter(adapter);
         return rootView;
     }
 
-    private ArrayList<Participant> initializeData(SQLiteDatabase db, Context context) {
+    private ArrayList<Participant> initializeData(Context context) {
         ContentResolver contentResolver = context.getContentResolver();
         Cursor cursor = contentResolver.query(
                 ParticipantContent.buildParticipantUri(ParticipantContent.column_type, filter),
@@ -79,7 +76,6 @@ public class ParticipantFragment extends Fragment {
             participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
         }
         cursor.close();
-        db.close();
         return participants;
     }
 

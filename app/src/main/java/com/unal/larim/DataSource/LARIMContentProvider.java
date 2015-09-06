@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
+import android.provider.Telephony;
 
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
@@ -201,7 +202,11 @@ public class LARIMContentProvider extends ContentProvider {
                     if (cad.equals("all")) {
                         cursor = db.query(getParticipantTableName(),
                                 new String[]{"DISTINCT " + ParticipantContent.column_type},
-                                null, null, null, null, sortOrder);
+                                /*be careful with the number*/
+                                "length( " + ParticipantContent.column_type + " )<3 or "
+                                        + ParticipantContent.column_type + " IS NULL ",
+                                null,
+                                null, null, sortOrder);
                         Util.log("entro", uri.toString());
                         break;
                     } else {
@@ -264,6 +269,13 @@ public class LARIMContentProvider extends ContentProvider {
                                 + ConferenceContent.column_hour_start
                                 + " =?",
                         new String[]{uri.getLastPathSegment(), list2.get(size - 2)},
+                        null, null, sortOrder);
+                break;
+            case paper_by_id:
+                cursor = db.query(PaperContent.table_name,
+                        PaperContent.column_names,
+                        PaperContent._ID + "=?",
+                        new String[]{uri.getLastPathSegment()},
                         null, null, sortOrder);
                 break;
             default:
@@ -388,7 +400,6 @@ public class LARIMContentProvider extends ContentProvider {
         matcher.addURI(authority, ConferenceContent.CONFERENCE_PATH, conferences);
         matcher.addURI(authority, ConferenceContent.CONFERENCE_PATH + "/#", conferences_by_date);
         matcher.addURI(authority, ConferenceContent.CONFERENCE_PATH + "/*/#", conferences_by_hours_and_date);
-
 
         return matcher;
     }

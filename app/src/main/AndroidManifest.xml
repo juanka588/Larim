@@ -22,7 +22,7 @@
         android:label="@string/app_name"
         android:theme="@style/LARIMTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".GUI.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,38 +39,38 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".GUI.MapsActivity"
             android:label="@string/title_activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
+                android:value=".GUI.MainActivity" />
         </activity>
         <activity
-            android:name=".WebActivity"
+            android:name=".GUI.WebActivity"
             android:label="@string/title_activity_web" />
         <activity
-            android:name=".Cronograma"
+            android:name=".GUI.Cronograma"
             android:label="@string/title_activity_cronograma"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".GUI.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
+                android:value=".GUI.MainActivity" />
         </activity>
         <activity
-            android:name=".DetailConference"
+            android:name=".GUI.DetailConference"
             android:label="@string/title_activity_detail_conference"
-            android:parentActivityName=".Cronograma">
+            android:parentActivityName=".GUI.Cronograma">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.Cronograma" />
+                android:value=".GUI.Cronograma" />
         </activity>
         <activity
-            android:name=".SponsorsActivity"
+            android:name=".GUI.SponsorsActivity"
             android:label="@string/title_activity_sponsors"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".GUI.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
+                android:value=".GUI.MainActivity" />
         </activity>
         <!-- [START gcm_receiver] -->
         <receiver
@@ -88,7 +88,7 @@
 
         <!-- [START gcm_listener] -->
         <service
-            android:name=".LN.MyGcmListenerService"
+            android:name=".Services.MyGcmListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -97,7 +97,7 @@
         <!-- [END gcm_listener] -->
         <!-- [START instanceId_listener] -->
         <service
-            android:name=".LN.MyInstanceIDListenerService"
+            android:name=".Services.MyInstanceIDListenerService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
@@ -105,27 +105,27 @@
         </service>
         <!-- [END instanceId_listener] -->
         <service
-            android:name=".LN.RegistrationIntentService"
+            android:name=".Services.RegistrationIntentService"
             android:exported="false" />
 
         <activity
-            android:name=".NewsActivity"
+            android:name=".GUI.NewsActivity"
             android:label="@string/title_activity_news"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".GUI.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
+                android:value=".GUI.MainActivity" />
         </activity>
         <activity
-            android:name=".ParticipantActivity"
+            android:name=".GUI.ParticipantActivity"
             android:label="@string/title_activity_participant"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".GUI.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unal.larim.MainActivity" />
+                android:value=".GUI.MainActivity" />
         </activity>
         <activity
-            android:name=".InformationActivity"
+            android:name=".GUI.InformationActivity"
             android:label="@string/title_activity_information"></activity>
 
         <provider

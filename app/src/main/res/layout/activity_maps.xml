@@ -3,5 +3,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/map"
-    tools:context="com.unal.larim.MapsActivity"
+    tools:context="com.unal.larim.GUI.MapsActivity"
     android:name="com.google.android.gms.maps.SupportMapFragment" />

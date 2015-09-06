@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.unal.larim.InformationActivity">
+    tools:context="com.unal.larim.GUI.InformationActivity">
     <item
         android:id="@+id/ItemWEB"
         android:icon="@drawable/ic_goto_web"

@@ -1,12 +1,10 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,11 +12,10 @@ import android.support.v7.widget.RecyclerView;
 
 import com.unal.larim.Data.Notice;
 import com.unal.larim.DataSource.NoticeContent;
-import com.unal.larim.LN.LinnaeusDatabase;
-import com.unal.larim.LN.NewsRecyclerViewAdapter;
+import com.unal.larim.Adapters.NewsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 

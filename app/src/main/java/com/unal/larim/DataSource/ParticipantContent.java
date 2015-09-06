@@ -32,6 +32,14 @@ public class ParticipantContent implements BaseColumns {
     public final static String TYPE_INTERNAL_LOGISTICS_SUPPORT = "A";
     public static final String PATH_PARTICIPANT = "participant";
 
+    public static final String STRING_NORMAL = "Normal";
+    public final static String STRING_SCIENTIFIC_ORGANIZING_COMMITTEE = "Scientific Organizing Committee";
+    public final static String STRING_LOCAL_ORGANIZING_COMMITTEE = "Local Organizing Committee";
+    public final static String STRING_REVIEWS_TALK = "Reviews Talks";
+    public final static String STRING_INVITED_TALK = "Invited Talks";
+    public final static String STRING_EXTERNAL_LOGISTICS_SUPPORT = "External Logistics Committee";
+    public final static String STRING_INTERNAL_LOGISTICS_SUPPORT = "Internal Logistics Support";
+
     public static final Uri CONTENT_URI =
             LARIMContentProvider.BASE_CONTENT_URI.buildUpon().appendPath(PATH_PARTICIPANT).build();
     public static final String CONTENT_TYPE =
@@ -40,6 +48,7 @@ public class ParticipantContent implements BaseColumns {
     public static final String CONTENT_ITEM_TYPE =
             ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" +
                     LARIMContentProvider.CONTENT_AUTHORITY + "/" + PATH_PARTICIPANT;
+
 
     public static Uri buildParticipantUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
@@ -53,5 +62,30 @@ public class ParticipantContent implements BaseColumns {
     public static Uri buildParticipantUri(String column, String filter) {
         return CONTENT_URI.buildUpon().appendPath(
                 column).appendPath(filter).build();
+    }
+
+    public static String getTypeString(String cad) {
+        if(cad.contains(TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE)){
+            return STRING_SCIENTIFIC_ORGANIZING_COMMITTEE;
+        }
+        if(cad.equals(TYPE_LOCAL_ORGANIZING_COMMITTEE)){
+            return STRING_LOCAL_ORGANIZING_COMMITTEE;
+        }
+        if(cad.equals(TYPE_REVIEWS_TALK)){
+            return STRING_REVIEWS_TALK;
+        }
+        if(cad.equals(TYPE_INVITED_TALK)){
+            return STRING_INVITED_TALK;
+        }
+        if(cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)){
+            return STRING_EXTERNAL_LOGISTICS_SUPPORT;
+        }
+        if(cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)){
+            return STRING_INTERNAL_LOGISTICS_SUPPORT;
+        }
+        if(cad.equals("null")){
+            return STRING_NORMAL;
+        }
+        return "";
     }
 }

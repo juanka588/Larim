@@ -1,4 +1,4 @@
-package com.unal.larim.LN;
+package com.unal.larim.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Participant;
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 import java.util.List;

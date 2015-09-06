@@ -1,4 +1,4 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
 import android.app.Activity;
 import android.content.ContentResolver;
@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 import java.util.ArrayList;
 

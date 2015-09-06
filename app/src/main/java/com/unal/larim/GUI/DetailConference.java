@@ -1,9 +1,8 @@
-package com.unal.larim;
+package com.unal.larim.GUI;
 
+import android.content.ContentResolver;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -16,8 +15,8 @@ import com.unal.larim.Data.Paper;
 import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.PaperContent;
 import com.unal.larim.DataSource.ParticipantContent;
-import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
+import com.unal.larim.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,12 +34,14 @@ public class DetailConference extends AppCompatActivity {
     private Conference conference;
     private Paper paper;
     private Participant author;
-    private SQLiteDatabase database;
+    private ContentResolver contentResolver;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_conference);
+
         textDate = (TextView) findViewById(R.id.textDate);
         textHour = (TextView) findViewById(R.id.textHour);
         textPaperName = (TextView) findViewById(R.id.textPaperName);
@@ -48,8 +49,9 @@ public class DetailConference extends AppCompatActivity {
         textAutor = (TextView) findViewById(R.id.textAutor);
         textChairman = (TextView) findViewById(R.id.textChairman);
         pdfConference = (WebView) findViewById(R.id.pdfConference);
-        LinnaeusDatabase ln = new LinnaeusDatabase(getApplicationContext());
-        database = ln.getReadableDatabase();
+
+        contentResolver = getContentResolver();
+
         Bundle b = this.getIntent().getExtras();
         conference = (Conference) b.getSerializable(getString(R.string.TAG_CONFERENCE));
         paper = getPaperFromID(conference.paperID);
@@ -75,13 +77,12 @@ public class DetailConference extends AppCompatActivity {
         textChairman.setText(getString(R.string.chairman) + " " + conference.chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         textDate.setText(getString(R.string.date) + " " + df.format(conference.date.getTime()).toString());
-        database.close();
 
     }
 
     private Paper getPaperFromID(String id) {
-        Cursor cursor = database.query(PaperContent.table_name, PaperContent.column_names,
-                BaseColumns._ID + "=?", new String[]{id}, null, null, null);
+        Cursor cursor = contentResolver.query(PaperContent.buildPaperUri(Long.parseLong(id)),
+                null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Paper paper = null;
         for (int i = 0; i < mat.length; i++) {
@@ -92,11 +93,8 @@ public class DetailConference extends AppCompatActivity {
     }
 
     private Participant getAuthorFromID(String id) {
-        Cursor cursor = database.query(ParticipantContent.table_name_participant + " a inner join " +
-                        ParticipantContent.table_name_country + " b on a." + ParticipantContent.table_name_country
-                        + "=b." + BaseColumns._ID,
-                ParticipantContent.column_names,
-                "a." + BaseColumns._ID + "=?", new String[]{id}, null, null, null);
+        Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri(Long.parseLong(id)),
+                null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Participant participant = null;
         for (int i = 0; i < mat.length; i++) {
