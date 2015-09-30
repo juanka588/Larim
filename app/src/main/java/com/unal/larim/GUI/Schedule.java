@@ -1,5 +1,6 @@
 package com.unal.larim.GUI;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,16 +8,21 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 
-public class Cronograma extends ActionBarActivity implements ActionBar.TabListener {
+public class Schedule extends AppCompatActivity implements ActionBar.TabListener {
 
+    private static final String TAG = Schedule.class.getSimpleName();
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -70,8 +76,53 @@ public class Cronograma extends ActionBarActivity implements ActionBar.TabListen
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+        mViewPager.setCurrentItem(selectCurrentDay());
     }
 
+    public static int selectCurrentDay() {
+        Date date = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("EEEE", Locale.US);
+        String dateString = df.format(date);
+        Util.log(TAG, dateString);
+        if (dateString.equals("Monday")) {
+            return 1;
+        }
+        if (dateString.equals("Tuesday")) {
+            return 2;
+        }
+        if (dateString.equals("Wednesday")) {
+            return 3;
+        }
+        if (dateString.equals("Thursday")) {
+            return 4;
+        }
+        if (dateString.equals("Friday")) {
+            return 5;
+        }
+        if (dateString.equals("Saturday")) {
+            return 5;
+        }
+        return 0;
+    }
+
+    public static CharSequence getDayTitle(int selection, Context c) {
+        Locale l = Locale.getDefault();
+        switch (selection) {
+            case 0:
+                return c.getString(R.string.title_section1).toUpperCase(l);
+            case 1:
+                return c.getString(R.string.title_section2).toUpperCase(l);
+            case 2:
+                return c.getString(R.string.title_section3).toUpperCase(l);
+            case 3:
+                return c.getString(R.string.title_section4).toUpperCase(l);
+            case 4:
+                return c.getString(R.string.title_section5).toUpperCase(l);
+            case 5:
+                return c.getString(R.string.title_section6).toUpperCase(l);
+        }
+        return null;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -112,7 +163,7 @@ public class Cronograma extends ActionBarActivity implements ActionBar.TabListen
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a DayFragment (defined as a static inner class below).
-            return DayFragment.newInstance(position + 1);
+            return DayFragment.newInstance(position);
         }
 
         @Override
@@ -123,22 +174,7 @@ public class Cronograma extends ActionBarActivity implements ActionBar.TabListen
 
         @Override
         public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
-                case 3:
-                    return getString(R.string.title_section4).toUpperCase(l);
-                case 4:
-                    return getString(R.string.title_section5).toUpperCase(l);
-                case 5:
-                    return getString(R.string.title_section6).toUpperCase(l);
-            }
-            return null;
+            return getDayTitle(position, getApplicationContext());
         }
     }
 
