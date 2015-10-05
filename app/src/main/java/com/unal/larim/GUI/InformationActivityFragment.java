@@ -1,11 +1,12 @@
 package com.unal.larim.GUI;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,7 +17,7 @@ import com.unal.larim.R;
  */
 public class InformationActivityFragment extends Fragment {
     private TextView title;
-    private TextView content;
+    private WebView content;
     private ImageView image;
 
     public InformationActivityFragment() {
@@ -32,10 +33,11 @@ public class InformationActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_information, container, false);
         title = (TextView) rootView.findViewById(R.id.textInformationTitle);
-        content = (TextView) rootView.findViewById(R.id.textContentInformation);
+        content = (WebView) rootView.findViewById(R.id.contentInformationView);
         image = (ImageView) rootView.findViewById(R.id.imageInformation);
         title.setText(InformationActivity.information.name);
-        content.setText(Html.fromHtml(InformationActivity.information.content));
+        content.loadData(InformationActivity.information.content, "text/html", "utf-8");
+        content.setBackgroundColor(Color.parseColor("#00000000"));
         image.setImageResource(InformationActivity.information.icon);
         return rootView;
     }

@@ -59,4 +59,11 @@
     <string name="ARG_WEB_PAGE">paginaWEB</string>
     <string name="participant_search">Busqueda</string>
     <string name="ARG_NOTICE">notice</string>
+    <string name="title_activity_detail_participant">Participant</string>
+    <string name="name">Nombre:</string>
+    <string name="email">Email:</string>
+    <string name="type">Tipo:</string>
+    <string name="institution">Institucion:</string>
+    <string name="help_type">Tipo de Ayuda:</string>
+    <string name="country">Pais</string>
 </resources>

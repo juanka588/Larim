@@ -23,11 +23,11 @@ public class ConferenceContent implements BaseColumns {
     public static final String column_scheduled = "scheduled";
     public static final String column_code_id = "code";
     public static final String column_chairman_id = "chairman";
-    public static final String column_chaiman_name = "name";
+    public static final String column_chairman_name = "name";
     public static final String column_code_initials = "initials";
     public static final String column_code_description = "description";
     public static final String column_names[] = new String[]{column_paper_id, column_title,
-            column_place, column_hour_start, column_hour_end, column_date, column_chaiman_name,
+            column_place, column_hour_start, column_hour_end, column_date, column_chairman_name,
             column_scheduled, column_code_initials, column_code_description};
     public static final String CONFERENCE_PATH = "conference";
 

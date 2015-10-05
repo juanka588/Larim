@@ -36,17 +36,11 @@
                 android:padding="10dp"
                 android:src="@drawable/un" />
 
-            <TextView
-                android:id="@+id/textContentInformation"
-                style="@style/TextStyleMicro"
-                android:layout_width="match_parent"
+            <WebView
+                android:id="@+id/contentInformationView"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:gravity="fill_horizontal"
-                android:lineSpacingMultiplier="1.2"
-                android:padding="16dp"
-                android:text="algo"
-                android:elegantTextHeight="true"
-                android:linksClickable="true" />
+                android:padding="16dp"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.unal.larim.GUI.WebActivity">
     <item
-        android:id="@+id/ItemSatelite"
-        android:icon="@drawable/ic_satelite"
+        android:id="@+id/ItemSatellite"
+        android:icon="@drawable/ic_satellite_24dp"
         app:showAsAction="ifRoom"
         android:title="@string/satelite"
         android:visible="true"></item>

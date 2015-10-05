@@ -5,8 +5,6 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.unal.larim.LN.Util;
-
 /**
  * Created by JuanCamilo on 03/08/2015.
  */
@@ -18,10 +16,13 @@ public class ParticipantContent implements BaseColumns {
     public static final String column_institution = "institution";
     public static final String column_country_code = "code";
     public static final String column_country_name = "name";
+    public static final String column_country_local_name = "local";
     public static final String column_type = "type";
     public static final String column_names[] = new String[]{"a." +
             column_name, column_email, column_institution, column_country_code, column_type,
             "a." + BaseColumns._ID + " as _id"};
+    public static final String column_names2[] = new String[]{BaseColumns._ID, column_country_code,
+            column_country_name, column_country_local_name};
 
     public final static String TYPE_NORMAL = "-";
     public final static String TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE = "SC";
@@ -65,26 +66,54 @@ public class ParticipantContent implements BaseColumns {
     }
 
     public static String getTypeString(String cad) {
-        if(cad.contains(TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE)){
+        if (cad.equals(TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE)) {
             return STRING_SCIENTIFIC_ORGANIZING_COMMITTEE;
         }
-        if(cad.equals(TYPE_LOCAL_ORGANIZING_COMMITTEE)){
+        if (cad.equals(TYPE_LOCAL_ORGANIZING_COMMITTEE)) {
             return STRING_LOCAL_ORGANIZING_COMMITTEE;
         }
-        if(cad.equals(TYPE_REVIEWS_TALK)){
+        if (cad.equals(TYPE_REVIEWS_TALK)) {
             return STRING_REVIEWS_TALK;
         }
-        if(cad.equals(TYPE_INVITED_TALK)){
+        if (cad.equals(TYPE_INVITED_TALK)) {
             return STRING_INVITED_TALK;
         }
-        if(cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)){
+        if (cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)) {
             return STRING_EXTERNAL_LOGISTICS_SUPPORT;
         }
-        if(cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)){
+        if (cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)) {
             return STRING_INTERNAL_LOGISTICS_SUPPORT;
         }
-        if(cad.equals("null")){
+        if (cad.equals("null")) {
             return STRING_NORMAL;
+        }
+        return "";
+    }
+
+    public static String getFilterString(String cad) {
+        if (cad == null) {
+            return "";
+        }
+        if (cad.equals(STRING_SCIENTIFIC_ORGANIZING_COMMITTEE)) {
+            return TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE;
+        }
+        if (cad.equals(STRING_LOCAL_ORGANIZING_COMMITTEE)) {
+            return TYPE_LOCAL_ORGANIZING_COMMITTEE;
+        }
+        if (cad.equals(STRING_REVIEWS_TALK)) {
+            return TYPE_REVIEWS_TALK;
+        }
+        if (cad.equals(STRING_INVITED_TALK)) {
+            return TYPE_INVITED_TALK;
+        }
+        if (cad.equals(STRING_EXTERNAL_LOGISTICS_SUPPORT)) {
+            return TYPE_EXTERNAL_LOGISTICS_SUPPORT;
+        }
+        if (cad.equals(STRING_INTERNAL_LOGISTICS_SUPPORT)) {
+            return TYPE_INTERNAL_LOGISTICS_SUPPORT;
+        }
+        if (cad.equals(STRING_NORMAL)) {
+            return TYPE_NORMAL;
         }
         return "";
     }

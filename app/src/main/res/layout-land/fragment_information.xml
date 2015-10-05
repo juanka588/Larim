@@ -48,14 +48,11 @@
         android:layout_weight="1"
         android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textContentInformation"
-            style="@style/TextStyleMicro"
-            android:layout_width="match_parent"
+        <WebView
+            android:id="@+id/contentInformationView"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="fill_horizontal"
-            android:lineSpacingMultiplier="1.2"
-            android:text="algo" />
+            android:padding="16dp"/>
 
 
     </ScrollView>

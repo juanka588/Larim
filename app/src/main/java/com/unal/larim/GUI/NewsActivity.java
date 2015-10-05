@@ -9,10 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 
+import com.unal.larim.Adapters.NewsRecyclerViewAdapter;
 import com.unal.larim.Data.Notice;
 import com.unal.larim.DataSource.NoticeContent;
-import com.unal.larim.Adapters.NewsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
@@ -26,7 +27,7 @@ public class NewsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+        final RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         Bundle b = this.getIntent().getExtras();
         Notice notice = (Notice) b.getSerializable(getString(R.string.ARG_NOTICE));
         if (notice != null) {
@@ -40,6 +41,23 @@ public class NewsActivity extends AppCompatActivity {
             Util.log("Fue Exitoso?", retrived.toString() + "");
         }
         recList.setHasFixedSize(true);
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback
+                (0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder,
+                                  RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                int position = viewHolder.getAdapterPosition();
+                ((NewsRecyclerViewAdapter) recList.getAdapter()).delete(position);
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recList);
         recList.setItemAnimator(new DefaultItemAnimator());
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);

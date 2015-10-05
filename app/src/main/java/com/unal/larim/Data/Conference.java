@@ -3,8 +3,6 @@ package com.unal.larim.Data;
 import com.unal.larim.LN.Util;
 
 import java.io.Serializable;
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -32,9 +30,10 @@ public class Conference implements Serializable {
         this.title = title;
         this.place = place;
         this.chairman = chairman;
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm a EEEE");
         try {
             this.date = new Date (Long.parseLong(date));
+            Util.log("Current date", dateformat.format(this.date));
         } catch (Exception e) {
             this.date = Calendar.getInstance().getTime();
             Util.log("Error Fechas", e.toString());

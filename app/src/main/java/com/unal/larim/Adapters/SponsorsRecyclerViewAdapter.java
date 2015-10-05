@@ -28,7 +28,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
 
     @Override
     public SponsorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewsponsor, parent, false);
+        View v = LayoutInflater.from(context).inflate(R.layout.cardviewsponsor, parent, false);
         SponsorViewHolder pvh = new SponsorViewHolder(v);
         return pvh;
     }
@@ -83,7 +83,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
 
         @Override
         public void onClick(View v) {
-            openWeb(getPosition());
+            openWeb(getAdapterPosition());
         }
     }
 }

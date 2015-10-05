@@ -1,12 +1,12 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
     android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    android:background="@color/blue"
     card_view:cardCornerRadius="2dp"
     card_view:cardElevation="5dp">
 
@@ -14,27 +14,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/NoticeTitle"
+        <LinearLayout
+            android:id="@+id/row"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/darkblue"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="contact det"
-            android:textColor="@android:color/white"
-            android:textSize="14sp" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/NoticeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:text="contact det"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/image_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_delete_24dp"/>
+
+        </LinearLayout>
 
 
         <TextView
             android:id="@+id/NoticeContent"
+            style="@style/Base.TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/NoticeTitle"
+            android:layout_below="@id/row"
             android:layout_margin="10dp"
             android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="Surname"
-            style="@style/Base.TextAppearance.AppCompat.Small" />
+            android:text="Surname"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

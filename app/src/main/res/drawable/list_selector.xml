@@ -1,0 +1,9 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true"
+          android:drawable="@drawable/row_selected_background"/>
+    <item android:state_activated="true"
+          android:drawable="@drawable/row_activated_background"/>
+    <item android:state_focused="true"
+          android:drawable="@drawable/row_focused_background"/>
+    <item android:drawable="@drawable/row_background"/>
+</selector>

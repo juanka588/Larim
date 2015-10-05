@@ -13,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.unal.larim.Adapters.ParticipantRecyclerViewAdapter;
 import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.ParticipantContent;
-import com.unal.larim.Adapters.ParticipantRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
@@ -23,10 +23,12 @@ import java.util.ArrayList;
 
 
 public class ParticipantFragment extends Fragment {
+
     private static final String TAG = ParticipantFragment.class.getSimpleName();
-    private static final String ARG_PARTICIPANT_FILTER = "filter";
-    private RecyclerView recList;
-    private String filter;
+    public static final String ARG_PARTICIPANT_FILTER = "filter";
+    public RecyclerView recList;
+    public String filter;
+
 
     public ParticipantFragment() {
     }
@@ -59,17 +61,32 @@ public class ParticipantFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        ParticipantRecyclerViewAdapter adapter =
-                new ParticipantRecyclerViewAdapter(initializeData(context), context);
-        recList.setAdapter(adapter);
+        poupulateAdapter(filter);
         return rootView;
     }
 
-    private ArrayList<Participant> initializeData(Context context) {
-        ContentResolver contentResolver = context.getContentResolver();
+    public void poupulateAdapter(String filter) {
+        this.filter = filter;
+        ParticipantRecyclerViewAdapter adapter =
+                new ParticipantRecyclerViewAdapter(initializeData(filter), getActivity());
+        recList.setAdapter(adapter);
+    }
+
+    public ArrayList<Participant> initializeData(String filter) {
+        ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor cursor = contentResolver.query(
                 ParticipantContent.buildParticipantUri(ParticipantContent.column_type, filter),
                 null, null, null, null);
+        String mat[][] = Util.imprimirLista(cursor);
+        ArrayList<Participant> participants = new ArrayList<>();
+        for (int i = 0; i < mat.length; i++) {
+            participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
+        }
+        cursor.close();
+        return participants;
+    }
+
+    public ArrayList<Participant> initializeData(Cursor cursor) {
         String mat[][] = Util.imprimirLista(cursor);
         ArrayList<Participant> participants = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
@@ -86,4 +103,6 @@ public class ParticipantFragment extends Fragment {
         pf.setArguments(bundle);
         return pf;
     }
+
+
 }

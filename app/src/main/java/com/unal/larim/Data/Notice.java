@@ -21,7 +21,7 @@ public class Notice implements Serializable {
     }
 
     public Notice(String id, String title, String content, String checked, String url) {
-        this(id, title, content, checked.equals("true"), url);
+        this(id, title, content, checked.equals("1"), url);
     }
 }
 

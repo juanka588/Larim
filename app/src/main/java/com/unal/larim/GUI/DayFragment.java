@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.unal.larim.Adapters.ExpandableSessionAdapter;
 import com.unal.larim.Data.Conference;
 import com.unal.larim.DataSource.ConferenceContent;
-import com.unal.larim.Adapters.ExpandableSesionAdapter;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
@@ -34,6 +34,7 @@ public class DayFragment extends Fragment {
      * fragment.
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
+    private static final String TAG = DayFragment.class.getSimpleName();
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -60,52 +61,32 @@ public class DayFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_cronograma, container, false);
         Context context = rootView.getContext();
+
         dayTitle = (TextView) rootView.findViewById(R.id.textDayTitle);
         currentDay = (TextView) rootView.findViewById(R.id.textCurrentDate);
         dayDate = (TextView) rootView.findViewById(R.id.textDayDate);
-
         sections = (ExpandableListView) rootView.findViewById(R.id.expandableSections);
+
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date today = Calendar.getInstance().getTime();
-        Util.log("fecha de hoy", today.toString());
         String date = df.format(today);
         currentDay.setText(getString(R.string.today) + " " + date);
-
+        int todayInt = Schedule.selectCurrentDay();
         Bundle bundle = this.getArguments();
         int selected = bundle.getInt(ARG_SECTION_NUMBER);
-        ExpandableSesionAdapter adapter = new ExpandableSesionAdapter(initializeData());
+        if (selected == 6) {
+            selected = 5;
+        }
+        ExpandableSessionAdapter adapter = new ExpandableSessionAdapter(initializeData());
         adapter.setInflater(
                 (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),
                 getActivity());
         sections.setAdapter(adapter);
-        int suma = 0;
-        /*TODO: configurar suma para que cuadren los dias*/
-        if (bundle != null) {
-            suma = selected - 1;
-            switch (selected - 1) {
-                case 0:
-                    dayTitle.setText(R.string.title_section1);
-                    break;
-                case 1:
-                    dayTitle.setText(R.string.title_section2);
-                    break;
-                case 2:
-                    dayTitle.setText(R.string.title_section3);
-                    break;
-                case 3:
-                    dayTitle.setText(R.string.title_section4);
-                    break;
-                case 4:
-                    dayTitle.setText(R.string.title_section5);
-                    break;
-                case 5:
-                    dayTitle.setText(R.string.title_section6);
-                    break;
-            }
-        }
+        dayTitle.setText(Schedule.getDayTitle(selected, context));
+        int sum = selected - todayInt;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);
-        calendar.add(Calendar.DAY_OF_YEAR, suma);
+        calendar.add(Calendar.DAY_OF_YEAR, sum);
         dayDate.setText(df.format(calendar.getTime()));
         return rootView;
     }
@@ -114,25 +95,14 @@ public class DayFragment extends Fragment {
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor c = contentResolver.query(ConferenceContent.CONTENT_URI,
                 null, null, null, ConferenceContent.column_hour_start);
-//        Cursor c = db.query(ConferenceContent.table_name_conference + " a inner join " +
-//                        ConferenceContent.table_name_code
-//                        + " b on a." + ConferenceContent.column_code_id
-//                        + "=b._id inner join " + ConferenceContent.table_name_chairman
-//                        + " c on c._id=a."
-//                        + ConferenceContent.column_chairman_id, ConferenceContent.column_names,
-//                /*TODO: utilize date filter*/
-//                null,//selection
-//                null,//args
-//                null,//group by
-//                null,//having
-//                ConferenceContent.column_hour_start//order by
-//        );
+         /*TODO: utilize date filter*/
         String[][] mat = Util.imprimirLista(c);
         ArrayList<List> hours = new ArrayList<>();
         ArrayList<Conference> conferences = new ArrayList<>();
         Conference conference;
         if (mat.length > 0) {
-            String hour = mat[0][3] + "-" + mat[0][4], currentHour;
+            String hour = mat[0][3] + "-" + mat[0][4];
+            String currentHour;
             for (int i = 0; i < mat.length; i++) {
                 currentHour = mat[i][3] + "-" + mat[i][4];
                 if (!hour.equals(currentHour)) {

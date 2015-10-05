@@ -1,6 +1,7 @@
 package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -102,6 +103,12 @@ public class DetailConference extends AppCompatActivity {
         }
         cursor.close();
         return participant;
+    }
+
+    public void participant(View v) {
+        Intent participant = new Intent(getApplicationContext(), DetailParticipantActivity.class);
+        participant.putExtra(DetailParticipantActivity.PARTICIPANT_ARG, author);
+        startActivity(participant);
     }
 
     public void schedule(View v) {

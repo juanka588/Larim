@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Notice;
@@ -24,7 +26,7 @@ import java.util.List;
  */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
-    private List<Notice> noticias;
+    private List<Notice> notices;
     private Context context;
     private Activity activity;
 
@@ -41,11 +43,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(final NewsViewHolder holder, int i) {
-        holder.title.setText(noticias.get(i).title);
-        holder.content.setText(noticias.get(i).content);
-        holder.title.setBackgroundColor(context.getResources().getColor(
-                noticias.get(i).checked ? R.color.darkblue : R.color.darkyellow));
+    public void onBindViewHolder(NewsViewHolder holder, int i) {
+        holder.title.setText(notices.get(i).title);
+        holder.content.setText(notices.get(i).content);
+        holder.row.setBackgroundColor(context.getResources().getColor(
+                notices.get(i).checked ? R.color.darkblue : R.color.darkyellow));
     }
 
     @Override
@@ -55,11 +57,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     @Override
     public int getItemCount() {
-        return noticias.size();
+        return notices.size();
     }
 
     public NewsRecyclerViewAdapter(ArrayList<Notice> noticias, Activity activity) {
-        this.noticias = noticias;
+        this.notices = noticias;
         this.context = activity.getApplicationContext();
         this.activity = activity;
     }
@@ -68,45 +70,57 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         if (position == -1) {
             return;
         }
-        Notice remove = noticias.remove(position);
+        Notice remove = notices.remove(position);
         notifyItemRemoved(position);
         ContentResolver contentResolver = context.getContentResolver();
         ContentValues cv = new ContentValues();
-        cv.put(NoticeContent.column_checked, true);
-        long retrived = contentResolver.update(
-                NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
+        cv.put(NoticeContent.column_checked, 1);
+        long retrieved = contentResolver.delete(
+                NoticeContent.CONTENT_URI, NoticeContent._ID + "=?"
                 , new String[]{remove.id});
+        Util.log("Item Eliminado", retrieved + " " + remove.title + " con id " + retrieved);
     }
 
     public void irWeb(int position) {
-        Notice remove = noticias.get(position);
+        Notice selected = notices.get(position);
+        selected.checked = true;
         ContentValues cv = new ContentValues();
-        cv.put(NoticeContent.column_checked, true);
+        cv.put(NoticeContent.column_checked, 1);
         ContentResolver contentResolver = context.getContentResolver();
-        long retrived = contentResolver.update(
+        long retrieved = contentResolver.update(
                 NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
-                , new String[]{remove.id});
+                , new String[]{selected.id});
         notifyItemChanged(position);
-        Util.log("Item Cambiado", retrived + " " + noticias.get(position).title + " con id " + retrived);
-        Util.irA(noticias.get(position).url, activity);
+        Util.log("Item Cambiado", retrieved + " " + selected + " con id " + retrieved);
+        Util.irA(notices.get(position).url, activity);
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cv;
         TextView title;
         TextView content;
+        LinearLayout row;
+        ImageView imageDelete;
 
         NewsViewHolder(View itemView) {
             super(itemView);
             cv = (CardView) itemView.findViewById(R.id.card_view);
+            row = (LinearLayout) itemView.findViewById(R.id.row);
             title = (TextView) itemView.findViewById(R.id.NoticeTitle);
+            imageDelete = (ImageView) itemView.findViewById(R.id.image_delete);
             content = (TextView) itemView.findViewById(R.id.NoticeContent);
             cv.setOnClickListener(this);
+            imageDelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    delete(getAdapterPosition());
+                }
+            });
         }
 
         @Override
         public void onClick(View v) {
-            irWeb(getPosition());
+            irWeb(getAdapterPosition());
         }
 
 

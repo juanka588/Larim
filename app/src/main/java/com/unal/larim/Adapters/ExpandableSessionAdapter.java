@@ -17,7 +17,7 @@ import com.unal.larim.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExpandableSesionAdapter extends
+public class ExpandableSessionAdapter extends
         BaseExpandableListAdapter {
 
     public int parentsSize;
@@ -26,7 +26,7 @@ public class ExpandableSesionAdapter extends
     private ArrayList<List> hours;
     private ArrayList<Conference> child;
 
-    public ExpandableSesionAdapter(ArrayList<List> hours) {
+    public ExpandableSessionAdapter(ArrayList<List> hours) {
         this.hours = hours;
         this.parentsSize = hours.size() - 1;
     }

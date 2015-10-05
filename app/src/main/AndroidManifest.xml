@@ -49,7 +49,7 @@
             android:name=".GUI.WebActivity"
             android:label="@string/title_activity_web" />
         <activity
-            android:name=".GUI.Cronograma"
+            android:name=".GUI.Schedule"
             android:label="@string/title_activity_cronograma"
             android:parentActivityName=".GUI.MainActivity">
             <meta-data
@@ -59,10 +59,10 @@
         <activity
             android:name=".GUI.DetailConference"
             android:label="@string/title_activity_detail_conference"
-            android:parentActivityName=".GUI.Cronograma">
+            android:parentActivityName=".GUI.Schedule">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GUI.Cronograma" />
+                android:value=".GUI.Schedule"/>
         </activity>
         <activity
             android:name=".GUI.SponsorsActivity"
@@ -126,13 +126,19 @@
         </activity>
         <activity
             android:name=".GUI.InformationActivity"
-            android:label="@string/title_activity_information"></activity>
+            android:label="@string/title_activity_information"/>
 
         <provider
             android:name=".DataSource.LARIMContentProvider"
             android:authorities="com.unal.larim"
             android:enabled="true"
             android:exported="true" />
+
+        <activity
+            android:name=".GUI.DetailParticipantActivity"
+            android:label="@string/title_activity_detail_participant"
+            android:parentActivityName=".GUI.ParticipantActivity"
+            android:theme="@style/DialogTheme"></activity>
     </application>
 
 </manifest>

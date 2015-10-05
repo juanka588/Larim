@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import com.unal.larim.Adapters.SponsorsRecyclerViewAdapter;
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
-import com.unal.larim.Adapters.SponsorsRecyclerViewAdapter;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
@@ -28,8 +27,10 @@ public class SponsorsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sponsors);
-        StaggeredGridLayoutManager gridLayoutManager =
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(getApplicationContext(), 2);
+//        StaggeredGridLayoutManager gridLayoutManager =
+//                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         GridLayoutManager gridLayoutManager2 =
                 new GridLayoutManager(getApplicationContext(), 2);
        /*

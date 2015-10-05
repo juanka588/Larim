@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.provider.Telephony;
 
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
@@ -37,6 +36,8 @@ public class LARIMContentProvider extends ContentProvider {
     public static final int conferences = 500;
     public static final int conferences_by_date = 501;
     public static final int conferences_by_hours_and_date = 502;
+
+    public static final int country_by_code = 600;
 
     private LinnaeusDatabase ln;
 
@@ -207,7 +208,6 @@ public class LARIMContentProvider extends ContentProvider {
                                         + ParticipantContent.column_type + " IS NULL ",
                                 null,
                                 null, null, sortOrder);
-                        Util.log("entro", uri.toString());
                         break;
                     } else {
                         cursor = db.query(getParticipantTableName(),
@@ -221,6 +221,13 @@ public class LARIMContentProvider extends ContentProvider {
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
                         "a." + ParticipantContent.column_name + " like ?",
+                        new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
+                break;
+            case country_by_code:
+                Util.log("URI entro", uri.toString());
+                cursor = db.query(ParticipantContent.table_name_country,
+                        ParticipantContent.column_names2,
+                        ParticipantContent.column_country_code + " like ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case participant_by_column:
@@ -281,7 +288,6 @@ public class LARIMContentProvider extends ContentProvider {
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
-        Util.log("URI", uri.toString());
         cursor.setNotificationUri(getContext().getContentResolver(), uri);
         return cursor;
     }
@@ -386,6 +392,7 @@ public class LARIMContentProvider extends ContentProvider {
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/#", participant_by_id);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/type/*", participant_by_type);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/name/*", participant_by_name);
+        matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/country/*", country_by_code);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/*/*", participant_by_column);
 
         matcher.addURI(authority, SponsorContent.SPONSOR_PATH, sponsors);

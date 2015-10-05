@@ -76,7 +76,11 @@ public class Schedule extends AppCompatActivity implements ActionBar.TabListener
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        mViewPager.setCurrentItem(selectCurrentDay());
+        int day = selectCurrentDay();
+        if (day == 6) {
+            day = 5;
+        }
+        mViewPager.setCurrentItem(day);
     }
 
     public static int selectCurrentDay() {
@@ -100,7 +104,7 @@ public class Schedule extends AppCompatActivity implements ActionBar.TabListener
             return 5;
         }
         if (dateString.equals("Saturday")) {
-            return 5;
+            return 6;
         }
         return 0;
     }

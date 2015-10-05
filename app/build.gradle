@@ -1,14 +1,15 @@
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'
 android {
-    compileSdkVersion 21
+    compileSdkVersion 22
     buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "com.unal.larim"
-        minSdkVersion 14
+        minSdkVersion 11
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -25,6 +26,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:22.2.0'
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.+'
-    compile 'com.android.support:cardview-v7:21.0.+'
-    compile 'com.android.support:recyclerview-v7:21.0.+'
+    compile 'com.android.support:cardview-v7:22.+'
+    compile 'com.android.support:recyclerview-v7:22.2.+'
+    compile files('libs/svg-android.jar')
 }

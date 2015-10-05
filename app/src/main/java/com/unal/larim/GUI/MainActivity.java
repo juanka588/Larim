@@ -22,9 +22,9 @@ import com.unal.larim.Data.Notice;
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.QuickstartPreferences;
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 import com.unal.larim.Services.RegistrationIntentService;
-import com.unal.larim.LN.Util;
 
 
 public class MainActivity extends Activity {
@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
     }
 
     public void program(View v) {
-        Intent cron = new Intent(this, Cronograma.class);
+        Intent cron = new Intent(this, Schedule.class);
         startActivity(cron);
     }
 
@@ -138,8 +138,10 @@ public class MainActivity extends Activity {
 
     public void noticias(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-        news.putExtra("notice", new Notice("1", "Desde Main Activity", "Contenidos",
-                false, "http://www.google.com"));
+
+        int r = (int) (Math.random() * 100);
+        news.putExtra("notice", new Notice("1", "Desde Main Activity " + r, "Contenidos " + r,
+                true, "http://www.google.com"));
         startActivity(news);
     }
 }

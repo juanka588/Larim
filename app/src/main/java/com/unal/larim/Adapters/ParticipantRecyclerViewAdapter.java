@@ -1,7 +1,7 @@
 package com.unal.larim.Adapters;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Participant;
-import com.unal.larim.LN.Util;
+import com.unal.larim.GUI.DetailParticipantActivity;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -22,6 +22,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     private List<Participant> participants;
     private Context context;
+
 
     @Override
     public ParticipantViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -39,8 +40,8 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
     public void onBindViewHolder(final ParticipantViewHolder holder, int i) {
         Participant p = participants.get(i);
         holder.name.setText(p.toString());
-        holder.institution.setText(p.institution);
-        holder.country.setText(p.country);
+        holder.institution.setText(p.getInstitution());
+        holder.country.setText(p.getCountry());
     }
 
     @Override
@@ -59,7 +60,9 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
     }
 
     public void sendEmail(int position) {
-        Util.enviar(context, participants.get(position).email, "", "", "");
+        Intent detail = new Intent(context, DetailParticipantActivity.class);
+        detail.putExtra(DetailParticipantActivity.PARTICIPANT_ARG, participants.get(position));
+        context.startActivity(detail);
     }
 
     public class ParticipantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -79,7 +82,7 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
         @Override
         public void onClick(View v) {
-            sendEmail(getPosition());
+            sendEmail(getAdapterPosition());
         }
 
     }

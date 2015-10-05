@@ -5,7 +5,7 @@
     tools:context="com.unal.larim.GUI.InformationActivity">
     <item
         android:id="@+id/ItemWEB"
-        android:icon="@drawable/ic_goto_web"
+        android:icon="@drawable/ic_launch_24dp"
         app:showAsAction="ifRoom"
         android:title="@string/web_site"
         android:visible="true"></item>
