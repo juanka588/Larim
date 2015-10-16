@@ -39,7 +39,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     }
 
     @Override
-    public void onBindViewHolder(final SponsorViewHolder holder, int i) {
+    public void onBindViewHolder(SponsorViewHolder holder, int i) {
         Sponsor s = sponsors.get(i);
         holder.name.setText(s.name);
         holder.icon.setImageResource(s.icon);

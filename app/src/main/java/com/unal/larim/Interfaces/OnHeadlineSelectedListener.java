@@ -1,4 +1,4 @@
-package com.unal.larim.GUI;
+package com.unal.larim.Interfaces;
 
 /**
  * Created by JuanCamilo on 19/09/2015.

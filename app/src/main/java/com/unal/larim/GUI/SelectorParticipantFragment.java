@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.unal.larim.DataSource.ParticipantContent;
+import com.unal.larim.Interfaces.OnHeadlineSelectedListener;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.unal.larim">
+    package="com.unal.larim" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,10 +20,10 @@
         android:allowBackup="true"
         android:icon="@drawable/larim"
         android:label="@string/app_name"
-        android:theme="@style/LARIMTheme">
+        android:theme="@style/LARIMTheme" >
         <activity
             android:name=".GUI.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +40,7 @@
 
         <activity
             android:name=".GUI.MapsActivity"
-            android:label="@string/title_activity_maps">
+            android:label="@string/title_activity_maps" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GUI.MainActivity" />
@@ -51,7 +51,7 @@
         <activity
             android:name=".GUI.Schedule"
             android:label="@string/title_activity_cronograma"
-            android:parentActivityName=".GUI.MainActivity">
+            android:parentActivityName=".GUI.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GUI.MainActivity" />
@@ -59,15 +59,15 @@
         <activity
             android:name=".GUI.DetailConference"
             android:label="@string/title_activity_detail_conference"
-            android:parentActivityName=".GUI.Schedule">
+            android:parentActivityName=".GUI.Schedule" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".GUI.Schedule"/>
+                android:value=".GUI.Schedule" />
         </activity>
         <activity
             android:name=".GUI.SponsorsActivity"
             android:label="@string/title_activity_sponsors"
-            android:parentActivityName=".GUI.MainActivity">
+            android:parentActivityName=".GUI.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GUI.MainActivity" />
@@ -76,7 +76,7 @@
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
 
@@ -89,7 +89,7 @@
         <!-- [START gcm_listener] -->
         <service
             android:name=".Services.MyGcmListenerService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -98,7 +98,7 @@
         <!-- [START instanceId_listener] -->
         <service
             android:name=".Services.MyInstanceIDListenerService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
@@ -111,7 +111,7 @@
         <activity
             android:name=".GUI.NewsActivity"
             android:label="@string/title_activity_news"
-            android:parentActivityName=".GUI.MainActivity">
+            android:parentActivityName=".GUI.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GUI.MainActivity" />
@@ -119,14 +119,14 @@
         <activity
             android:name=".GUI.ParticipantActivity"
             android:label="@string/title_activity_participant"
-            android:parentActivityName=".GUI.MainActivity">
+            android:parentActivityName=".GUI.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".GUI.MainActivity" />
         </activity>
         <activity
             android:name=".GUI.InformationActivity"
-            android:label="@string/title_activity_information"/>
+            android:label="@string/title_activity_information" />
 
         <provider
             android:name=".DataSource.LARIMContentProvider"
@@ -138,7 +138,11 @@
             android:name=".GUI.DetailParticipantActivity"
             android:label="@string/title_activity_detail_participant"
             android:parentActivityName=".GUI.ParticipantActivity"
-            android:theme="@style/DialogTheme"></activity>
+            android:theme="@style/DialogTheme" />
+        <activity
+            android:name=".GUI.AuditoriumActivity"
+            android:label="@string/title_activity_auditorium" >
+        </activity>
     </application>
 
 </manifest>

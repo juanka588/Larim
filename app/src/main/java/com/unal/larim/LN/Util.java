@@ -19,8 +19,8 @@ import android.text.format.Time;
 import android.util.Log;
 
 import com.unal.larim.GUI.MainActivity;
-import com.unal.larim.R;
 import com.unal.larim.GUI.WebActivity;
+import com.unal.larim.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -261,7 +261,20 @@ public class Util {
     public static void irA(String url, Activity act) {
         Intent deta = new Intent(act, WebActivity.class);
         deta.putExtra(act.getString(R.string.ARG_WEB_PAGE), url);
+        deta.putExtra(act.getString(R.string.ARG_NAV_BAR), true);
         act.startActivity(deta);
+    }
+
+    /**
+     * @param url
+     * @param activity
+     * @param flag     defines if the application bar is showed or not
+     */
+    public static void irA(String url, Activity activity, boolean flag) {
+        Intent deta = new Intent(activity, WebActivity.class);
+        deta.putExtra(activity.getString(R.string.ARG_WEB_PAGE), url);
+        deta.putExtra(activity.getString(R.string.ARG_NAV_BAR), flag);
+        activity.startActivity(deta);
     }
 
     public static long normalizeDate(long startDate) {

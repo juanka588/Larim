@@ -96,7 +96,9 @@ public class MainActivity extends Activity {
     }
 
     public void site(View v) {
-        Util.irA("http://www.cccartagena.com", this);
+        Intent audi = new Intent(this, AuditoriumActivity.class);
+        startActivity(audi);
+        //Util.irA("http://www.cccartagena.com", this);
     }
 
     public void welcome(View v) {

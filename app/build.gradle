@@ -9,7 +9,7 @@ android {
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+       // multiDexEnabled true
     }
     buildTypes {
         release {
@@ -27,6 +27,7 @@ dependencies {
     compile 'com.android.support:support-v4:22.2.0'
     compile 'com.google.android.gms:play-services:7.5.+'
     compile 'com.android.support:cardview-v7:22.+'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.android.support:recyclerview-v7:22.2.+'
     compile files('libs/svg-android.jar')
 }

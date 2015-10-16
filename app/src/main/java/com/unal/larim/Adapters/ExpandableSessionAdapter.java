@@ -36,7 +36,6 @@ public class ExpandableSessionAdapter extends
         this.activity = activity;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {

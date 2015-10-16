@@ -66,4 +66,17 @@
     <string name="institution">Institucion:</string>
     <string name="help_type">Tipo de Ayuda:</string>
     <string name="country">Pais</string>
+    <string name="title_activity_auditorium">Auditorio</string>
+    <string name="auditorium">Auditorio Getsemani</string>
+    <string name="stage_1">Primer Piso</string>
+    <string name="stage_2">Segundo Piso</string>
+    <string name="stage_3">Tercer Piso</string>
+    <string name="places_LARIM">Lugares LARIM 2016</string>
+    <string name="not_application_installed">No existe ninguna aplicacion para abrir el archivo
+    </string>
+    <string name="ARG_NAV_BAR">app_bar</string>
+    <string name="registration_port">Portico Registro</string>
+    <string name="salle_201">Salon 201</string>
+    <string name="salle_303">Salon 303</string>
+    <string name="salle_304">Salon 304</string>
 </resources>
