@@ -8,6 +8,6 @@
         android:icon="@drawable/ic_launch_24dp"
         app:showAsAction="ifRoom"
         android:title="@string/web_site"
-        android:visible="true"></item>
+        android:visible="true"/>
 
 </menu>

@@ -7,8 +7,8 @@
     android:layout_margin="5dp"
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
-    card_view:cardCornerRadius="1dp"
-    card_view:cardElevation="2dp">
+    card_view:cardCornerRadius="2dp"
+    card_view:cardElevation="5dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,12 +19,13 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_centerHorizontal="true"
+            android:adjustViewBounds="true"
             android:padding="10dp"
-            android:src="@drawable/ic_media_play"/>
+            android:src="@drawable/un"/>
 
         <TextView
             android:id="@+id/sponsorDescription"
-            style="@style/Base.TextAppearance.AppCompat.Small"
+            style="@style/TextStyleMicro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -32,7 +33,6 @@
             android:layout_below="@+id/sponsorImage"
             android:gravity="center"
             android:padding="4dp"
-            android:text="Surname"
-            android:textColor="@color/darkblue"/>
+            android:text="Surname"/>
     </RelativeLayout>
 </android.support.v7.widget.CardView>

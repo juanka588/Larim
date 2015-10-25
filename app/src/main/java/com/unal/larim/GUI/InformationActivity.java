@@ -18,6 +18,7 @@ public class InformationActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         information = (Sponsor) bundle.getSerializable(getString(R.string.ARG_TAG_INFORMATION));
         getSupportActionBar().setTitle(information.name + "");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setContentView(R.layout.activity_information);
     }
 
@@ -27,9 +28,13 @@ public class InformationActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.ItemWEB:
                 Util.irA(information.url, this);
                 return true;

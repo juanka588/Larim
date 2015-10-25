@@ -47,8 +47,8 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
         getMenuInflater().inflate(R.menu.menu_participant, menu);
         sv = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.action_busqueda));
         contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri("_"),
-                null, null, null, null);
+//        Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri("_"),
+//                null, null, null, null);
         mCursorAdapter = participantFragment.recList.getAdapter();
 //                = new CustomCursorSearchAdapter(
 //                getApplicationContext(), layout, cursor,

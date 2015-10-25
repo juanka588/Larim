@@ -6,7 +6,6 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.provider.BaseColumns;
 
 import com.unal.larim.LN.LinnaeusDatabase;
 import com.unal.larim.LN.Util;
@@ -188,7 +187,7 @@ public class LARIMContentProvider extends ContentProvider {
             case participant_by_id:
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
-                        "a." + ParticipantContent._ID + "=?", new String[]{uri.getLastPathSegment()},
+                        ParticipantContent._ID + "=?", new String[]{uri.getLastPathSegment()},
                         null, null, sortOrder);
                 break;
             case participant_by_type:
@@ -220,21 +219,21 @@ public class LARIMContentProvider extends ContentProvider {
             case participant_by_name:
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
-                        "a." + ParticipantContent.column_name + " like ?",
+                        ParticipantContent.column_name + " like ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case country_by_code:
                 Util.log("URI entro", uri.toString());
-                cursor = db.query(ParticipantContent.table_name_country,
-                        ParticipantContent.column_names2,
-                        ParticipantContent.column_country_code + " like ?",
+                cursor = db.query(CountryContent.table_name_country,
+                        CountryContent.column_names,
+                        CountryContent.column_country_code + " like ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case participant_by_column:
                 List<String> list = uri.getPathSegments();
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
-                        "a." + list.get(list.size() - 2) + " = ?",
+                        list.get(list.size() - 2) + " = ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case notices:
@@ -293,10 +292,7 @@ public class LARIMContentProvider extends ContentProvider {
     }
 
     private String getParticipantTableName() {
-        return ParticipantContent.table_name_participant + " a inner join " +
-                ParticipantContent.table_name_country + " b on a."
-                + ParticipantContent.table_name_country
-                + "=b." + BaseColumns._ID;
+        return ParticipantContent.table_name_participant;
     }
 
     private String getConferenceTableName() {
@@ -392,8 +388,9 @@ public class LARIMContentProvider extends ContentProvider {
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/#", participant_by_id);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/type/*", participant_by_type);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/name/*", participant_by_name);
-        matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/country/*", country_by_code);
         matcher.addURI(authority, ParticipantContent.PATH_PARTICIPANT + "/*/*", participant_by_column);
+
+        matcher.addURI(authority, CountryContent.COUNTRY_PATH + "/*", country_by_code);
 
         matcher.addURI(authority, SponsorContent.SPONSOR_PATH, sponsors);
         matcher.addURI(authority, SponsorContent.SPONSOR_PATH + "/info/*", sponsors_as_map_points);

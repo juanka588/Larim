@@ -26,7 +26,7 @@ public class LinnaeusDatabase extends SQLiteOpenHelper {
     public LinnaeusDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         /*
-         * desde carpetas externas File f=new File(path) if extits f.mkdir();
+         * desde carpetas externas File f=new File(path) if exist f.mkdir();
 		 */
         this.dbContext = context;
         DATABASE_PATH = "/data/data/com.unal.larim/databases/";

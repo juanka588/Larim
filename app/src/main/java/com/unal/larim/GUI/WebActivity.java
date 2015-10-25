@@ -2,7 +2,6 @@ package com.unal.larim.GUI;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,7 +17,7 @@ public class WebActivity extends AppCompatActivity {
 
     private String URL = "";
     private WebView browser;
-    private boolean appBarEnabled = true;
+    private boolean appBarEnabled;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +25,9 @@ public class WebActivity extends AppCompatActivity {
             Bundle b = getIntent().getExtras();
             URL = b.getString(getString(R.string.ARG_WEB_PAGE));
             appBarEnabled = b.getBoolean(getString(R.string.ARG_NAV_BAR));
-            if (!appBarEnabled) {
-                supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-            }
+        }
+        if (!appBarEnabled) {
+            supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
@@ -36,8 +35,6 @@ public class WebActivity extends AppCompatActivity {
         browser.getSettings().setJavaScriptEnabled(true);
         browser.getSettings().setBuiltInZoomControls(true);
         browser.setWebViewClient(new WebViewClient() {
-            // evita que los enlaces se abran fuera nuestra app en el navegador
-            // de android
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 return false;
@@ -45,22 +42,23 @@ public class WebActivity extends AppCompatActivity {
 
         });
         browser.loadUrl(URL);
-        if (!Util.isOnline(this)) {
+        if (!Util.isOnline(this) && appBarEnabled) {
             Util.notificarRed(this);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString("URL", browser.getUrl());
-        Log.e("pagina actual", "" + browser.getUrl());
+        outState.putString(getString(R.string.ARG_WEB_PAGE), browser.getUrl());
+        outState.putBoolean(getString(R.string.ARG_NAV_BAR), appBarEnabled);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        URL = savedInstanceState.getString("URL");
+        URL = savedInstanceState.getString(getString(R.string.ARG_WEB_PAGE));
         browser.loadUrl(URL);
+        appBarEnabled = savedInstanceState.getBoolean(getString(R.string.ARG_NAV_BAR));
         super.onRestoreInstanceState(savedInstanceState);
     }
 

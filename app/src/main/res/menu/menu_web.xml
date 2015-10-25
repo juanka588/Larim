@@ -5,24 +5,24 @@
     <item
         android:id="@+id/ItemVolver"
         android:icon="@drawable/ic_volver"
-        android:title="@string/menu_volver"
+        android:title="@string/menu_back"
         android:visible="true"
-        app:showAsAction="always"></item>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/ItemRefresh"
         android:icon="@drawable/ic_refresh"
-        android:title="@string/menu_Recargar"
+        android:title="@string/menu_refresh"
         android:visible="true"
-        app:showAsAction="always"></item>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/ItemForward"
         android:icon="@drawable/ic_fordward"
-        android:title="@string/menu_adelante"
+        android:title="@string/menu_forward"
         android:visible="true"
-        app:showAsAction="always"></item>
+        app:showAsAction="always"/>
     <item
         android:id="@+id/itemURL"
         android:title="@string/menu_URL"
         android:visible="true"
-        app:showAsAction="always"></item>
+        app:showAsAction="always"/>
 </menu>

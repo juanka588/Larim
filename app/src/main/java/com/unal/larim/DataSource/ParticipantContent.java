@@ -10,19 +10,14 @@ import android.provider.BaseColumns;
  */
 public class ParticipantContent implements BaseColumns {
     public static final String table_name_participant = "registered";
-    public static final String table_name_country = "country";
     public static final String column_name = "name";
     public static final String column_email = "email";
     public static final String column_institution = "institution";
-    public static final String column_country_code = "code";
-    public static final String column_country_name = "name";
-    public static final String column_country_local_name = "local";
+    public static final String column_country_code = "country";
     public static final String column_type = "type";
-    public static final String column_names[] = new String[]{"a." +
+    public static final String column_names[] = new String[]{
             column_name, column_email, column_institution, column_country_code, column_type,
-            "a." + BaseColumns._ID + " as _id"};
-    public static final String column_names2[] = new String[]{BaseColumns._ID, column_country_code,
-            column_country_name, column_country_local_name};
+            BaseColumns._ID};
 
     public final static String TYPE_NORMAL = "-";
     public final static String TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE = "SC";
@@ -65,26 +60,31 @@ public class ParticipantContent implements BaseColumns {
                 column).appendPath(filter).build();
     }
 
-    public static String getTypeString(String cad) {
+    public static String getTypeString(String type) {
+        StringBuilder finalString = new StringBuilder();
+        String arr[] = type.split(",");
+        finalString.append(switchString(arr[0]));
+        for (int i = 1; i < arr.length; i++) {
+            finalString.append("\n");
+            finalString.append(switchString(arr[i]));
+        }
+        return finalString.toString();
+    }
+
+    public static String switchString(String cad) {
         if (cad.equals(TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE)) {
             return STRING_SCIENTIFIC_ORGANIZING_COMMITTEE;
-        }
-        if (cad.equals(TYPE_LOCAL_ORGANIZING_COMMITTEE)) {
+        } else if (cad.equals(TYPE_LOCAL_ORGANIZING_COMMITTEE)) {
             return STRING_LOCAL_ORGANIZING_COMMITTEE;
-        }
-        if (cad.equals(TYPE_REVIEWS_TALK)) {
+        } else if (cad.equals(TYPE_REVIEWS_TALK)) {
             return STRING_REVIEWS_TALK;
-        }
-        if (cad.equals(TYPE_INVITED_TALK)) {
+        } else if (cad.equals(TYPE_INVITED_TALK)) {
             return STRING_INVITED_TALK;
-        }
-        if (cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)) {
+        } else if (cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)) {
             return STRING_EXTERNAL_LOGISTICS_SUPPORT;
-        }
-        if (cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)) {
+        } else if (cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)) {
             return STRING_INTERNAL_LOGISTICS_SUPPORT;
-        }
-        if (cad.equals("null")) {
+        } else if (cad.equals("null")) {
             return STRING_NORMAL;
         }
         return "";

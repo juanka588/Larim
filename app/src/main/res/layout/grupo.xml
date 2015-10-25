@@ -5,7 +5,7 @@
     android:layout_marginLeft="50dp"
     android:layout_marginRight="5dp"
     android:checked="false"
-    android:gravity="left"
+    android:gravity="start"
     android:maxLines="3"
     android:text="Un Titulo muy largo larguisimo de prueba para mirar la efectividad"
     android:textStyle="bold" />

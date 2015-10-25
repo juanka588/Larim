@@ -10,13 +10,13 @@
     <string name="main_menu_6">Apoyo</string>
     <string name="explanation">prueba</string>
     <string name="title_activity_web"></string>
-    <string name="menu_volver">volver</string>
-    <string name="menu_Recargar">recargar</string>
-    <string name="menu_adelante">adelante</string>
+    <string name="menu_back">volver</string>
+    <string name="menu_refresh">recargar</string>
+    <string name="menu_forward">adelante</string>
     <string name="menu_URL" />
     <string name="network_exception">No hay conexion a la red</string>
     <string name="expanded_app_name">LARIM</string>
-    <string name="acept_dialog">Aceptar</string>
+    <string name="accept_dialog">Aceptar</string>
     <string name="cancel_dialog">Cancelar</string>
     <string name="title_activity_cronograma">Cronograma</string>
 
@@ -34,13 +34,13 @@
     <string name="title_activity_detail_conference">Conferencia</string>
     <string name="title_activity_sponsors">Sponsors</string>
 
-    <string name="organizators">Organizadores</string>
+    <string name="organizers">Organizadores</string>
     <string name="gcm_send_message">TokenID enviado</string>
     <string name="token_error_message">Error TokenID</string>
     <string name="title_activity_news">Noticias</string>
     <string name="gcm_defaultSenderId">224088768895</string>
-    <string name="satelite">Satelite</string>
-    <string name="informacion">Información</string>
+    <string name="satellite">Satelite</string>
+    <string name="information">Información</string>
     <string name="web_site">Sitio Web</string>
     <string name="title_activity_participant">Participantes</string>
 
@@ -76,7 +76,10 @@
     </string>
     <string name="ARG_NAV_BAR">app_bar</string>
     <string name="registration_port">Portico Registro</string>
-    <string name="salle_201">Salon 201</string>
-    <string name="salle_303">Salon 303</string>
-    <string name="salle_304">Salon 304</string>
+    <string name="saloon_201">Salon 201</string>
+    <string name="saloon_303">Salon 303</string>
+    <string name="saloon_304">Salon 304</string>
+    <string name="snackbar_undo">Deshacer</string>
+    <string name="message_deleted">El mesaje ha sido eliminado</string>
+    <string name="title_activity_auditorium_detail">Imagen</string>
 </resources>

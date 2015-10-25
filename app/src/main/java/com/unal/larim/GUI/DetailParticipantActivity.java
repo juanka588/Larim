@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Participant;
+import com.unal.larim.DataSource.CountryContent;
 import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
@@ -48,17 +49,17 @@ public class DetailParticipantActivity extends AppCompatActivity {
         String countryDesc = getCountryDescription();
         textCountry.setText(getString(R.string.country) + "\n" + countryID + "\n" + countryDesc);
         if (participant.getInstitution() == null) {
-            textInstitution.setVisibility(View.INVISIBLE);
+            textInstitution.setVisibility(View.GONE);
         } else {
             textInstitution.setText(getString(R.string.institution) + " " + participant.getInstitution());
         }
         if (participant.getHelpType() == null) {
-            textHelpType.setVisibility(View.INVISIBLE);
+            textHelpType.setVisibility(View.GONE);
         } else {
             textHelpType.setText(getString(R.string.help_type) + " ");
         }
         if (participant.getPaperID() == -1) {
-            textPaper.setVisibility(View.INVISIBLE);
+            textPaper.setVisibility(View.GONE);
         } else {
             textPaper.setText(getString(R.string.paper) + " ");
         }
@@ -66,8 +67,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
 
     private String getCountryDescription() {
         ContentResolver c = getContentResolver();
-        Cursor cursor = c.query(ParticipantContent.buildParticipantUri(
-                        ParticipantContent.table_name_country, participant.getCountry()),
+        Cursor cursor = c.query(CountryContent.buildCountryUri(participant.getCountry()),
                 null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Util.log(TAG, Util.toString(mat));

@@ -22,12 +22,35 @@ import java.util.ArrayList;
 
 public class NewsActivity extends AppCompatActivity {
 
+    private RecyclerView recList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news);
-        final RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+        recList = (RecyclerView) findViewById(R.id.cardList);
+        if (savedInstanceState == null) {
+            handleBundle();
+        }
+        initializeList();
+    }
+
+    private void initializeList() {
+        recList.setHasFixedSize(true);
+        manageSwipeEffects();
+        recList.setItemAnimator(new DefaultItemAnimator());
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recList.setLayoutManager(llm);
+        NewsRecyclerViewAdapter adapter = new NewsRecyclerViewAdapter(initializeData(), this);
+        recList.setAdapter(adapter);
+    }
+
+    /**
+     * inserts the new notice into the database when is sent
+     * temporarily until service updating
+     */
+    private void handleBundle() {
         Bundle b = this.getIntent().getExtras();
         Notice notice = (Notice) b.getSerializable(getString(R.string.ARG_NOTICE));
         if (notice != null) {
@@ -37,10 +60,12 @@ public class NewsActivity extends AppCompatActivity {
             cv.put(NoticeContent.column_checked, false);
             cv.put(NoticeContent.column_url, notice.url);
             ContentResolver contentResolver = getContentResolver();
-            Uri retrived = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
-            Util.log("Fue Exitoso?", retrived.toString() + "");
+            Uri retrieved = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
+            Util.log("Fue Exitoso?", retrieved.toString() + "");
         }
-        recList.setHasFixedSize(true);
+    }
+
+    private void manageSwipeEffects() {
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback
                 (0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -52,31 +77,24 @@ public class NewsActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 int position = viewHolder.getAdapterPosition();
-                ((NewsRecyclerViewAdapter) recList.getAdapter()).delete(position);
+                ((NewsRecyclerViewAdapter) recList.getAdapter()).delete(position, viewHolder.itemView);
             }
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recList);
-        recList.setItemAnimator(new DefaultItemAnimator());
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
-        NewsRecyclerViewAdapter adapter = new NewsRecyclerViewAdapter(initializeData(), this);
-        recList.setAdapter(adapter);
-
     }
 
     private ArrayList<Notice> initializeData() {
         ContentResolver contentResolver = getContentResolver();
         Cursor c = contentResolver.query(NoticeContent.CONTENT_URI, null, null, null, null);
         String[][] mat = Util.imprimirLista(c);
-        ArrayList<Notice> noticias = new ArrayList<>();
+        ArrayList<Notice> notices = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            noticias.add(new Notice(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
+            notices.add(new Notice(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
         }
         c.close();
-        Util.log("Noticias size", noticias.size() + "");
-        return noticias;
+        Util.log("Noticias size", notices.size() + "");
+        return notices;
     }
 }

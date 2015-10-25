@@ -43,7 +43,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
         Sponsor s = sponsors.get(i);
         holder.name.setText(s.name);
         holder.icon.setImageResource(s.icon);
-        holder.icon.setEnabled(false);
     }
 
     @Override

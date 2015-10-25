@@ -15,7 +15,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.CalendarContract;
-import android.text.format.Time;
 import android.util.Log;
 
 import com.unal.larim.GUI.MainActivity;
@@ -29,10 +28,10 @@ import java.util.Calendar;
  * Created by JuanCamilo on 15/03/2015.
  */
 public class Util {
-    public static Drawable resizeImage(Context ctx, int resId, int w, int h) {
+    public static Drawable resizeImage(Context context, int resId, int w, int h) {
 
         // cargamos la imagen de origen
-        Bitmap BitmapOrg = BitmapFactory.decodeResource(ctx.getResources(),
+        Bitmap BitmapOrg = BitmapFactory.decodeResource(context.getResources(),
                 resId);
 
         int width = BitmapOrg.getWidth();
@@ -57,7 +56,7 @@ public class Util {
 
         // si queremos poder mostrar nuestra imagen tenemos que crear un
         // objeto drawable y así asignarlo a un botón, imageview...
-        return new BitmapDrawable(resizedBitmap);
+        return new BitmapDrawable(context.getResources(),resizedBitmap);
     }
 
     public static boolean isOnline(Activity acc) {
@@ -143,7 +142,7 @@ public class Util {
         AlertDialog.Builder builder = new AlertDialog.Builder(act, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
         builder.setMessage(act.getText(R.string.network_exception))
                 .setTitle(act.getText(R.string.expanded_app_name))
-                .setPositiveButton(act.getText(R.string.acept_dialog),
+                .setPositiveButton(act.getText(R.string.accept_dialog),
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
@@ -277,13 +276,6 @@ public class Util {
         activity.startActivity(deta);
     }
 
-    public static long normalizeDate(long startDate) {
-        // normalize the start date to the beginning of the (UTC) day
-        Time time = new Time();
-        time.set(startDate);
-        int julianDay = Time.getJulianDay(startDate, time.gmtoff);
-        return time.setJulianDay(julianDay);
-    }
     public static CharSequence toCammelCase(String lowerCase) {
         String cad = "";
         String[] palabras = lowerCase.split(" ");

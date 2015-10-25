@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.net.Uri;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,9 +29,13 @@ import java.util.List;
  */
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
+    private static final String TAG = NewsRecyclerViewAdapter.class.getSimpleName();
     private List<Notice> notices;
     private Context context;
     private Activity activity;
+
+    private Notice remove;
+    private int removedPosition;
 
     @Override
     public NewsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -46,7 +53,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(NewsViewHolder holder, int i) {
         holder.title.setText(notices.get(i).title);
         holder.content.setText(notices.get(i).content);
-        holder.row.setBackgroundColor(context.getResources().getColor(
+        holder.row.setBackgroundColor(ContextCompat.getColor(context,
                 notices.get(i).checked ? R.color.darkblue : R.color.darkyellow));
     }
 
@@ -60,25 +67,61 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         return notices.size();
     }
 
-    public NewsRecyclerViewAdapter(ArrayList<Notice> noticias, Activity activity) {
-        this.notices = noticias;
+    public NewsRecyclerViewAdapter(ArrayList<Notice> notices, Activity activity) {
+        this.notices = notices;
         this.context = activity.getApplicationContext();
         this.activity = activity;
     }
 
-    public void delete(int position) {
+    public void delete(int position, View view) {
         if (position == -1) {
             return;
         }
-        Notice remove = notices.remove(position);
+        removedPosition = position;
+        remove = notices.remove(position);
+        remove.checked = true;
         notifyItemRemoved(position);
         ContentResolver contentResolver = context.getContentResolver();
-        ContentValues cv = new ContentValues();
-        cv.put(NoticeContent.column_checked, 1);
         long retrieved = contentResolver.delete(
                 NoticeContent.CONTENT_URI, NoticeContent._ID + "=?"
                 , new String[]{remove.id});
-        Util.log("Item Eliminado", retrieved + " " + remove.title + " con id " + retrieved);
+        createSnackBar(view);
+    }
+
+    private void createSnackBar(View view) {
+        Snackbar snackbar = Snackbar
+                .make(view, context.getString(R.string.message_deleted), Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(context,R.color.white));
+        snackbar.setAction(context.getString(R.string.snackbar_undo),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deleteUndo();
+                    }
+                });
+
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.darkyellow));
+        View snackbarView = snackbar.getView();
+        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.darkblue));
+        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+        snackbar.show();
+    }
+
+    public void deleteUndo() {
+        notices.add(removedPosition, remove);
+        notifyItemInserted(removedPosition);
+        ContentResolver contentResolver = context.getContentResolver();
+        ContentValues cv = new ContentValues();
+        cv.put(NoticeContent._ID, remove.id);
+        cv.put(NoticeContent.column_checked, remove.checked);
+        cv.put(NoticeContent.column_content, remove.content);
+        cv.put(NoticeContent.column_title, remove.title);
+        cv.put(NoticeContent.column_url, remove.url);
+        Uri retrieved = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
+        Util.log(TAG, retrieved.toString());
+        removedPosition = -1;
+        remove = null;
     }
 
     public void irWeb(int position) {
@@ -91,7 +134,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
                 , new String[]{selected.id});
         notifyItemChanged(position);
-        Util.log("Item Cambiado", retrieved + " " + selected + " con id " + retrieved);
+        Util.log(TAG, retrieved + " " + selected.title + " con id " + retrieved);
         Util.irA(notices.get(position).url, activity);
     }
 
@@ -113,7 +156,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
             imageDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    delete(getAdapterPosition());
+                    delete(getAdapterPosition(), v);
                 }
             });
         }

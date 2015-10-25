@@ -7,7 +7,7 @@
         android:id="@+id/ItemSatellite"
         android:icon="@drawable/ic_satellite_24dp"
         app:showAsAction="ifRoom"
-        android:title="@string/satelite"
-        android:visible="true"></item>
+        android:title="@string/satellite"
+        android:visible="true"/>
 
 </menu>
