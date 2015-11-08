@@ -71,7 +71,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
                 null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         Util.log(TAG, Util.toString(mat));
-        String cad = mat[0][2];
+        String cad = mat[0][3];
         return cad;
     }
 

@@ -2,9 +2,9 @@ package com.unal.larim.GUI;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -18,7 +18,7 @@ public class WebActivity extends AppCompatActivity {
     private String URL = "";
     private WebView browser;
     private boolean appBarEnabled;
-
+    private Toolbar mToolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -31,6 +31,8 @@ public class WebActivity extends AppCompatActivity {
         }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web);
+
+        manageToolbar();
         browser = (WebView) findViewById(R.id.webView1);
         browser.getSettings().setJavaScriptEnabled(true);
         browser.getSettings().setBuiltInZoomControls(true);
@@ -45,6 +47,11 @@ public class WebActivity extends AppCompatActivity {
         if (!Util.isOnline(this) && appBarEnabled) {
             Util.notificarRed(this);
         }
+    }
+
+    private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
     }
 
     @Override
@@ -68,10 +75,6 @@ public class WebActivity extends AppCompatActivity {
         menu.getItem(3).setTitle(URL);
         menu.getItem(3).setTitleCondensed(URL);
         return super.onCreateOptionsMenu(menu);
-    }
-
-    public void goBack(View v) {
-        goBack();
     }
 
     public void goBack() {

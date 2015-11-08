@@ -4,10 +4,12 @@ import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,8 +21,10 @@ import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 public class ParticipantActivity extends AppCompatActivity implements OnHeadlineSelectedListener {
+
     private static String TAG = ParticipantActivity.class.getSimpleName();
 
+    private Toolbar mToolbar;
     private SearchView sv;
     private RecyclerView.Adapter mCursorAdapter;
     private ContentResolver contentResolver;
@@ -38,8 +42,15 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
         setContentView(R.layout.activity_participant);
         participantFragment = (ParticipantFragment)
                 getFragmentManager().findFragmentById(R.id.participant_fragment);
+        manageToolbar();
     }
 
+    private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getString(R.string.title_activity_participant));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -116,10 +127,13 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

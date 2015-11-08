@@ -4,7 +4,11 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -24,6 +28,8 @@ import java.util.Calendar;
 
 
 public class DetailConference extends AppCompatActivity {
+
+    private Toolbar mToolbar;
 
     private TextView textDate;
     private TextView textHour;
@@ -51,10 +57,16 @@ public class DetailConference extends AppCompatActivity {
         textChairman = (TextView) findViewById(R.id.textChairman);
         pdfConference = (WebView) findViewById(R.id.pdfConference);
 
+        manageToolbar();
+
         contentResolver = getContentResolver();
 
         Bundle b = this.getIntent().getExtras();
         conference = (Conference) b.getSerializable(getString(R.string.TAG_CONFERENCE));
+        populateData();
+    }
+
+    public void populateData() {
         paper = getPaperFromID(conference.paperID);
         pdfConference.loadUrl("http://docs.google.com/gview?embedded=true&url=" +
                 paper.pdfURL);
@@ -78,7 +90,13 @@ public class DetailConference extends AppCompatActivity {
         textChairman.setText(getString(R.string.chairman) + " " + conference.chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         textDate.setText(getString(R.string.date) + " " + df.format(conference.date.getTime()).toString());
+    }
 
+    private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getString(R.string.title_activity_news));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private Paper getPaperFromID(String id) {
@@ -111,7 +129,7 @@ public class DetailConference extends AppCompatActivity {
         startActivity(participant);
     }
 
-    public void schedule(View v) {
+    public void schedule() {
         int beginHour, beginMinute, endHour, endMinute;
         String begin = conference.hour.split("-")[0];
         String end = conference.hour.split("-")[1];
@@ -128,5 +146,24 @@ public class DetailConference extends AppCompatActivity {
                 conference.description, conference.place);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_conference_detail, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.ItemCalendar:
+                schedule();
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 }

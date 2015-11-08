@@ -1,10 +1,10 @@
 package com.unal.larim.GUI;
 
+import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,7 +40,7 @@ public class DayFragment extends Fragment {
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static DayFragment newInstance(int sectionNumber) {
+    public static Fragment newInstance(int sectionNumber) {
         DayFragment fragment = new DayFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_SECTION_NUMBER, sectionNumber);
@@ -71,7 +71,7 @@ public class DayFragment extends Fragment {
         Date today = Calendar.getInstance().getTime();
         String date = df.format(today);
         currentDay.setText(getString(R.string.today) + " " + date);
-        int todayInt = Schedule.selectCurrentDay();
+        int todayInt = ScheduleActivity.selectCurrentDay();
         Bundle bundle = this.getArguments();
         int selected = bundle.getInt(ARG_SECTION_NUMBER);
         if (selected == 6) {
@@ -82,7 +82,7 @@ public class DayFragment extends Fragment {
                 (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE),
                 getActivity());
         sections.setAdapter(adapter);
-        dayTitle.setText(Schedule.getDayTitle(selected, context));
+        dayTitle.setText(ScheduleActivity.getDayTitle(selected, context));
         int sum = selected - todayInt;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(today);

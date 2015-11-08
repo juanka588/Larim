@@ -82,4 +82,6 @@
     <string name="snackbar_undo">Deshacer</string>
     <string name="message_deleted">El mesaje ha sido eliminado</string>
     <string name="title_activity_auditorium_detail">Imagen</string>
+    <string name="title_activity_schedule">Cronograma</string>
+    <string name="calendar">Agendar</string>
 </resources>

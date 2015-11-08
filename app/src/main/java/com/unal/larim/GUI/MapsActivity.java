@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -25,8 +27,9 @@ import java.util.ArrayList;
 
 public class MapsActivity extends AppCompatActivity {
 
-    private GoogleMap mapa;
-    private ArrayList<LatLng> marcadores = new ArrayList<LatLng>();
+    private GoogleMap mGoogleMap;
+    private Toolbar mToolbar;
+    private ArrayList<LatLng> markersList = new ArrayList<LatLng>();
     private static final String MAP_MARKER_TYPE = "2";
     private Activity act;
 
@@ -34,8 +37,17 @@ public class MapsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        manageToolbar();
         setUpMapIfNeeded();
     }
+
+    private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getString(R.string.title_activity_maps));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
 
     @Override
     protected void onResume() {
@@ -46,7 +58,7 @@ public class MapsActivity extends AppCompatActivity {
     /**
      * Sets up the map if it is possible to do so (i.e., the Google Play services APK is correctly
      * installed) and the map has not already been instantiated.. This will ensure that we only ever
-     * call {@link #setUpMap()} once when {@link #mapa} is not null.
+     * call {@link #setUpMap()} once when {@link #mGoogleMap} is not null.
      * <p/>
      * If it isn't installed {@link SupportMapFragment} (and
      * {@link com.google.android.gms.maps.MapView MapView}) will show a prompt for the user to
@@ -60,12 +72,12 @@ public class MapsActivity extends AppCompatActivity {
      */
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
-        if (mapa == null) {
+        if (mGoogleMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mapa = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+            mGoogleMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
             // Check if we were successful in obtaining the map.
-            if (mapa != null) {
+            if (mGoogleMap != null) {
                 setUpMap();
             }
         }
@@ -75,13 +87,13 @@ public class MapsActivity extends AppCompatActivity {
      * This is where we can add markers or lines, add listeners or move the camera. In this case, we
      * just add a marker near Africa.
      * <p/>
-     * This should only be called once and when we are sure that {@link #mapa} is not null.
+     * This should only be called once and when we are sure that {@link #mGoogleMap} is not null.
      */
     private void setUpMap() {
         getMapData();
         act = this;
-        animarCamara(marcadores.get(0), 17);
-        mapa.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        moveCamera(markersList.get(0), 4);
+        mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Util.irA(marker.getSnippet(), act);
@@ -95,34 +107,31 @@ public class MapsActivity extends AppCompatActivity {
                 , null, null, null, null);
         String mat[][] = Util.imprimirLista(cursor);
         for (int i = 0; i < mat.length; i++) {
-            mostrarMarcador(new LatLng(Double.parseDouble(mat[i][2] + ""), Double.parseDouble(mat[i][3] + "")),
+            showMarker(new LatLng(Double.parseDouble(mat[i][2] + ""), Double.parseDouble(mat[i][3] + "")),
                     mat[i][0] + "", mat[i][1] + "", 0);
         }
         cursor.close();
     }
 
-    private void mostrarMarcador(LatLng latLng, String title, String desc,
-                                 int tipo) {
-        mostrarMarcador(latLng.latitude, latLng.longitude, title, desc, tipo);
+    private void showMarker(LatLng latLng, String title, String desc,
+                            int type) {
+        showMarker(latLng.latitude, latLng.longitude, title, desc, type);
 
     }
 
-    private void mostrarMarcador(double lat, double lng, String title,
-                                 String desc, int tipo) {
-        /*
-         * float a = 0; switch (count) { case 0: a =
-		 * BitmapDescriptorFactory.HUE_CYAN; break; case 1: a =
-		 * BitmapDescriptorFactory.HUE_ORANGE; break; case 2: a =
-		 * BitmapDescriptorFactory.HUE_VIOLET; break; case 3: a =
-		 * BitmapDescriptorFactory.HUE_YELLOW; break; case 4: a =
-		 * BitmapDescriptorFactory.HUE_ORANGE; break;
-		 *
-		 * default: break; }
-		 */
-        if (!marcadores.contains(new LatLng(lat, lng))) {
-            marcadores.add(new LatLng(lat, lng));
+    /**
+     * @param lat   latitude
+     * @param lng   longitude
+     * @param title title displayed
+     * @param desc  snippet
+     * @param type  describes if we want to change visual aspects of marker
+     */
+    private void showMarker(double lat, double lng, String title,
+                            String desc, int type) {
+        if (!markersList.contains(new LatLng(lat, lng))) {
+            markersList.add(new LatLng(lat, lng));
             MarkerOptions k = null;
-            if (tipo == 0) {
+            if (type == 0) {
                 k = new MarkerOptions()
                         .position(new LatLng(lat, lng))
                         .title(title)
@@ -139,11 +148,11 @@ public class MapsActivity extends AppCompatActivity {
                                 .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                 // .fromResource(R.drawable.edificiop2));
             }
-            mapa.addMarker(k);
+            mGoogleMap.addMarker(k);
         }
     }
 
-    private void animarCamara(LatLng position, int zoom2) {
+    private void moveCamera(LatLng position, int zoom2) {
         CameraPosition camPos = new CameraPosition.Builder().target(position)
                 .zoom(zoom2) // Establecemos el zoom en 19
                 .bearing(0) // Establecemos la orientación con el noreste arriba
@@ -151,7 +160,7 @@ public class MapsActivity extends AppCompatActivity {
                 .build();
         CameraUpdate camUpd3 = CameraUpdateFactory.newCameraPosition(camPos);
 
-        mapa.animateCamera(camUpd3);
+        mGoogleMap.animateCamera(camUpd3);
 
     }
 
@@ -165,7 +174,10 @@ public class MapsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.ItemSatellite:
-                cambiar();
+                changeMapType();
+                return true;
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -173,11 +185,11 @@ public class MapsActivity extends AppCompatActivity {
         }
     }
 
-    private void cambiar() {
-        if (mapa.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {
-            mapa.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+    private void changeMapType() {
+        if (mGoogleMap.getMapType() == GoogleMap.MAP_TYPE_NORMAL) {
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         } else {
-            mapa.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         }
     }
 }

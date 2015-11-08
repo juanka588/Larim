@@ -1,20 +1,21 @@
 <resources>
 
-    <style name="DialogTheme" parent="Theme.AppCompat.Light.Dialog">
+    <style name="DialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
         <!--<item name="windowNoTitle">true</item>-->
         <item name="android:windowTitleBackgroundStyle">@android:color/transparent</item>
         <item name="windowActionBar">false</item>
     </style>
-    <style name="ToolBarTheme" parent="LARIMTheme">
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-    </style>
+
     <!-- Base application theme. -->
-    <style name="LARIMTheme" parent="@style/Theme.AppCompat.Light">
+    <style name="LARIMTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
         <item name="android:textViewStyle">@style/TextStyleBlue</item>
         <item name="colorPrimary">@color/darkblue</item>
         <item name="colorAccent">@color/darkyellow</item>
         <item name="android:colorForeground">@color/darkblue</item>
+    </style>
+
+    <style name="LARIMActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
     </style>
 
     <style name="TextStyleBlue" parent="@android:style/Widget.Holo.Light.TextView">

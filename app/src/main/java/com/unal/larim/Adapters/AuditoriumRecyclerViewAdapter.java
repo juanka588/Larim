@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.unal.larim.Data.AuditoriumPlace;
 import com.unal.larim.GUI.AuditoriumDetailActivity;
 import com.unal.larim.GUI.AuditoriumDetailActivityFragment;
-import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -66,7 +65,7 @@ public class AuditoriumRecyclerViewAdapter extends RecyclerView.Adapter<Auditori
 
     public void showImage(int position) {
         /*TODO: center and display image */
-        String style="<style type='text/css'>" +
+        String style = "<style type='text/css'>" +
                 "img{" +
                 "display: block;" +
                 "margin-left: auto;" +
@@ -75,11 +74,10 @@ public class AuditoriumRecyclerViewAdapter extends RecyclerView.Adapter<Auditori
                 "}" +
                 "</style>";
         String imagePath = "file:///android_res/drawable/" + mPlaces.get(position).getImage();
-        String data = "<html><body>" + "<img src=\""+imagePath+"\"/></body></html>";
-        Intent intent=new Intent(mActivity, AuditoriumDetailActivity.class);
-        AuditoriumDetailActivityFragment.SOURCE=imagePath;
+        String data = "<html><body>" + "<img src=\"" + imagePath + "\"/></body></html>";
+        Intent intent = new Intent(mActivity, AuditoriumDetailActivity.class);
+        AuditoriumDetailActivityFragment.SOURCE = imagePath;
         mActivity.startActivity(intent);
-        Util.irA(imagePath,mActivity,false);
     }
 
     public class PlacesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

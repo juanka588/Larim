@@ -1,17 +1,20 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:paddingRight="20dp"
     android:layout_height="wrap_content"
+    android:background="?android:attr/selectableItemBackground"
     android:clickable="true"
     android:focusable="true"
-    android:background="?android:attr/selectableItemBackground"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:paddingRight="20dp">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="40dp"
-        android:src="@drawable/ic_calendar" />
+        android:background="@drawable/selector_cirular"
+        android:padding="10dp"
+        android:src="@drawable/ic_calendar"/>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -21,22 +24,22 @@
 
         <TextView
             android:id="@+id/textItem"
+            style="@style/TextStyleYellow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="start"
-            android:text="item"
-            style="@style/TextStyleYellow" />
+            android:text="item"/>
 
         <TextView
             android:id="@+id/textItemSub"
+            style="@style/TextStyleBlue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:gravity="start"
             android:paddingRight="8dp"
-            android:text="subItem"
-            style="@style/TextStyleBlue" />
+            android:text="subItem"/>
     </LinearLayout>
 
 </LinearLayout>

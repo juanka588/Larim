@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.unal.larim.Adapters.NewsRecyclerViewAdapter;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class NewsActivity extends AppCompatActivity {
 
     private RecyclerView recList;
+    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class NewsActivity extends AppCompatActivity {
             handleBundle();
         }
         initializeList();
+        manageToolbar();
+    }
+    private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle(getString(R.string.title_activity_news));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void initializeList() {
@@ -61,7 +70,6 @@ public class NewsActivity extends AppCompatActivity {
             cv.put(NoticeContent.column_url, notice.url);
             ContentResolver contentResolver = getContentResolver();
             Uri retrieved = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
-            Util.log("Fue Exitoso?", retrieved.toString() + "");
         }
     }
 

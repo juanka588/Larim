@@ -1,0 +1,12 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.unal.larim.GUI.DetailConference">
+    <item
+        android:id="@+id/ItemCalendar"
+        android:icon="@drawable/ic_calendar"
+        android:title="@string/calendar"
+        android:visible="true"
+        app:showAsAction="ifRoom"/>
+</menu>

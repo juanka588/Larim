@@ -34,10 +34,7 @@ public class AuditoriumActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auditorium);
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
         list = (RecyclerView) findViewById(R.id.listAuditoriumPlaces);
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         manageToolbar();
         /*
         StaggeredGridLayoutManager gridLayoutManager =
@@ -53,6 +50,8 @@ public class AuditoriumActivity extends AppCompatActivity {
     }
 
     private void manageToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         collapsingToolbarLayout.setTitle(getString(R.string.title_activity_auditorium));
@@ -130,7 +129,6 @@ public class AuditoriumActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }

@@ -123,7 +123,7 @@ public class MainActivity extends Activity {
     }
 
     public void program(View v) {
-        Intent cron = new Intent(this, Schedule.class);
+        Intent cron = new Intent(this, ScheduleActivity.class);
         startActivity(cron);
     }
 
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, SponsorsActivity.class));
     }
 
-    public void noticias(View view) {
+    public void news(View view) {
         Intent news = new Intent(this, NewsActivity.class);
 
         int r = (int) (Math.random() * 100);

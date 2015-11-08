@@ -79,7 +79,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         }
         removedPosition = position;
         remove = notices.remove(position);
-        remove.checked = true;
         notifyItemRemoved(position);
         ContentResolver contentResolver = context.getContentResolver();
         long retrieved = contentResolver.delete(
@@ -91,7 +90,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     private void createSnackBar(View view) {
         Snackbar snackbar = Snackbar
                 .make(view, context.getString(R.string.message_deleted), Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(ContextCompat.getColor(context,R.color.white));
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.white));
         snackbar.setAction(context.getString(R.string.snackbar_undo),
                 new View.OnClickListener() {
                     @Override
@@ -101,9 +100,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                 });
 
         snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.darkyellow));
-        View snackbarView = snackbar.getView();
-        snackbarView.setBackgroundColor(ContextCompat.getColor(context, R.color.darkblue));
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        View snackBarView = snackbar.getView();
+        snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.darkblue));
+        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
         textView.setTextColor(ContextCompat.getColor(context, R.color.white));
         snackbar.show();
     }
@@ -165,7 +164,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         public void onClick(View v) {
             irWeb(getAdapterPosition());
         }
-
 
     }
 }
