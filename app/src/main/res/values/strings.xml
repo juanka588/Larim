@@ -84,4 +84,5 @@
     <string name="title_activity_auditorium_detail">Imagen</string>
     <string name="title_activity_schedule">Cronograma</string>
     <string name="calendar">Agendar</string>
+    <string name="follows_us_in_facebook">Siguenos en Facebook</string>
 </resources>

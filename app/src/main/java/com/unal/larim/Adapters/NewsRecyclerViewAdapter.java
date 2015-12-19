@@ -30,7 +30,7 @@ import java.util.List;
 public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerViewAdapter.NewsViewHolder> {
 
     private static final String TAG = NewsRecyclerViewAdapter.class.getSimpleName();
-    private List<Notice> notices;
+    public List<Notice> notices;
     private Context context;
     private Activity activity;
 
@@ -108,6 +108,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     }
 
     public void deleteUndo() {
+        if (removedPosition == -1) {
+            return;
+        }
         notices.add(removedPosition, remove);
         notifyItemInserted(removedPosition);
         ContentResolver contentResolver = context.getContentResolver();

@@ -71,6 +71,11 @@ public class ParticipantContent implements BaseColumns {
         return finalString.toString();
     }
 
+    /***
+     *
+     * @param cad
+     * @return
+     */
     public static String switchString(String cad) {
         if (cad.equals(TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE)) {
             return STRING_SCIENTIFIC_ORGANIZING_COMMITTEE;

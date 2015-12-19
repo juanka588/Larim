@@ -79,6 +79,7 @@ public class JSONParser {
             String name = participant.getString(ParticipantContent.column_name);
             String email = participant.getString(ParticipantContent.column_email);
             String institution = participant.getString(ParticipantContent.column_institution);
+            String country = participant.getString(ParticipantContent.column_country_code);
             Util.log(TAG, name);
         }
 

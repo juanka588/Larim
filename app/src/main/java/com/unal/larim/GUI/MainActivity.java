@@ -139,7 +139,6 @@ public class MainActivity extends Activity {
 
     public void news(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-
         int r = (int) (Math.random() * 100);
         news.putExtra("notice", new Notice("1", "Desde Main Activity " + r, "Contenidos " + r,
                 true, "http://www.google.com"));

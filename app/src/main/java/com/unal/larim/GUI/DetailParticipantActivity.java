@@ -1,10 +1,16 @@
 package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
+import android.content.res.Resources;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Participant;
@@ -17,6 +23,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
 
     public static final String PARTICIPANT_ARG = "participant";
     private static final String TAG = DetailParticipantActivity.class.getSimpleName();
+    private ImageView participantPhoto;
     private TextView textName;
     private TextView textEmail;
     private TextView textType;
@@ -34,6 +41,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
         participant = (Participant) b.getSerializable(PARTICIPANT_ARG);
 
         Util.log(TAG, participant + "");
+        participantPhoto=(ImageView) findViewById(R.id.photoPart);
         textName = (TextView) findViewById(R.id.textDetailPartName);
         textEmail = (TextView) findViewById(R.id.textDetailPartEmail);
         textType = (TextView) findViewById(R.id.textDetailPartType);
@@ -41,6 +49,14 @@ public class DetailParticipantActivity extends AppCompatActivity {
         textInstitution = (TextView) findViewById(R.id.textDetailPartIntitution);
         textHelpType = (TextView) findViewById(R.id.textDetailPartHelpType);
         textPaper = (TextView) findViewById(R.id.textDetailPartPaper);
+
+        /*TODO:replace with an service of image*/
+        Resources res = getResources();
+        Bitmap src = BitmapFactory.decodeResource(res, R.drawable.rodrijua);
+        RoundedBitmapDrawable dr =
+                RoundedBitmapDrawableFactory.create(res, src);
+        dr.setCornerRadius(Math.max(src.getWidth(), src.getHeight()) / 2.0f);
+        participantPhoto.setImageDrawable(dr);
 
         textName.setText(getString(R.string.name) + " " + participant.getName());
         textType.setText(getString(R.string.type) + " " + ParticipantContent.getTypeString(participant.getType()));

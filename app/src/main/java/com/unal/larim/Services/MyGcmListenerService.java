@@ -34,6 +34,8 @@ import com.unal.larim.R;
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    private static final String UPDATE_TAG = "update";
+
     /**
      * Called when message is received.
      *
@@ -62,7 +64,11 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(title, message, url);
+        if (url.equals(UPDATE_TAG)) {
+            /*TODO: fetch from server*/
+        } else {
+            sendNotification(title, message, url);
+        }
     }
     // [END receive_message]
 

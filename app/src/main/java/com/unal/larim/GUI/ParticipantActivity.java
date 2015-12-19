@@ -131,6 +131,9 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.item_facebook:
+                Util.irA("https://www.facebook.com/IAU.LARIM/", this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
