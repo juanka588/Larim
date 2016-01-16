@@ -11,7 +11,11 @@
         android:orientation="vertical"
         android:showDividers="middle"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
+        <TextView
+            style="@style/TextStyleBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/committees"/>
         <fragment
             android:id="@+id/participant_selector_fragment"
             android:name="com.unal.larim.GUI.SelectorParticipantFragment"
@@ -23,7 +27,11 @@
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:paddingTop="@dimen/activity_vertical_margin"
             tools:layout="@layout/fragment_selector"/>
-
+        <TextView
+            style="@style/TextStyleBig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_activity_participant"/>
         <fragment
             android:id="@+id/participant_fragment"
             android:name="com.unal.larim.GUI.ParticipantFragment"
