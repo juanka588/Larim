@@ -1,5 +1,7 @@
 package com.unal.larim.Services;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.widget.Toast;
 
@@ -54,7 +56,7 @@ public class JSONParser {
                 } else {
                     String cad = response.body().string();
                     try {
-                        getTempObject(cad);
+                        getItemsFromJSON(cad);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -68,7 +70,7 @@ public class JSONParser {
      * @param JSONString
      * @throws JSONException
      */
-    private void getTempObject(String JSONString) throws JSONException {
+    private void getItemsFromJSON(String JSONString) throws JSONException {
         JSONObject object = new JSONObject(JSONString);
         JSONArray participants = object.getJSONArray("registered");
         int size = participants.length();
@@ -80,6 +82,19 @@ public class JSONParser {
             String email = participant.getString(ParticipantContent.column_email);
             String institution = participant.getString(ParticipantContent.column_institution);
             String country = participant.getString(ParticipantContent.column_country_code);
+            String type = participant.getString(ParticipantContent.column_type);
+
+            ContentValues cv = new ContentValues();
+            cv.put(ParticipantContent._ID, id);
+            cv.put(ParticipantContent.column_name, name);
+            cv.put(ParticipantContent.column_email, email);
+            cv.put(ParticipantContent.column_institution, institution);
+            cv.put(ParticipantContent.column_country_code, country);
+            cv.put(ParticipantContent.column_type, type);
+
+            ContentResolver cr = mContext.getContentResolver();
+            cr.insert(ParticipantContent.CONTENT_URI, cv);
+
             Util.log(TAG, name);
         }
 

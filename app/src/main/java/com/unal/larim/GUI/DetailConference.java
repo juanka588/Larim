@@ -2,7 +2,6 @@ package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
@@ -67,7 +66,7 @@ public class DetailConference extends AppCompatActivity {
     }
 
     public void populateData() {
-        paper = getPaperFromID(conference.paperID);
+        paper = PaperContent.getPaper(conference.paperID, getApplicationContext());
         pdfConference.loadUrl("http://docs.google.com/gview?embedded=true&url=" +
                 paper.pdfURL);
         pdfConference.getSettings().setJavaScriptEnabled(true);
@@ -85,7 +84,7 @@ public class DetailConference extends AppCompatActivity {
         textHour.setText(getString(R.string.hour) + " " + conference.hour);
         textPaperName.setText(getString(R.string.paper) + " " + paper.title);
         textPlace.setText(getString(R.string.place) + " " + conference.place);
-        author = getAuthorFromID(paper.participantID);
+        author = ParticipantContent.getAuthorFromID(paper.participantID, getApplicationContext());
         textAutor.setText(getString(R.string.author) + " " + author);
         textChairman.setText(getString(R.string.chairman) + " " + conference.chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -97,30 +96,6 @@ public class DetailConference extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(getString(R.string.title_activity_news));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private Paper getPaperFromID(String id) {
-        Cursor cursor = contentResolver.query(PaperContent.buildPaperUri(Long.parseLong(id)),
-                null, null, null, null);
-        String mat[][] = Util.imprimirLista(cursor);
-        Paper paper = null;
-        for (int i = 0; i < mat.length; i++) {
-            paper = new Paper(mat[i][0], mat[i][1], mat[i][2], mat[i][3]);
-        }
-        cursor.close();
-        return paper;
-    }
-
-    private Participant getAuthorFromID(String id) {
-        Cursor cursor = contentResolver.query(ParticipantContent.buildParticipantUri(Long.parseLong(id)),
-                null, null, null, null);
-        String mat[][] = Util.imprimirLista(cursor);
-        Participant participant = null;
-        for (int i = 0; i < mat.length; i++) {
-            participant = new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]);
-        }
-        cursor.close();
-        return participant;
     }
 
     public void participant(View v) {

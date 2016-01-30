@@ -33,7 +33,7 @@ public class MainActivity extends Activity {
     private static final String WELCOME_IDENTIFIER = "3";
     private final String TAG = MainActivity.this.getClass().getSimpleName();
     public static final boolean DEBUG = true;
-    public static int notification_counter;
+    public static int NOTIFICATION_COUNTER;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
@@ -128,8 +128,8 @@ public class MainActivity extends Activity {
     }
 
     public void details(View v) {
-        Intent participantes = new Intent(this, ParticipantActivity.class);
-        startActivity(participantes);
+        Intent participants = new Intent(this, ParticipantActivity.class);
+        startActivity(participants);
     }
 
 

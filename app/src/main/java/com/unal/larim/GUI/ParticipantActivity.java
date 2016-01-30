@@ -146,7 +146,7 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            participantFragment.poupulateAdapter(filter);
+            participantFragment.populateAdapter(filter);
         } else {
             // Otherwise, we're in the one-pane layout and must swap frags...
 

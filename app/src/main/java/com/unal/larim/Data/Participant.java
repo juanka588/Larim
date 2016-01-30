@@ -6,13 +6,15 @@ import java.io.Serializable;
  * Created by JuanCamilo on 15/07/2015.
  */
 public class Participant implements Serializable {
+    private long ID;
     private String name;
     private String email;
     private String institution;
     private String country;
     private String type;
-    private int paperID;
     private String helpType;
+    private String resume;
+    private int image;
 
     public String getName() {
         return name;
@@ -54,12 +56,12 @@ public class Participant implements Serializable {
         this.type = type;
     }
 
-    public int getPaperID() {
-        return paperID;
+    public long getID() {
+        return ID;
     }
 
-    public void setPaperID(int paperID) {
-        this.paperID = paperID;
+    public void setID(long ID) {
+        this.ID = ID;
     }
 
     public String getHelpType() {
@@ -70,13 +72,26 @@ public class Participant implements Serializable {
         this.helpType = helpType;
     }
 
-    public Participant(String name, String email,
-                       String institution, String country, String type) {
-        this(name, email, institution, country, type, -1, null);
+    public String getResume() {
+        return resume;
     }
 
-    public Participant(String name, String email,
-                       String institution, String country, String type, int paperID, String helpType) {
+    public int getImage() {
+        return image;
+    }
+
+    /***
+     * @param name        full name of participant
+     * @param email       of participant
+     * @param institution
+     * @param country     code
+     * @param type
+     * @param ID     participantID
+     * @param resume      html text with all description
+     * @param image       resource identifier of participant image
+     */
+    public Participant(String name, String email, String institution,
+                       String country, String type,String resume, int image, long ID) {
         this.name = name;
         this.email = email;
         this.institution = institution;
@@ -85,8 +100,12 @@ public class Participant implements Serializable {
             type = "null";
         }
         this.type = type;
-        this.paperID = paperID;
-        this.helpType = helpType;
+        this.ID =ID;
+        if (resume == null) {
+            resume = "null";
+        }
+        this.resume = resume;
+        this.image = image;
     }
 
     @Override

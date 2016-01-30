@@ -69,13 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/institution"/>
-
-            <TextView
-                android:id="@+id/textDetailPartHelpType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/help_type"/>
-
             <TextView
                 android:id="@+id/textDetailPartPaper"
                 android:layout_width="wrap_content"
@@ -85,6 +78,6 @@
     </LinearLayout>
     <WebView
         android:id="@+id/resumeView"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="match_parent"/>
 </LinearLayout>

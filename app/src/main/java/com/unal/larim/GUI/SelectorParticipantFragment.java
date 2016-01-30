@@ -67,12 +67,13 @@ public class SelectorParticipantFragment extends ListFragment implements OnHeadl
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         currentPosition = position;
-        if (dataMat[position][0] == null) {
+        String selection = dataMat[position][0];
+        Util.log(TAG, "selection " + selection);
+        if (selection == null || selection.length()==0) {
             mCallback.onArticleSelected("-");
         } else {
-            mCallback.onArticleSelected(dataMat[position][0]);
+            mCallback.onArticleSelected(selection);
         }
-
     }
 
     @Override

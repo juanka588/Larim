@@ -2,8 +2,14 @@ package com.unal.larim.DataSource;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import com.unal.larim.Data.Paper;
+
+import java.util.ArrayList;
 
 /**
  * Created by JuanCamilo on 03/08/2015.
@@ -28,5 +34,37 @@ public class PaperContent implements BaseColumns {
 
     public static Uri buildPaperUri(long id) {
         return ContentUris.withAppendedId(CONTENT_URI, id);
+    }
+
+    public static Uri buildPaperParticipantUri(long participantID) {
+        return CONTENT_URI.buildUpon().appendPath(
+                "participant").appendPath(
+                participantID + "").build();
+    }
+
+    public static Paper getPaper(long paperID, Context context) {
+        if (paperID == -1) {
+            return null;
+        }
+        ContentResolver cr = context.getContentResolver();
+        Cursor c = cr.query(PaperContent.buildPaperUri(paperID), null, null, null, null);
+        ArrayList<Paper> papers = getPapers(c);
+        return papers.isEmpty() ? null : papers.get(0);
+    }
+
+    public static ArrayList<Paper> getPapers(Cursor c) {
+        ArrayList<Paper> papers = new ArrayList<>();
+        if (c.moveToFirst()) {
+            for (int i = 0; i < c.getCount(); i++) {
+                String title = c.getString(c.getColumnIndex(column_title));
+                String keywords = c.getString(c.getColumnIndex(column_keywords));
+                String pdfURL = c.getString(c.getColumnIndex(column_pdf));
+                int participantID = c.getInt(c.getColumnIndex(column_participant_id));
+                papers.add(new Paper(title, keywords, pdfURL, participantID));
+                c.moveToNext();
+            }
+        }
+        c.close();
+        return papers;
     }
 }

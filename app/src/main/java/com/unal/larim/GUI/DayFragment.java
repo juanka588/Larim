@@ -110,7 +110,7 @@ public class DayFragment extends Fragment {
                     conferences = new ArrayList<>();
                     hour = currentHour;
                 }
-                conference = new Conference(mat[i][0], mat[i][1], mat[i][2], currentHour, mat[i][5],
+                conference = new Conference(Long.parseLong(mat[i][0]), mat[i][1], mat[i][2], currentHour, mat[i][5],
                         mat[i][6], mat[i][7], mat[i][8], mat[i][9]);
                 conferences.add(conference);
             }

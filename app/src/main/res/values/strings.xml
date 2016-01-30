@@ -85,4 +85,9 @@
     <string name="title_activity_schedule">Cronograma</string>
     <string name="calendar">Agendar</string>
     <string name="follows_us_in_facebook">Siguenos en Facebook</string>
+    <string name="testWeb">
+        <![CDATA[<html> <head> <title></title> </head> <body> <p style=\\\"text-align: justify;\\\">Is a professor at the National Astronomical Observatory, National University of Colombia. His research is focused on the connection between the star formation activity and the dynamics of active galactic nuclei. On the other hand he is the leader of the group Numerical Analysis and Simulation in Parallel and head of the team of mobile applications development (iUNDev). Now is the chair of the Local Organizing Committee for the XV Latin American Regional IAU Meeting, Cartagena, Colombia, 2016. <a href=\"http://ciencias.bogota.unal.edu.co/oan/docentes/\">URL</a></p> </body> </html>]]></string>
+    <string name="committees">Comites</string>
+    <string name="participant_description">Detalles del participante</string>
+    <string name="participant_description_short">Detalles</string>
 </resources>

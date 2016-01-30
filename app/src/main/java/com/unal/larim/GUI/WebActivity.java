@@ -18,7 +18,9 @@ public class WebActivity extends AppCompatActivity {
     private String URL = "";
     private WebView browser;
     private boolean appBarEnabled;
+    private boolean isPlainText;
     private Toolbar mToolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -43,7 +45,12 @@ public class WebActivity extends AppCompatActivity {
             }
 
         });
-        browser.loadUrl(URL);
+        isPlainText=!URL.startsWith("http:");
+        if (isPlainText) {
+            browser.loadData(URL, "text/html", "UTF8");
+        } else {
+            browser.loadUrl(URL);
+        }
         if (!Util.isOnline(this) && appBarEnabled) {
             Util.notificarRed(this);
         }
@@ -72,8 +79,13 @@ public class WebActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_web, menu);
-        menu.getItem(3).setTitle(URL);
-        menu.getItem(3).setTitleCondensed(URL);
+        if(!isPlainText) {
+            menu.getItem(3).setTitle(URL);
+            menu.getItem(3).setTitleCondensed(URL);
+        }else{
+            menu.getItem(3).setTitle(getString(R.string.participant_description));
+            menu.getItem(3).setTitleCondensed(getString(R.string.participant_description_short));
+        }
         return super.onCreateOptionsMenu(menu);
     }
 

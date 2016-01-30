@@ -2,7 +2,6 @@ package com.unal.larim.GUI;
 
 import android.app.Fragment;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -54,18 +53,17 @@ public class ParticipantFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_participant, container, false);
-        Context context = rootView.getContext();
         recList = (RecyclerView) rootView.findViewById(R.id.cardListParticipant);
         recList.setHasFixedSize(true);
         recList.setItemAnimator(new DefaultItemAnimator());
         LinearLayoutManager llm = new LinearLayoutManager(rootView.getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        poupulateAdapter(filter);
+        populateAdapter(filter);
         return rootView;
     }
 
-    public void poupulateAdapter(String filter) {
+    public void populateAdapter(String filter) {
         this.filter = filter;
         ParticipantRecyclerViewAdapter adapter =
                 new ParticipantRecyclerViewAdapter(initializeData(filter), getActivity());
@@ -73,6 +71,7 @@ public class ParticipantFragment extends Fragment {
     }
 
     public ArrayList<Participant> initializeData(String filter) {
+        Util.log(TAG,filter);
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor cursor = contentResolver.query(
                 ParticipantContent.buildParticipantUri(ParticipantContent.column_type, filter),
@@ -80,7 +79,10 @@ public class ParticipantFragment extends Fragment {
         String mat[][] = Util.imprimirLista(cursor);
         ArrayList<Participant> participants = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][6], null,
+                    this.getActivity().getPackageName());
+            participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3],
+                    mat[i][4], mat[i][5], icon,Long.parseLong(mat[i][7])));
         }
         cursor.close();
         return participants;
@@ -90,7 +92,10 @@ public class ParticipantFragment extends Fragment {
         String mat[][] = Util.imprimirLista(cursor);
         ArrayList<Participant> participants = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
+            int icon = this.getResources().getIdentifier("drawable/" + mat[i][6], null,
+                    this.getActivity().getPackageName());
+            participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3],
+                    mat[i][4], mat[i][5], icon,Long.parseLong(mat[i][7])));
         }
         cursor.close();
         return participants;

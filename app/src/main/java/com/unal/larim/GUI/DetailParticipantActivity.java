@@ -10,9 +10,13 @@ import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.unal.larim.Data.Paper;
 import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.CountryContent;
 import com.unal.larim.DataSource.ParticipantContent;
@@ -29,8 +33,8 @@ public class DetailParticipantActivity extends AppCompatActivity {
     private TextView textType;
     private TextView textCountry;
     private TextView textInstitution;
-    private TextView textHelpType;
     private TextView textPaper;
+    private WebView navigator;
     private Participant participant;
 
     @Override
@@ -41,43 +45,67 @@ public class DetailParticipantActivity extends AppCompatActivity {
         participant = (Participant) b.getSerializable(PARTICIPANT_ARG);
 
         Util.log(TAG, participant + "");
-        participantPhoto=(ImageView) findViewById(R.id.photoPart);
+        participantPhoto = (ImageView) findViewById(R.id.photoPart);
         textName = (TextView) findViewById(R.id.textDetailPartName);
         textEmail = (TextView) findViewById(R.id.textDetailPartEmail);
         textType = (TextView) findViewById(R.id.textDetailPartType);
         textCountry = (TextView) findViewById(R.id.textDetailPartCountry);
         textInstitution = (TextView) findViewById(R.id.textDetailPartIntitution);
-        textHelpType = (TextView) findViewById(R.id.textDetailPartHelpType);
         textPaper = (TextView) findViewById(R.id.textDetailPartPaper);
+        navigator = (WebView) findViewById(R.id.resumeView);
 
         /*TODO:replace with an service of image*/
         Resources res = getResources();
-        Bitmap src = BitmapFactory.decodeResource(res, R.drawable.rodrijua);
-        RoundedBitmapDrawable dr =
-                RoundedBitmapDrawableFactory.create(res, src);
-        dr.setCornerRadius(Math.max(src.getWidth(), src.getHeight()) / 2.0f);
-        participantPhoto.setImageDrawable(dr);
-
+        int img = participant.getImage();
+        Util.log(TAG, "selected image: " + img);
+        Bitmap src = BitmapFactory.decodeResource(res, img);
+        if (src == null) {
+            participantPhoto.setImageResource(R.drawable.no_image);
+        }else {
+            RoundedBitmapDrawable dr =
+                    RoundedBitmapDrawableFactory.create(res, src);
+            dr.setCornerRadius(Math.max(src.getWidth(), src.getHeight()) / 2.0f);
+            participantPhoto.setImageDrawable(dr);
+        }
         textName.setText(getString(R.string.name) + " " + participant.getName());
         textType.setText(getString(R.string.type) + " " + ParticipantContent.getTypeString(participant.getType()));
         textEmail.setText(getString(R.string.email) + " " + participant.getEmail());
         String countryID = participant.getCountry();
         String countryDesc = getCountryDescription();
         textCountry.setText(getString(R.string.country) + "\n" + countryID + "\n" + countryDesc);
-        if (participant.getInstitution() == null) {
+        if (participant.getInstitution() == null||participant.getInstitution().equals("-")) {
             textInstitution.setVisibility(View.GONE);
         } else {
             textInstitution.setText(getString(R.string.institution) + " " + participant.getInstitution());
         }
-        if (participant.getHelpType() == null) {
-            textHelpType.setVisibility(View.GONE);
-        } else {
-            textHelpType.setText(getString(R.string.help_type) + " ");
-        }
-        if (participant.getPaperID() == -1) {
+        Paper paper= ParticipantContent.getPaper(participant.getID(), getApplicationContext());
+        if (paper==null) {
             textPaper.setVisibility(View.GONE);
         } else {
-            textPaper.setText(getString(R.string.paper) + " ");
+            textPaper.setText(getString(R.string.paper) + paper.toString());
+        }
+        navigator.getSettings().setJavaScriptEnabled(true);
+        navigator.getSettings().setPluginState(WebSettings.PluginState.ON);
+        navigator.setWebViewClient(new WebViewClient() {
+            // evita que los enlaces se abran fuera nuestra app en el navegador
+            // de android
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                return false;
+            }
+
+        });
+        final String resume = participant.getResume();
+        if (!resume.equals("null")) {
+            navigator.loadData(resume, "text/html", "UTF8");
+            participantPhoto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Util.irA(resume,DetailParticipantActivity.this);
+                }
+            });
+        } else {
+            navigator.setVisibility(View.GONE);
         }
     }
 

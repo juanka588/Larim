@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Participant;
+import com.unal.larim.DataSource.ParticipantContent;
 import com.unal.larim.GUI.DetailParticipantActivity;
 import com.unal.larim.R;
 
@@ -20,6 +21,7 @@ import java.util.List;
  */
 public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<ParticipantRecyclerViewAdapter.ParticipantViewHolder> {
 
+    private static final String TAG = "ParticipantAdapter";
     private List<Participant> participants;
     private Context context;
 
@@ -61,7 +63,9 @@ public class ParticipantRecyclerViewAdapter extends RecyclerView.Adapter<Partici
 
     public void sendEmail(int position) {
         Intent detail = new Intent(context, DetailParticipantActivity.class);
-        detail.putExtra(DetailParticipantActivity.PARTICIPANT_ARG, participants.get(position));
+        Participant p = participants.get(position);
+        Participant participant = ParticipantContent.getAuthorFromID(p.getID(), context);
+        detail.putExtra(DetailParticipantActivity.PARTICIPANT_ARG, participant == null ? p : participant);
         context.startActivity(detail);
     }
 

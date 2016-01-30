@@ -17,14 +17,14 @@ public class Conference implements Serializable {
     public Date date;
     public String chairman;
     public boolean scheduled;
-    public String paperID;
+    public long paperID;
     public String initials;
     public String description;
 
     /*@param title indicates the conference title
     * @param hour text in format HH:MM:SS
-    * @param date in format YYYY-MM-DD*/
-    public Conference(String paperID, String title, String place, String hour, String date, String chairman
+    * @param date in format EPOCH*/
+    public Conference(long paperID, String title, String place, String hour, String date, String chairman
             , String scheduled, String initials, String description) {
         this.hour = hour;
         this.title = title;
@@ -32,7 +32,8 @@ public class Conference implements Serializable {
         this.chairman = chairman;
         SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm a EEEE");
         try {
-            this.date = new Date (Long.parseLong(date));
+
+            this.date = new Date (Long.parseLong(date)*1000);
             Util.log("Current date", dateformat.format(this.date));
         } catch (Exception e) {
             this.date = Calendar.getInstance().getTime();
@@ -49,7 +50,7 @@ public class Conference implements Serializable {
     /*@param session indicates the session abbreviation
     * @param hour text in number format
     * @param scheduled references if the conference is active or not*/
-    public Conference(String paperID, String title, String place, String hour, Date date, String chairman
+    public Conference(long paperID, String title, String place, String hour, Date date, String chairman
             , boolean scheduled, String initials, String description) {
         this.hour = hour;
         this.title = title;

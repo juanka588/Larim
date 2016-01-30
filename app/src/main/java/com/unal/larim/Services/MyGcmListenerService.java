@@ -97,8 +97,8 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentIntent(pendingIntent);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(MainActivity.notification_counter /* ID of notification */,
+        notificationManager.notify(MainActivity.NOTIFICATION_COUNTER /* ID of notification */,
                 notificationBuilder.build());
-        MainActivity.notification_counter++;
+        MainActivity.NOTIFICATION_COUNTER++;
     }
 }

@@ -29,7 +29,7 @@ public class LARIMContentProvider extends ContentProvider {
 
     public static final int papers = 300;
     public static final int paper_by_id = 301;
-
+    public static final int paper_by_participantID = 302;
     public static final int notices = 400;
 
     public static final int conferences = 500;
@@ -39,6 +39,7 @@ public class LARIMContentProvider extends ContentProvider {
     public static final int country_by_code = 600;
 
     private LinnaeusDatabase ln;
+
 
     public LARIMContentProvider() {
     }
@@ -121,7 +122,8 @@ public class LARIMContentProvider extends ContentProvider {
 
         switch (match) {
             case participants: {
-                long _id = db.insert(ParticipantContent.table_name_participant, null, values);
+                long _id = db.insertWithOnConflict(ParticipantContent.table_name_participant,
+                        null, values, SQLiteDatabase.CONFLICT_REPLACE);
                 if (_id > 0)
                     returnUri = ParticipantContent.buildParticipantUri(_id);
                 else
@@ -187,7 +189,8 @@ public class LARIMContentProvider extends ContentProvider {
             case participant_by_id:
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
-                        ParticipantContent._ID + "=?", new String[]{uri.getLastPathSegment()},
+                        ParticipantContent._ID + "=?",
+                        new String[]{uri.getLastPathSegment()},
                         null, null, sortOrder);
                 break;
             case participant_by_type:
@@ -195,7 +198,8 @@ public class LARIMContentProvider extends ContentProvider {
                 if (cad.equals(ParticipantContent.TYPE_NORMAL)) {
                     cursor = db.query(getParticipantTableName(),
                             ParticipantContent.column_names,
-                            ParticipantContent.column_type + " IS NULL ",
+                            "length( " + ParticipantContent.column_type + " )<3 or "
+                                    + ParticipantContent.column_type + " IS NULL ",
                             null, null, null, sortOrder);
                     break;
                 } else {
@@ -203,10 +207,9 @@ public class LARIMContentProvider extends ContentProvider {
                         cursor = db.query(getParticipantTableName(),
                                 new String[]{"DISTINCT " + ParticipantContent.column_type},
                                 /*be careful with the number*/
-                                "length( " + ParticipantContent.column_type + " )<3 or "
+                                "length( " + ParticipantContent.column_type + " )<5 or "
                                         + ParticipantContent.column_type + " IS NULL ",
-                                null,
-                                null, null, sortOrder);
+                                null, null, null, sortOrder);
                         break;
                     } else {
                         cursor = db.query(getParticipantTableName(),
@@ -284,6 +287,13 @@ public class LARIMContentProvider extends ContentProvider {
                         new String[]{uri.getLastPathSegment()},
                         null, null, sortOrder);
                 break;
+            case paper_by_participantID:
+                cursor = db.query(getParticipantTableNameWithPaper(),
+                        PaperContent.column_names,
+                        ParticipantContent.table_name_participant + "." + ParticipantContent._ID + "=?",
+                        new String[]{uri.getLastPathSegment()},
+                        null, null, sortOrder);
+                break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -295,12 +305,19 @@ public class LARIMContentProvider extends ContentProvider {
         return ParticipantContent.table_name_participant;
     }
 
+    private String getParticipantTableNameWithPaper() {
+        return ParticipantContent.table_name_participant + " INNER JOIN " +
+                PaperContent.table_name + " ON " + ParticipantContent.table_name_participant
+                + "." + ParticipantContent._ID
+                + " = " + PaperContent.column_participant_id;
+    }
+
     private String getConferenceTableName() {
-        return ConferenceContent.table_name_conference + " a inner join " +
+        return ConferenceContent.table_name_conference + " inner join " +
                 ConferenceContent.table_name_code
-                + " b on a." + ConferenceContent.column_code_id
-                + " = b._id inner join " + ConferenceContent.table_name_chairman
-                + " c on c._id=a."
+                + " on " + ConferenceContent.table_name_conference + "." + ConferenceContent.column_code_id
+                + " = " + ConferenceContent.table_name_code + "._id inner join " + ConferenceContent.table_name_chairman
+                + " on " + ConferenceContent.table_name_chairman + "._id=" + ConferenceContent.table_name_conference + "."
                 + ConferenceContent.column_chairman_id;
     }
 
@@ -398,6 +415,7 @@ public class LARIMContentProvider extends ContentProvider {
 
         matcher.addURI(authority, PaperContent.PAPER_PATH, papers);
         matcher.addURI(authority, PaperContent.PAPER_PATH + "/#", paper_by_id);
+        matcher.addURI(authority, PaperContent.PAPER_PATH + "/participant/#", paper_by_participantID);
 
         matcher.addURI(authority, NoticeContent.NOTICE_PATH, notices);
 
