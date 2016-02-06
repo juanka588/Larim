@@ -35,6 +35,8 @@ public class AuditoriumDetailActivityFragment extends Fragment {
                 return false;
             }
         });
+        webview.getSettings().setUseWideViewPort(true);
+        webview.getSettings().setLoadWithOverviewMode(true);
         Util.log("url", SOURCE);
 //        webview.loadData(SOURCE, "text/html", "UTF-8");
         webview.loadUrl(SOURCE);

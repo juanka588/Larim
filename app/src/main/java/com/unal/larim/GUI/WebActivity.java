@@ -45,7 +45,7 @@ public class WebActivity extends AppCompatActivity {
             }
 
         });
-        isPlainText=!URL.startsWith("http:");
+        isPlainText=!(URL.startsWith("http:")||URL.startsWith("https:"));
         if (isPlainText) {
             browser.loadData(URL, "text/html", "UTF8");
         } else {

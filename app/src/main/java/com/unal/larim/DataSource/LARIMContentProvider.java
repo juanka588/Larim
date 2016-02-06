@@ -207,7 +207,7 @@ public class LARIMContentProvider extends ContentProvider {
                         cursor = db.query(getParticipantTableName(),
                                 new String[]{"DISTINCT " + ParticipantContent.column_type},
                                 /*be careful with the number*/
-                                "length( " + ParticipantContent.column_type + " )<5 or "
+                                "length( " + ParticipantContent.column_type + " )<3 or "
                                         + ParticipantContent.column_type + " IS NULL ",
                                 null, null, null, sortOrder);
                         break;

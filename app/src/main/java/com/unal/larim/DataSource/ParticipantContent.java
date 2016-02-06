@@ -105,8 +105,8 @@ public class ParticipantContent implements BaseColumns {
         String arr[] = type.split(",");
         finalString.append(switchString(arr[0]));
         for (int i = 1; i < arr.length; i++) {
-            finalString.append(";");
-            finalString.append(switchString(arr[i]));
+            finalString.append("; ");
+            finalString.append(switchString(arr[i].trim()));
         }
         return finalString.toString();
     }

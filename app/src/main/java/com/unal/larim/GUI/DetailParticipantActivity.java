@@ -61,7 +61,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
         Bitmap src = BitmapFactory.decodeResource(res, img);
         if (src == null) {
             participantPhoto.setImageResource(R.drawable.no_image);
-        }else {
+        } else {
             RoundedBitmapDrawable dr =
                     RoundedBitmapDrawableFactory.create(res, src);
             dr.setCornerRadius(Math.max(src.getWidth(), src.getHeight()) / 2.0f);
@@ -73,16 +73,16 @@ public class DetailParticipantActivity extends AppCompatActivity {
         String countryID = participant.getCountry();
         String countryDesc = getCountryDescription();
         textCountry.setText(getString(R.string.country) + "\n" + countryID + "\n" + countryDesc);
-        if (participant.getInstitution() == null||participant.getInstitution().equals("-")) {
+        if (participant.getInstitution() == null || participant.getInstitution().equals("-")) {
             textInstitution.setVisibility(View.GONE);
         } else {
             textInstitution.setText(getString(R.string.institution) + " " + participant.getInstitution());
         }
-        Paper paper= ParticipantContent.getPaper(participant.getID(), getApplicationContext());
-        if (paper==null) {
+        Paper paper = ParticipantContent.getPaper(participant.getID(), getApplicationContext());
+        if (paper == null) {
             textPaper.setVisibility(View.GONE);
         } else {
-            textPaper.setText(getString(R.string.paper) + paper.toString());
+            textPaper.setText(getString(R.string.paper) + " " + paper.toString());
         }
         navigator.getSettings().setJavaScriptEnabled(true);
         navigator.getSettings().setPluginState(WebSettings.PluginState.ON);
@@ -101,7 +101,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
             participantPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Util.irA(resume,DetailParticipantActivity.this);
+                    Util.irA(resume, DetailParticipantActivity.this);
                 }
             });
         } else {
