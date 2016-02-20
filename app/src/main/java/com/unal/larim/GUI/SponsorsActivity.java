@@ -1,7 +1,5 @@
 package com.unal.larim.GUI;
 
-import android.content.ContentResolver;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,10 +9,9 @@ import android.support.v7.widget.Toolbar;
 import com.unal.larim.Adapters.SponsorsRecyclerViewAdapter;
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
-import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SponsorsActivity extends AppCompatActivity {
 
@@ -54,27 +51,15 @@ public class SponsorsActivity extends AppCompatActivity {
         listOrganizators.setAdapter(adapter2);
     }
 
+    private List<Sponsor> initializeData(String sponsorFilter) {
+        return SponsorContent.getSponsors(getApplicationContext(),sponsorFilter);
+    }
+
     private void manageToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private ArrayList<Sponsor> initializeData(String filter) {
-        ContentResolver contentResolver = getContentResolver();
-        Cursor c = contentResolver.query(
-                SponsorContent.buildSponsorUri(filter),
-                null, null, null, null);
-        String[][] mat = Util.imprimirLista(c);
-        ArrayList<Sponsor> sponsors = new ArrayList<>();
-        for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null,
-                    this.getPackageName());
-            sponsors.add(new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]));
-        }
-        c.close();
-        Util.log("Sponsors size", sponsors.size() + "");
-        return sponsors;
-    }
 
 }

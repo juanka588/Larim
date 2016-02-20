@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.unal.larim.Data.Sponsor;
 import com.unal.larim.GUI.InformationActivity;
+import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
 import java.util.List;
@@ -62,9 +63,14 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     }
 
     public void openWeb(int position) {
-        Intent info = new Intent(act, InformationActivity.class);
-        info.putExtra(act.getString(R.string.ARG_TAG_INFORMATION), sponsors.get(position));
-        act.startActivity(info);
+        boolean onlyURL = sponsors.get(position).content == null;
+        if (onlyURL) {
+            Util.irA(sponsors.get(position).url, act);
+        } else {
+            Intent info = new Intent(act, InformationActivity.class);
+            info.putExtra(act.getString(R.string.ARG_TAG_INFORMATION), sponsors.get(position));
+            act.startActivity(info);
+        }
     }
 
     public class SponsorViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

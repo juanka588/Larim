@@ -124,15 +124,15 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.item_facebook:
                 Util.irA("https://www.facebook.com/IAU.LARIM/", this);
+                return true;
+            case R.id.item_twitter:
+                Util.irA("https://twitter.com/search?q=%23LARIM2016&src=typd", this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

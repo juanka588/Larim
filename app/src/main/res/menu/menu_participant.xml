@@ -13,4 +13,9 @@
         android:icon="@drawable/facebook"
         android:title="@string/follows_us_in_facebook"
         app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/item_twitter"
+        android:icon="@drawable/twitter"
+        android:title="@string/follows_us_in_twitter"
+        app:showAsAction="ifRoom"/>
 </menu>

@@ -22,7 +22,13 @@
             android:onClick="news"
             android:scaleType="fitCenter"
             android:src="@drawable/fondoinf2" />
-
+        <Button
+            style="@style/ButtonBlueStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="events"
+            android:text="@string/main_menu_colombia" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

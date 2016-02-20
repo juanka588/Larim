@@ -2,27 +2,22 @@ package com.unal.larim.GUI;
 
 import android.app.Activity;
 import android.content.BroadcastReceiver;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.unal.larim.Data.Notice;
-import com.unal.larim.Data.Sponsor;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.QuickstartPreferences;
-import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 import com.unal.larim.Services.RegistrationIntentService;
 
@@ -38,7 +33,6 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -100,26 +94,17 @@ public class MainActivity extends Activity {
         startActivity(audi);
     }
 
-    public void welcome(View v) {
-        Intent info = new Intent(this, InformationActivity.class);
-        info.putExtra(getString(R.string.ARG_TAG_INFORMATION), getWelcomeInfo());
-        startActivity(info);
-
+    public void events(View v) {
+        Intent events = new Intent(this, EventsActivity.class);
+        startActivity(events);
     }
 
-    private Sponsor getWelcomeInfo() {
-        ContentResolver contentResolver = getContentResolver();
-        Cursor cursor = contentResolver.query(SponsorContent.buildSponsorUri(WELCOME_IDENTIFIER)
-                , null, null, null, null);
-        String[][] mat = Util.imprimirLista(cursor);
-        Sponsor sponsor = null;
-        for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][1], null,
-                    this.getPackageName());
-            sponsor = new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]);
-        }
-        cursor.close();
-        return sponsor;
+    public void welcome(View v) {
+        Intent info = new Intent(this, InformationActivity.class);
+        info.putExtra(getString(R.string.ARG_TAG_INFORMATION),
+                SponsorContent.getSponsors(getApplicationContext(),WELCOME_IDENTIFIER).get(0));
+        startActivity(info);
+
     }
 
     public void program(View v) {

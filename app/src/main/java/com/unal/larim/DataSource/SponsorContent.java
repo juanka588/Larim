@@ -2,8 +2,17 @@ package com.unal.larim.DataSource;
 
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
+import android.database.Cursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
+
+import com.unal.larim.Data.Sponsor;
+import com.unal.larim.LN.Util;
+import com.unal.larim.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JuanCamilo on 03/08/2015.
@@ -42,4 +51,23 @@ public class SponsorContent implements BaseColumns {
     public static Uri buildMapsUri(String filter) {
         return CONTENT_URI.buildUpon().appendPath("info").appendPath(filter).build();
     }
+
+    public static List<Sponsor> getSponsors(Context context, String filter) {
+        ContentResolver contentResolver = context.getContentResolver();
+        Cursor cursor = contentResolver.query(SponsorContent.buildSponsorUri(filter)
+                , null, null, null, null);
+        String[][] mat = Util.imprimirLista(cursor);
+        List<Sponsor> sponsors = new ArrayList<>();
+        for (int i = 0; i < mat.length; i++) {
+            int icon = context.getResources().getIdentifier("drawable/" + mat[i][1], null,
+                    context.getPackageName());
+            if(icon==0){
+                icon= R.drawable.larim;
+            }
+            sponsors.add(new Sponsor(mat[i][0], icon, mat[i][2], mat[i][3]));
+        }
+        cursor.close();
+        return sponsors;
+    }
+
 }

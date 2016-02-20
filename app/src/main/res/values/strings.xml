@@ -13,7 +13,7 @@
     <string name="menu_back">volver</string>
     <string name="menu_refresh">recargar</string>
     <string name="menu_forward">adelante</string>
-    <string name="menu_URL" />
+    <string name="menu_URL"/>
     <string name="network_exception">No hay conexion a la red</string>
     <string name="expanded_app_name">LARIM</string>
     <string name="accept_dialog">Aceptar</string>
@@ -90,4 +90,7 @@
     <string name="committees">Comites</string>
     <string name="participant_description">Detalles del participante</string>
     <string name="participant_description_short">Detalles</string>
+    <string name="title_activity_events">Proximos Eventos</string>
+    <string name="main_menu_colombia">2016, Colombia Destino Astronómico</string>
+    <string name="follows_us_in_twitter">Siguenos en Twitter</string>
 </resources>
