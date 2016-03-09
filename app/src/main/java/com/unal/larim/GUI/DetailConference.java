@@ -40,6 +40,7 @@ public class DetailConference extends AppCompatActivity {
     private Conference conference;
     private Paper paper;
     private Participant author;
+    private Participant chairman;
     private ContentResolver contentResolver;
 
 
@@ -86,7 +87,8 @@ public class DetailConference extends AppCompatActivity {
         textPlace.setText(getString(R.string.place) + " " + conference.place);
         author = ParticipantContent.getAuthorFromID(paper.participantID, getApplicationContext());
         textAutor.setText(getString(R.string.author) + " " + author);
-        textChairman.setText(getString(R.string.chairman) + " " + conference.chairman);
+        chairman = ParticipantContent.getAuthorFromID(conference.chairmanID, getApplicationContext());
+        textChairman.setText(getString(R.string.chairman) + " " + chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         textDate.setText(getString(R.string.date) + " " + df.format(conference.date.getTime()).toString());
     }
@@ -100,7 +102,8 @@ public class DetailConference extends AppCompatActivity {
 
     public void participant(View v) {
         Intent participant = new Intent(getApplicationContext(), DetailParticipantActivity.class);
-        participant.putExtra(DetailParticipantActivity.PARTICIPANT_ARG, author);
+        participant.putExtra(DetailParticipantActivity.PARTICIPANT_ARG,
+                v.getId() == R.id.textAutor ? author : chairman);
         startActivity(participant);
     }
 

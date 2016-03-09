@@ -1,7 +1,6 @@
 package com.unal.larim.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,7 +23,6 @@ import java.util.List;
 public class AuditoriumRecyclerViewAdapter extends RecyclerView.Adapter<AuditoriumRecyclerViewAdapter.PlacesViewHolder> {
 
     private List<AuditoriumPlace> mPlaces;
-    private Context context;
     private Activity mActivity;
 
 
@@ -59,7 +57,6 @@ public class AuditoriumRecyclerViewAdapter extends RecyclerView.Adapter<Auditori
 
     public AuditoriumRecyclerViewAdapter(List<AuditoriumPlace> places, Activity activity) {
         this.mPlaces = places;
-        this.context = activity.getApplicationContext();
         this.mActivity = activity;
     }
 

@@ -318,7 +318,7 @@ public class LARIMContentProvider extends ContentProvider {
                 + " on " + ConferenceContent.table_name_conference + "." + ConferenceContent.column_code_id
                 + " = " + ConferenceContent.table_name_code + "._id inner join " + ConferenceContent.table_name_chairman
                 + " on " + ConferenceContent.table_name_chairman + "._id=" + ConferenceContent.table_name_conference + "."
-                + ConferenceContent.column_chairman_id;
+                + ConferenceContent.column_chairman;
     }
 
     @Override

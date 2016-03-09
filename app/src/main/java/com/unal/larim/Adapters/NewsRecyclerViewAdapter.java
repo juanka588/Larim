@@ -3,7 +3,6 @@ package com.unal.larim.Adapters;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.net.Uri;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -31,7 +30,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private static final String TAG = NewsRecyclerViewAdapter.class.getSimpleName();
     public List<Notice> notices;
-    private Context context;
     private Activity activity;
 
     private Notice remove;
@@ -53,7 +51,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
     public void onBindViewHolder(NewsViewHolder holder, int i) {
         holder.title.setText(notices.get(i).title);
         holder.content.setText(notices.get(i).content);
-        holder.row.setBackgroundColor(ContextCompat.getColor(context,
+        holder.row.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),
                 notices.get(i).checked ? R.color.darkblue : R.color.darkyellow));
     }
 
@@ -69,7 +67,6 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     public NewsRecyclerViewAdapter(ArrayList<Notice> notices, Activity activity) {
         this.notices = notices;
-        this.context = activity.getApplicationContext();
         this.activity = activity;
     }
 
@@ -80,7 +77,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         removedPosition = position;
         remove = notices.remove(position);
         notifyItemRemoved(position);
-        ContentResolver contentResolver = context.getContentResolver();
+        ContentResolver contentResolver = activity.getContentResolver();
         long retrieved = contentResolver.delete(
                 NoticeContent.CONTENT_URI, NoticeContent._ID + "=?"
                 , new String[]{remove.id});
@@ -89,9 +86,9 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     private void createSnackBar(View view) {
         Snackbar snackbar = Snackbar
-                .make(view, context.getString(R.string.message_deleted), Snackbar.LENGTH_LONG);
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.white));
-        snackbar.setAction(context.getString(R.string.snackbar_undo),
+                .make(view, activity.getString(R.string.message_deleted), Snackbar.LENGTH_LONG);
+        snackbar.setActionTextColor(ContextCompat.getColor(activity, R.color.white));
+        snackbar.setAction(activity.getString(R.string.snackbar_undo),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -99,11 +96,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
                     }
                 });
 
-        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.darkyellow));
+        snackbar.setActionTextColor(ContextCompat.getColor(activity, R.color.darkyellow));
         View snackBarView = snackbar.getView();
-        snackBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.darkblue));
+        snackBarView.setBackgroundColor(ContextCompat.getColor(activity, R.color.darkblue));
         TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.white));
+        textView.setTextColor(ContextCompat.getColor(activity, R.color.white));
         snackbar.show();
     }
 
@@ -113,7 +110,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         }
         notices.add(removedPosition, remove);
         notifyItemInserted(removedPosition);
-        ContentResolver contentResolver = context.getContentResolver();
+        ContentResolver contentResolver = activity.getContentResolver();
         ContentValues cv = new ContentValues();
         cv.put(NoticeContent._ID, remove.id);
         cv.put(NoticeContent.column_checked, remove.checked);
@@ -131,7 +128,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         selected.checked = true;
         ContentValues cv = new ContentValues();
         cv.put(NoticeContent.column_checked, 1);
-        ContentResolver contentResolver = context.getContentResolver();
+        ContentResolver contentResolver = activity.getContentResolver();
         long retrieved = contentResolver.update(
                 NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
                 , new String[]{selected.id});

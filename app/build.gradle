@@ -16,18 +16,19 @@ android {
         }
     }
     compileSdkVersion 23
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId "com.unal.larim"
         minSdkVersion 13
         targetSdkVersion 23
         versionCode 2
         versionName "1.0.1"
-//        multiDexEnabled true
+//        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
             minifyEnabled false
+//            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.relase
         }

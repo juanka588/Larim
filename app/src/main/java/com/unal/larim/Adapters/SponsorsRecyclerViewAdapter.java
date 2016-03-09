@@ -1,7 +1,6 @@
 package com.unal.larim.Adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -24,12 +23,11 @@ import java.util.List;
 public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRecyclerViewAdapter.SponsorViewHolder> {
 
     private List<Sponsor> sponsors;
-    private Context context;
     private Activity act;
 
     @Override
     public SponsorViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(context).inflate(R.layout.cardviewsponsor, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardviewsponsor, parent, false);
         SponsorViewHolder pvh = new SponsorViewHolder(v);
         return pvh;
     }
@@ -58,7 +56,6 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
 
     public SponsorsRecyclerViewAdapter(List<Sponsor> sponsors, Activity act) {
         this.sponsors = sponsors;
-        this.context = act.getApplicationContext();
         this.act = act;
     }
 

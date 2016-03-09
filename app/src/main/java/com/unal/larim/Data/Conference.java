@@ -15,7 +15,7 @@ public class Conference implements Serializable {
     public String place;
     public String hour;
     public Date date;
-    public String chairman;
+    public long chairmanID;
     public boolean scheduled;
     public long paperID;
     public String initials;
@@ -24,21 +24,20 @@ public class Conference implements Serializable {
     /*@param title indicates the conference title
     * @param hour text in format HH:MM:SS
     * @param date in format EPOCH*/
-    public Conference(long paperID, String title, String place, String hour, String date, String chairman
+    public Conference(long paperID, String title, String place, String hour, String date, long chairmanID
             , String scheduled, String initials, String description) {
         this.hour = hour;
         this.title = title;
         this.place = place;
-        this.chairman = chairman;
-        SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd hh:mm a EEEE");
+        this.chairmanID = chairmanID;
+        SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm a EEEE");
         try {
-
-            this.date = new Date (Long.parseLong(date)*1000);
-            Util.log("Current date", dateformat.format(this.date));
+            this.date = new Date(Long.parseLong(date) * 1000);
+            Util.log("Current date", simpleFormat.format(this.date));
         } catch (Exception e) {
             this.date = Calendar.getInstance().getTime();
             Util.log("Error Fechas", e.toString());
-            Util.log("valor por defecto fecha", this.date.getTime()+"");
+            Util.log("valor por defecto fecha", this.date.getTime() + "");
         }
         this.scheduled = scheduled.equals("true");
         this.paperID = paperID;
@@ -50,12 +49,12 @@ public class Conference implements Serializable {
     /*@param session indicates the session abbreviation
     * @param hour text in number format
     * @param scheduled references if the conference is active or not*/
-    public Conference(long paperID, String title, String place, String hour, Date date, String chairman
+    public Conference(long paperID, String title, String place, String hour, Date date, long chairmanID
             , boolean scheduled, String initials, String description) {
         this.hour = hour;
         this.title = title;
         this.place = place;
-        this.chairman = chairman;
+        this.chairmanID = chairmanID;
         this.date = date;
         this.scheduled = scheduled;
         this.paperID = paperID;

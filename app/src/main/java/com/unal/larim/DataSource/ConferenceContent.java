@@ -10,7 +10,7 @@ import android.provider.BaseColumns;
  */
 public class ConferenceContent implements BaseColumns {
     public static final String table_name_conference = "conference";
-    public static final String table_name_chairman = "chairman";
+    public static final String table_name_chairman = "registered";
     public static final String table_name_code = "code";
     public static final String table_names[] = new String[]{table_name_conference,
             table_name_chairman, table_name_code};
@@ -22,12 +22,12 @@ public class ConferenceContent implements BaseColumns {
     public static final String column_paper_id = "paper";
     public static final String column_scheduled = "scheduled";
     public static final String column_code_id = "code";
-    public static final String column_chairman_id = "chairman";
-    public static final String column_chairman_name = "name";
+    public static final String column_chairman = "chairman";
+    public static final String column_chairman_id = table_name_chairman + BaseColumns._ID;
     public static final String column_code_initials = "initials";
     public static final String column_code_description = "description";
     public static final String column_names[] = new String[]{column_paper_id, column_title,
-            column_place, column_hour_start, column_hour_end, column_date, column_chairman_name,
+            column_place, column_hour_start, column_hour_end, column_date, column_chairman,
             column_scheduled, column_code_initials, column_code_description};
     public static final String CONFERENCE_PATH = "conference";
 

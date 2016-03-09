@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -29,6 +31,7 @@ public class MapsActivity extends AppCompatActivity {
 
     private GoogleMap mGoogleMap;
     private Toolbar mToolbar;
+    private DrawerLayout drawerLayout;
     private ArrayList<LatLng> markersList = new ArrayList<LatLng>();
     private static final String MAP_MARKER_TYPE = "2";
     private Activity act;
@@ -45,9 +48,26 @@ public class MapsActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(getString(R.string.title_activity_maps));
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    private void setupDrawerContent(final NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        menuItem.setChecked(true);
+                        drawerLayout.closeDrawers();
+                        return true;
+                    }
+                }
+        );
+    }
 
     @Override
     protected void onResume() {
@@ -177,7 +197,7 @@ public class MapsActivity extends AppCompatActivity {
                 changeMapType();
                 return true;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                drawerLayout.openDrawer(GravityCompat.START);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

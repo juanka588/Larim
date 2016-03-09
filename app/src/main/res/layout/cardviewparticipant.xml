@@ -1,6 +1,7 @@
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView
     android:id="@+id/card_view_participant"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
@@ -23,7 +24,7 @@
             android:background="@drawable/selector_cirular"
             android:gravity="center"
             android:text="CO"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="Surname" />
+                android:text="Surname"/>
 
             <TextView
                 android:id="@+id/textParticipantInstitution"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:gravity="center_vertical"
-                android:text="OAN UNAL" />
+                android:text="OAN UNAL"/>
 
         </LinearLayout>
 

@@ -4,18 +4,18 @@
     <string name="title_activity_maps">Mapa</string>
     <string name="main_menu_1">Bienvenido</string>
     <string name="main_menu_2">Programa</string>
-    <string name="main_menu_3">Mapa</string>
-    <string name="main_menu_4">Auditorio</string>
+    <string name="main_menu_3">Mapa \u0026 Hoteles</string>
+    <string name="main_menu_4" translatable="false">Venue</string>
     <string name="main_menu_5">Participantes</string>
     <string name="main_menu_6">Apoyo</string>
-    <string name="explanation">prueba</string>
-    <string name="title_activity_web"></string>
+    <string name="explanation" translatable="false">prueba</string>
+    <string name="title_activity_web" translatable="false"></string>
     <string name="menu_back">volver</string>
     <string name="menu_refresh">recargar</string>
     <string name="menu_forward">adelante</string>
-    <string name="menu_URL"/>
+    <string name="menu_URL" translatable="false"/>
     <string name="network_exception">No hay conexion a la red</string>
-    <string name="expanded_app_name">LARIM</string>
+    <string name="expanded_app_name" translatable="false">LARIM</string>
     <string name="accept_dialog">Aceptar</string>
     <string name="cancel_dialog">Cancelar</string>
     <string name="title_activity_cronograma">Cronograma</string>
@@ -38,32 +38,31 @@
     <string name="gcm_send_message">TokenID enviado</string>
     <string name="token_error_message">Error TokenID</string>
     <string name="title_activity_news">Noticias</string>
-    <string name="gcm_defaultSenderId">224088768895</string>
+    <string name="gcm_defaultSenderId" translatable="false">224088768895</string>
     <string name="satellite">Satelite</string>
     <string name="information">Información</string>
     <string name="web_site">Sitio Web</string>
     <string name="title_activity_participant">Participantes</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="today">Hoy:</string>
     <string name="hour">Hora:</string>
-    <string name="paper">Paper:</string>
+    <string name="paper" translatable="false">Paper:</string>
     <string name="place">Lugar:</string>
     <string name="author">Autor:</string>
-    <string name="chairman">Chairman:</string>
+    <string name="chairman" translatable="false">Chairman:</string>
     <string name="date">Fecha:</string>
     <string name="title_activity_information">Informacion</string>
-    <string name="TAG_CONFERENCE">conference</string>
-    <string name="ARG_TAG_INFORMATION">information</string>
-    <string name="ARG_WEB_PAGE">paginaWEB</string>
+    <string name="TAG_CONFERENCE" translatable="false">conference</string>
+    <string name="ARG_TAG_INFORMATION" translatable="false">information</string>
+    <string name="ARG_WEB_PAGE" translatable="false">paginaWEB</string>
     <string name="participant_search">Busqueda</string>
-    <string name="ARG_NOTICE">notice</string>
-    <string name="title_activity_detail_participant">Participant</string>
+    <string name="ARG_NOTICE" translatable="false">notice</string>
+    <string name="title_activity_detail_participant">Participante</string>
     <string name="name">Nombre:</string>
-    <string name="email">Email:</string>
+    <string name="email" translatable="false">Email:</string>
     <string name="type">Tipo:</string>
-    <string name="institution">Institucion:</string>
+    <string name="institution">Institución:</string>
     <string name="help_type">Tipo de Ayuda:</string>
     <string name="country">Pais</string>
     <string name="title_activity_auditorium">Auditorio</string>
@@ -74,7 +73,7 @@
     <string name="places_LARIM">Lugares LARIM 2016</string>
     <string name="not_application_installed">No existe ninguna aplicacion para abrir el archivo
     </string>
-    <string name="ARG_NAV_BAR">app_bar</string>
+    <string name="ARG_NAV_BAR" translatable="false">app_bar</string>
     <string name="registration_port">Portico Registro</string>
     <string name="saloon_201">Salon 201</string>
     <string name="saloon_303">Salon 303</string>
@@ -85,7 +84,7 @@
     <string name="title_activity_schedule">Cronograma</string>
     <string name="calendar">Agendar</string>
     <string name="follows_us_in_facebook">Siguenos en Facebook</string>
-    <string name="testWeb">
+    <string name="testWeb" translatable="false">
         <![CDATA[<html> <head> <title></title> </head> <body> <p style=\\\"text-align: justify;\\\">Is a professor at the National Astronomical Observatory, National University of Colombia. His research is focused on the connection between the star formation activity and the dynamics of active galactic nuclei. On the other hand he is the leader of the group Numerical Analysis and Simulation in Parallel and head of the team of mobile applications development (iUNDev). Now is the chair of the Local Organizing Committee for the XV Latin American Regional IAU Meeting, Cartagena, Colombia, 2016. <a href=\"http://ciencias.bogota.unal.edu.co/oan/docentes/\">URL</a></p> </body> </html>]]></string>
     <string name="committees">Comites</string>
     <string name="participant_description">Detalles del participante</string>
