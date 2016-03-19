@@ -5,10 +5,10 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -25,16 +25,19 @@ import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MapsActivity extends AppCompatActivity {
 
     private GoogleMap mGoogleMap;
     private Toolbar mToolbar;
     private DrawerLayout drawerLayout;
-    private ArrayList<LatLng> markersList = new ArrayList<LatLng>();
+    private NavigationView navigationView;
+    private Map<Integer, Marker> markersList = new TreeMap<>();
     private static final String MAP_MARKER_TYPE = "2";
     private Activity act;
+    private MarkerOptions firstMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class MapsActivity extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         mToolbar.setTitle(getString(R.string.title_activity_maps));
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         if (navigationView != null) {
             setupDrawerContent(navigationView);
         }
@@ -61,7 +64,7 @@ public class MapsActivity extends AppCompatActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
+                        moveCamera(getLatLong(menuItem.getTitle()), 16);
                         drawerLayout.closeDrawers();
                         return true;
                     }
@@ -112,13 +115,14 @@ public class MapsActivity extends AppCompatActivity {
     private void setUpMap() {
         getMapData();
         act = this;
-        moveCamera(markersList.get(0), 4);
+        moveCamera(firstMarker.getPosition(), 4);
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
                 Util.irA(marker.getSnippet(), act);
             }
         });
+        mGoogleMap.getUiSettings().setMapToolbarEnabled(true);
     }
 
     private void getMapData() {
@@ -128,15 +132,13 @@ public class MapsActivity extends AppCompatActivity {
         String mat[][] = Util.imprimirLista(cursor);
         for (int i = 0; i < mat.length; i++) {
             showMarker(new LatLng(Double.parseDouble(mat[i][2] + ""), Double.parseDouble(mat[i][3] + "")),
-                    mat[i][0] + "", mat[i][1] + "", 0);
+                    mat[i][0] + "", mat[i][1] + "", Integer.parseInt(mat[i][4]));
         }
         cursor.close();
     }
 
-    private void showMarker(LatLng latLng, String title, String desc,
-                            int type) {
-        showMarker(latLng.latitude, latLng.longitude, title, desc, type);
-
+    private void showMarker(LatLng latLng, String title, String desc, int id) {
+        showMarker(latLng.latitude, latLng.longitude, title, desc, id);
     }
 
     /**
@@ -144,31 +146,18 @@ public class MapsActivity extends AppCompatActivity {
      * @param lng   longitude
      * @param title title displayed
      * @param desc  snippet
-     * @param type  describes if we want to change visual aspects of marker
      */
     private void showMarker(double lat, double lng, String title,
-                            String desc, int type) {
-        if (!markersList.contains(new LatLng(lat, lng))) {
-            markersList.add(new LatLng(lat, lng));
-            MarkerOptions k = null;
-            if (type == 0) {
-                k = new MarkerOptions()
-                        .position(new LatLng(lat, lng))
-                        .title(title)
-                        .snippet(desc)
-                        .icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
-
-            } else {
-                k = new MarkerOptions()
-                        .position(new LatLng(lat, lng))
-                        .title(title)
-                        .snippet(desc)
-                        .icon(BitmapDescriptorFactory
-                                .defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
-                // .fromResource(R.drawable.edificiop2));
-            }
-            mGoogleMap.addMarker(k);
+                            String desc, int id) {
+        if (!markersList.containsKey(id)) {
+            MarkerOptions k = new MarkerOptions()
+                    .position(new LatLng(lat, lng))
+                    .title(title)
+                    .snippet(desc)
+                    .icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_VIOLET));
+            markersList.put(id, mGoogleMap.addMarker(k));
+            firstMarker = k;
         }
     }
 
@@ -187,8 +176,17 @@ public class MapsActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_maps, menu);
+        Menu menuDrawer = navigationView.getMenu();
+        addHotels(menuDrawer);
         return super.onCreateOptionsMenu(menu);
     }
+
+    private void addHotels(Menu menu) {
+        for (int id : markersList.keySet()) {
+            menu.add(markersList.get(id).getTitle());
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -197,12 +195,29 @@ public class MapsActivity extends AppCompatActivity {
                 changeMapType();
                 return true;
             case android.R.id.home:
-                drawerLayout.openDrawer(GravityCompat.START);
+                onBackPressed();
+                return true;
+            case R.id.ItemHotels:
+                drawerLayout.openDrawer(Gravity.RIGHT);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
 
         }
+    }
+
+    private LatLng getLatLong(CharSequence title) {
+        LatLng latLng = null;
+        Marker item;
+        for (int id : markersList.keySet()) {
+            item = markersList.get(id);
+            if (title.equals(item.getTitle())) {
+                latLng = item.getPosition();
+                item.showInfoWindow();
+                return latLng;
+            }
+        }
+        return latLng;
     }
 
     private void changeMapType() {

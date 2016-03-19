@@ -1,10 +1,9 @@
 package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
@@ -16,6 +15,8 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 import com.unal.larim.Data.Paper;
 import com.unal.larim.Data.Participant;
 import com.unal.larim.DataSource.CountryContent;
@@ -53,20 +54,28 @@ public class DetailParticipantActivity extends AppCompatActivity {
         textInstitution = (TextView) findViewById(R.id.textDetailPartIntitution);
         textPaper = (TextView) findViewById(R.id.textDetailPartPaper);
         navigator = (WebView) findViewById(R.id.resumeView);
+        Picasso.with(this).setIndicatorsEnabled(true);
+        Picasso.with(this)
+                .load("http://mcdaniel.hu/wp-content/uploads/2015/01/6784063-cute-cats-hd.jpg")
+                .error(R.drawable.no_image)
+                .into(participantPhoto, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Bitmap source = ((BitmapDrawable) participantPhoto.getDrawable()).getBitmap();
+                        RoundedBitmapDrawable drawable =
+                                RoundedBitmapDrawableFactory.create(DetailParticipantActivity.this
+                                        .getResources(), source);
+                        drawable.setCircular(true);
+                        drawable.setCornerRadius(Math.max(source.getWidth() / 2.0f, source.getHeight() / 2.0f));
+                        participantPhoto.setImageDrawable(drawable);
+                    }
 
-        /*TODO:replace with an service of image*/
-        Resources res = getResources();
-        int img = participant.getImage();
-        Util.log(TAG, "selected image: " + img);
-        Bitmap src = BitmapFactory.decodeResource(res, img);
-        if (src == null) {
-            participantPhoto.setImageResource(R.drawable.no_image);
-        } else {
-            RoundedBitmapDrawable dr =
-                    RoundedBitmapDrawableFactory.create(res, src);
-            dr.setCornerRadius(Math.max(src.getWidth(), src.getHeight()) / 2.0f);
-            participantPhoto.setImageDrawable(dr);
-        }
+                    @Override
+                    public void onError() {
+
+                    }
+                });
+
         textName.setText(getString(R.string.name) + " " + participant.getName());
         textType.setText(getString(R.string.type) + " " + ParticipantContent.getTypeString(participant.getType()));
         textEmail.setText(getString(R.string.email) + " " + participant.getEmail());

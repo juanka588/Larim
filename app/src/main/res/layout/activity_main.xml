@@ -22,7 +22,7 @@
             android:id="@+id/imageView1"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="70"
+            android:layout_weight="60"
             android:scaleType="fitCenter"
             android:src="@drawable/fondoinf2"/>
 
@@ -30,7 +30,7 @@
             android:id="@+id/menuTable"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="30"
+            android:layout_weight="40"
             android:orientation="vertical"
             android:paddingLeft="10dp">
             <TableRow
@@ -42,6 +42,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:padding="10dp"
                     android:gravity="center"
                     android:onClick="events"
                     android:text="@string/main_menu_colombia"/>
@@ -127,6 +128,7 @@
         android:adjustViewBounds="true"
         android:elevation="2dp"
         android:onClick="news"
+        app:fabSize="mini"
         android:src="@drawable/ic_calendar"
         app:layout_anchor="@id/menuTable"
         app:layout_anchorGravity="top|right|end"/>

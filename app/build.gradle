@@ -43,7 +43,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     //    compile 'com.android.support:palette-v7:23.1.0'
-    //    compile 'com.commit451:PhotoView:1.2.4'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile files('libs/svg-android.jar')
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:appcompat-v7:23.1.0'

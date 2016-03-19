@@ -43,6 +43,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:onClick="events"
+                    android:padding="10dp"
                     android:text="@string/main_menu_colombia"/>
 
             </TableRow>

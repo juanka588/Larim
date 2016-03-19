@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
     public void welcome(View v) {
         Intent info = new Intent(this, InformationActivity.class);
         info.putExtra(getString(R.string.ARG_TAG_INFORMATION),
-                SponsorContent.getSponsors(getApplicationContext(),WELCOME_IDENTIFIER).get(0));
+                SponsorContent.getSponsors(getApplicationContext(), WELCOME_IDENTIFIER).get(0));
         startActivity(info);
 
     }

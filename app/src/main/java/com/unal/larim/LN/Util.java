@@ -28,6 +28,7 @@ import java.util.Calendar;
  * Created by JuanCamilo on 15/03/2015.
  */
 public class Util {
+    public static final String IMAGE_SOURCE="https://drive.google.com/folderview?id=0B35yrc6tno4Ld05ialFkNXJfcWs&usp=sharing";
     public static Drawable resizeImage(Context context, int resId, int w, int h) {
 
         // cargamos la imagen de origen

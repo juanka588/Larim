@@ -72,4 +72,5 @@
     <string name="token_error_message">TokenID Error</string>
     <string name="type">Type:</string>
     <string name="web_site">Web Site</string>
+    <string name="hotels">Hotels</string>
 </resources>

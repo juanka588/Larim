@@ -29,7 +29,7 @@ public class SponsorContent implements BaseColumns {
     public static final String column_names[] = new String[]{column_name,
             column_icon, column_website, column_content};
     public static final String column_names2[] = new String[]{column_name,
-            column_website, column_latitude, column_longitude};
+            column_website, column_latitude, column_longitude,_ID};
     public static final String SPONSOR_PATH = "sponsor";
     public static final Uri CONTENT_URI =
             LARIMContentProvider.BASE_CONTENT_URI.buildUpon().appendPath(SPONSOR_PATH).build();

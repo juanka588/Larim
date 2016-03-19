@@ -9,5 +9,11 @@
         app:showAsAction="ifRoom"
         android:title="@string/satellite"
         android:visible="true"/>
+    <item
+        android:id="@+id/ItemHotels"
+        android:icon="@drawable/ic_hotel_24dp"
+        app:showAsAction="ifRoom"
+        android:title="@string/hotels"
+        android:visible="true"/>
 
 </menu>
