@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.View;
@@ -30,11 +31,13 @@ public class MainActivity extends Activity {
     public static final boolean DEBUG = true;
     public static int NOTIFICATION_COUNTER;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -53,6 +56,12 @@ public class MainActivity extends Activity {
             // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
+        }
+        int newItems = 1;
+        if (newItems == 0) {
+            fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkyellow));
+        } else {
+            fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkblue));
         }
     }
 

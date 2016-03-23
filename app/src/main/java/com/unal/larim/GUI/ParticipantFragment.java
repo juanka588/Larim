@@ -79,10 +79,8 @@ public class ParticipantFragment extends Fragment {
         String mat[][] = Util.imprimirLista(cursor);
         ArrayList<Participant> participants = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][6], null,
-                    this.getActivity().getPackageName());
             participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3],
-                    mat[i][4], mat[i][5], icon,Long.parseLong(mat[i][7])));
+                    mat[i][4], mat[i][5], mat[i][6],Long.parseLong(mat[i][7])));
         }
         cursor.close();
         return participants;
@@ -92,10 +90,8 @@ public class ParticipantFragment extends Fragment {
         String mat[][] = Util.imprimirLista(cursor);
         ArrayList<Participant> participants = new ArrayList<>();
         for (int i = 0; i < mat.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + mat[i][6], null,
-                    this.getActivity().getPackageName());
             participants.add(new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3],
-                    mat[i][4], mat[i][5], icon,Long.parseLong(mat[i][7])));
+                    mat[i][4], mat[i][5], mat[i][6],Long.parseLong(mat[i][7])));
         }
         cursor.close();
         return participants;

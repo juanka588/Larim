@@ -119,7 +119,10 @@ public class MapsActivity extends AppCompatActivity {
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Util.irA(marker.getSnippet(), act);
+                String cad = marker.getSnippet();
+                if (!"".equals(cad)) {
+                    Util.irA(cad, act);
+                }
             }
         });
         mGoogleMap.getUiSettings().setMapToolbarEnabled(true);

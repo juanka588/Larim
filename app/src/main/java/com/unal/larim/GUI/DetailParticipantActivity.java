@@ -28,6 +28,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
 
     public static final String PARTICIPANT_ARG = "participant";
     private static final String TAG = DetailParticipantActivity.class.getSimpleName();
+    private static final String BASE_URL = "http://i1318.photobucket.com/albums/t654/Juan_Camilo_Rodriguez_Duran/";
     private ImageView participantPhoto;
     private TextView textName;
     private TextView textEmail;
@@ -44,7 +45,6 @@ public class DetailParticipantActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_participant);
         Bundle b = getIntent().getExtras();
         participant = (Participant) b.getSerializable(PARTICIPANT_ARG);
-
         Util.log(TAG, participant + "");
         participantPhoto = (ImageView) findViewById(R.id.photoPart);
         textName = (TextView) findViewById(R.id.textDetailPartName);
@@ -56,7 +56,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
         navigator = (WebView) findViewById(R.id.resumeView);
         Picasso.with(this).setIndicatorsEnabled(true);
         Picasso.with(this)
-                .load("http://mcdaniel.hu/wp-content/uploads/2015/01/6784063-cute-cats-hd.jpg")
+                .load(BASE_URL+participant.getImage()+".jpg")
                 .error(R.drawable.no_image)
                 .into(participantPhoto, new Callback() {
                     @Override
@@ -75,7 +75,6 @@ public class DetailParticipantActivity extends AppCompatActivity {
 
                     }
                 });
-
         textName.setText(getString(R.string.name) + " " + participant.getName());
         textType.setText(getString(R.string.type) + " " + ParticipantContent.getTypeString(participant.getType()));
         textEmail.setText(getString(R.string.email) + " " + participant.getEmail());

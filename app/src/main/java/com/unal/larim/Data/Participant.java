@@ -14,7 +14,7 @@ public class Participant implements Serializable {
     private String type;
     private String helpType;
     private String resume;
-    private int image;
+    private String image;
 
     public String getName() {
         return name;
@@ -76,7 +76,7 @@ public class Participant implements Serializable {
         return resume;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
@@ -91,7 +91,7 @@ public class Participant implements Serializable {
      * @param image       resource identifier of participant image
      */
     public Participant(String name, String email, String institution,
-                       String country, String type,String resume, int image, long ID) {
+                       String country, String type,String resume, String image, long ID) {
         this.name = name;
         this.email = email;
         this.institution = institution;

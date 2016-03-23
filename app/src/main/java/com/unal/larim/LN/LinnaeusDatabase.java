@@ -17,8 +17,9 @@ import java.io.OutputStream;
 
 public class LinnaeusDatabase extends SQLiteOpenHelper {
 
+    private static final String TAG = LinnaeusDatabase.class.getSimpleName();
     public static String DATABASE_PATH;
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
     public static String DATABASE_NAME = "larim2016.sqlite";
     private final Context dbContext;
     public SQLiteDatabase dataBase;
@@ -93,6 +94,12 @@ public class LinnaeusDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        try {
+            copyDataBase();
+            Toast.makeText(dbContext, dbContext.getText(R.string.database),
+                    Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Util.log(TAG, e.toString());
+        }
     }
 }

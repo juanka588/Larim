@@ -196,10 +196,8 @@ public class ParticipantContent implements BaseColumns {
         String mat[][] = Util.imprimirLista(cursor);
         Participant participant = null;
         for (int i = 0; i < mat.length; i++) {
-            int icon = context.getResources().getIdentifier("drawable/" + mat[i][6], null,
-                    context.getPackageName());
             participant = new Participant(mat[i][0], mat[i][1], mat[i][2], mat[i][3],
-                    mat[i][4], mat[i][5], icon, Long.parseLong(mat[i][7]));
+                    mat[i][4], mat[i][5], mat[i][6], Long.parseLong(mat[i][7]));
         }
         cursor.close();
         return participant;
