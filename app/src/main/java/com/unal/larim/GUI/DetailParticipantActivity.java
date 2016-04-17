@@ -44,7 +44,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_participant);
         Bundle b = getIntent().getExtras();
-        participant = (Participant) b.getSerializable(PARTICIPANT_ARG);
+        participant = (Participant) b.getParcelable(PARTICIPANT_ARG);
         Util.log(TAG, participant + "");
         participantPhoto = (ImageView) findViewById(R.id.photoPart);
         textName = (TextView) findViewById(R.id.textDetailPartName);

@@ -35,10 +35,10 @@ public class InformationActivityFragment extends Fragment {
         title = (TextView) rootView.findViewById(R.id.textInformationTitle);
         content = (WebView) rootView.findViewById(R.id.contentInformationView);
         image = (ImageView) rootView.findViewById(R.id.imageInformation);
-        title.setText(InformationActivity.information.name);
-        content.loadData(InformationActivity.information.content, "text/html", "utf-8");
+        title.setText(InformationActivity.information.getName());
+        content.loadData(InformationActivity.information.getContent(), "text/html", "utf-8");
         content.setBackgroundColor(Color.parseColor("#00000000"));
-        image.setImageResource(InformationActivity.information.icon);
+        image.setImageResource(InformationActivity.information.getIcon());
         return rootView;
     }
 }

@@ -71,7 +71,7 @@ public class AuditoriumActivity extends AppCompatActivity {
     }
 
     private List<AuditoriumPlace> populateData() {
-        ArrayList<AuditoriumPlace> list = new ArrayList<>();
+        List<AuditoriumPlace> list = new ArrayList<>();
         String iconsNames[] = new String[]{
                 "audi_getsemani",
                 "fondoinf",

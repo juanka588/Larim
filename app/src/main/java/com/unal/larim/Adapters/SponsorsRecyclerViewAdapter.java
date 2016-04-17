@@ -40,8 +40,8 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     @Override
     public void onBindViewHolder(SponsorViewHolder holder, int i) {
         Sponsor s = sponsors.get(i);
-        holder.name.setText(s.name);
-        holder.icon.setImageResource(s.icon);
+        holder.name.setText(s.getName());
+        holder.icon.setImageResource(s.getIcon());
     }
 
     @Override
@@ -60,9 +60,9 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     }
 
     public void openWeb(int position) {
-        boolean onlyURL = sponsors.get(position).content == null;
+        boolean onlyURL = sponsors.get(position).getContent() == null;
         if (onlyURL) {
-            Util.irA(sponsors.get(position).url, act);
+            Util.irA(sponsors.get(position).getUrl(), act);
         } else {
             Intent info = new Intent(act, InformationActivity.class);
             info.putExtra(act.getString(R.string.ARG_TAG_INFORMATION), sponsors.get(position));

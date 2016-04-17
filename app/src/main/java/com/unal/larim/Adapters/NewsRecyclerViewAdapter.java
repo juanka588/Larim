@@ -20,7 +20,6 @@ import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -49,10 +48,10 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int i) {
-        holder.title.setText(notices.get(i).title);
-        holder.content.setText(notices.get(i).content);
+        holder.title.setText(notices.get(i).getTitle());
+        holder.content.setText(notices.get(i).getContent());
         holder.row.setBackgroundColor(ContextCompat.getColor(activity.getApplicationContext(),
-                notices.get(i).checked ? R.color.darkblue : R.color.darkyellow));
+                notices.get(i).isChecked() ? R.color.darkblue : R.color.darkyellow));
     }
 
     @Override
@@ -65,7 +64,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         return notices.size();
     }
 
-    public NewsRecyclerViewAdapter(ArrayList<Notice> notices, Activity activity) {
+    public NewsRecyclerViewAdapter(List<Notice> notices, Activity activity) {
         this.notices = notices;
         this.activity = activity;
     }
@@ -80,7 +79,7 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         ContentResolver contentResolver = activity.getContentResolver();
         long retrieved = contentResolver.delete(
                 NoticeContent.CONTENT_URI, NoticeContent._ID + "=?"
-                , new String[]{remove.id});
+                , new String[]{remove.getId()});
         createSnackBar(view);
     }
 
@@ -112,11 +111,11 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
         notifyItemInserted(removedPosition);
         ContentResolver contentResolver = activity.getContentResolver();
         ContentValues cv = new ContentValues();
-        cv.put(NoticeContent._ID, remove.id);
-        cv.put(NoticeContent.column_checked, remove.checked);
-        cv.put(NoticeContent.column_content, remove.content);
-        cv.put(NoticeContent.column_title, remove.title);
-        cv.put(NoticeContent.column_url, remove.url);
+        cv.put(NoticeContent._ID, remove.getId());
+        cv.put(NoticeContent.column_checked, remove.isChecked());
+        cv.put(NoticeContent.column_content, remove.getContent());
+        cv.put(NoticeContent.column_title, remove.getTitle());
+        cv.put(NoticeContent.column_url, remove.getUrl());
         Uri retrieved = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
         Util.log(TAG, retrieved.toString());
         removedPosition = -1;
@@ -125,16 +124,16 @@ public class NewsRecyclerViewAdapter extends RecyclerView.Adapter<NewsRecyclerVi
 
     public void irWeb(int position) {
         Notice selected = notices.get(position);
-        selected.checked = true;
+        selected.setChecked(true);
         ContentValues cv = new ContentValues();
         cv.put(NoticeContent.column_checked, 1);
         ContentResolver contentResolver = activity.getContentResolver();
         long retrieved = contentResolver.update(
                 NoticeContent.CONTENT_URI, cv, NoticeContent._ID + "=?"
-                , new String[]{selected.id});
+                , new String[]{selected.getId()});
         notifyItemChanged(position);
-        Util.log(TAG, retrieved + " " + selected.title + " con id " + retrieved);
-        Util.irA(notices.get(position).url, activity);
+        Util.log(TAG, retrieved + " " + selected.getTitle() + " con id " + retrieved);
+        Util.irA(notices.get(position).getUrl(), activity);
     }
 
     public class NewsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

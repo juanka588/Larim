@@ -11,7 +11,7 @@ import com.unal.larim.Data.Paper;
 import com.unal.larim.Data.Participant;
 import com.unal.larim.LN.Util;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JuanCamilo on 03/08/2015.
@@ -206,7 +206,7 @@ public class ParticipantContent implements BaseColumns {
     public static Paper getPaper(long participantID, Context context) {
         Cursor cursor = context.getContentResolver().query(PaperContent.buildPaperParticipantUri(participantID),
                 null, null, null, null);
-        ArrayList<Paper> papers = PaperContent.getPapers(cursor);
+        List<Paper> papers = PaperContent.getPapers(cursor);
         cursor.close();
         return papers.isEmpty() ? null : papers.get(0);
     }

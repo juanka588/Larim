@@ -19,7 +19,7 @@ public class InformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
-        information = (Sponsor) bundle.getSerializable(getString(R.string.ARG_TAG_INFORMATION));
+        information = (Sponsor) bundle.getParcelable(getString(R.string.ARG_TAG_INFORMATION));
         setContentView(R.layout.activity_information);
         manageToolbar();
     }
@@ -27,7 +27,7 @@ public class InformationActivity extends AppCompatActivity {
     private void manageToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(information.name + "");
+        getSupportActionBar().setTitle(information.getName() + "");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -45,7 +45,7 @@ public class InformationActivity extends AppCompatActivity {
                 onBackPressed();
                 return true;
             case R.id.ItemWEB:
-                Util.irA(information.url, this);
+                Util.irA(information.getUrl(), this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

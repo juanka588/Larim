@@ -10,6 +10,7 @@ import android.provider.BaseColumns;
 import com.unal.larim.Data.Paper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JuanCamilo on 03/08/2015.
@@ -48,12 +49,12 @@ public class PaperContent implements BaseColumns {
         }
         ContentResolver cr = context.getContentResolver();
         Cursor c = cr.query(PaperContent.buildPaperUri(paperID), null, null, null, null);
-        ArrayList<Paper> papers = getPapers(c);
+        List<Paper> papers = getPapers(c);
         return papers.isEmpty() ? null : papers.get(0);
     }
 
-    public static ArrayList<Paper> getPapers(Cursor c) {
-        ArrayList<Paper> papers = new ArrayList<>();
+    public static List<Paper> getPapers(Cursor c) {
+        List<Paper> papers = new ArrayList<>();
         if (c.moveToFirst()) {
             for (int i = 0; i < c.getCount(); i++) {
                 String title = c.getString(c.getColumnIndex(column_title));

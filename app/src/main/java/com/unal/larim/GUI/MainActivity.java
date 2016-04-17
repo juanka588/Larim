@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.unal.larim.Data.Notice;
+import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.QuickstartPreferences;
 import com.unal.larim.R;
@@ -57,11 +58,12 @@ public class MainActivity extends Activity {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
-        int newItems = 1;
+        int newItems = NoticeContent.getUnreadNews(getApplicationContext());
         if (newItems == 0) {
-            fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkyellow));
-        } else {
             fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkblue));
+        } else {
+            Toast.makeText(getApplicationContext(), "unread: " + newItems, Toast.LENGTH_SHORT).show();
+            fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkyellow));
         }
     }
 

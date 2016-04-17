@@ -2,7 +2,6 @@ package com.unal.larim.GUI;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,7 +20,7 @@ import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class NewsActivity extends AppCompatActivity {
@@ -87,7 +86,7 @@ public class NewsActivity extends AppCompatActivity {
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
-        adapter = new NewsRecyclerViewAdapter(initializeData(), this);
+        adapter = new NewsRecyclerViewAdapter(NoticeContent.getNews(getApplicationContext()), this);
         recList.setAdapter(adapter);
     }
 
@@ -97,13 +96,13 @@ public class NewsActivity extends AppCompatActivity {
      */
     private void handleBundle() {
         Bundle b = this.getIntent().getExtras();
-        Notice notice = (Notice) b.getSerializable(getString(R.string.ARG_NOTICE));
+        Notice notice = (Notice) b.getParcelable(getString(R.string.ARG_NOTICE));
         if (notice != null) {
             ContentValues cv = new ContentValues();
-            cv.put(NoticeContent.column_title, notice.title);
-            cv.put(NoticeContent.column_content, notice.content);
+            cv.put(NoticeContent.column_title, notice.getTitle());
+            cv.put(NoticeContent.column_content, notice.getContent());
             cv.put(NoticeContent.column_checked, false);
-            cv.put(NoticeContent.column_url, notice.url);
+            cv.put(NoticeContent.column_url, notice.getUrl());
             ContentResolver contentResolver = getContentResolver();
             Uri retrieved = contentResolver.insert(NoticeContent.CONTENT_URI, cv);
         }
@@ -129,25 +128,13 @@ public class NewsActivity extends AppCompatActivity {
         itemTouchHelper.attachToRecyclerView(recList);
     }
 
-    private ArrayList<Notice> initializeData() {
-        ContentResolver contentResolver = getContentResolver();
-        Cursor c = contentResolver.query(NoticeContent.CONTENT_URI, null, null, null, null);
-        String[][] mat = Util.imprimirLista(c);
-        ArrayList<Notice> notices = new ArrayList<>();
-        for (int i = 0; i < mat.length; i++) {
-            notices.add(new Notice(mat[i][0], mat[i][1], mat[i][2], mat[i][3], mat[i][4]));
-        }
-        c.close();
-        Util.log("Noticias size", notices.size() + "");
-        return notices;
-    }
 
-    private class FetchNewsTask extends AsyncTask<Void, Void, ArrayList<Notice>> {
+    private class FetchNewsTask extends AsyncTask<Void, Void, List<Notice>> {
 
         static final int DURACION = 3 * 1000; // 3 segundos de carga
 
         @Override
-        protected ArrayList doInBackground(Void... params) {
+        protected List<Notice> doInBackground(Void... params) {
             // Simulación de la carga de items
             try {
                 Thread.sleep(DURACION);
@@ -157,7 +144,7 @@ public class NewsActivity extends AppCompatActivity {
             Util.log("retorno asincrono", "si");
             // Retornar en nuevos elementos para el adaptador
             /*test*/
-            ArrayList<Notice> temp = initializeData();
+            List<Notice> temp = NoticeContent.getNews(getApplicationContext());
             int r = (int) (Math.random() * 100);
             temp.add(new Notice("1", "New notice from server" + r, "Contenidos " + r,
                     true, "http://www.google.com"));
@@ -165,7 +152,7 @@ public class NewsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList result) {
+        protected void onPostExecute(List result) {
             super.onPostExecute(result);
 
             // Limpiar elementos antiguos

@@ -62,14 +62,14 @@ public class DetailConference extends AppCompatActivity {
         contentResolver = getContentResolver();
 
         Bundle b = this.getIntent().getExtras();
-        conference = (Conference) b.getSerializable(getString(R.string.TAG_CONFERENCE));
+        conference = (Conference) b.getParcelable(getString(R.string.TAG_CONFERENCE));
         populateData();
     }
 
     public void populateData() {
-        paper = PaperContent.getPaper(conference.paperID, getApplicationContext());
+        paper = PaperContent.getPaper(conference.getPaperID(), getApplicationContext());
         pdfConference.loadUrl("http://docs.google.com/gview?embedded=true&url=" +
-                paper.pdfURL);
+                paper.getPdfURL());
         pdfConference.getSettings().setJavaScriptEnabled(true);
         pdfConference.getSettings().setPluginState(WebSettings.PluginState.ON);
         pdfConference.getSettings().setBuiltInZoomControls(true);
@@ -82,15 +82,15 @@ public class DetailConference extends AppCompatActivity {
             }
 
         });
-        textHour.setText(getString(R.string.hour) + " " + conference.hour);
-        textPaperName.setText(getString(R.string.paper) + " " + paper.title);
-        textPlace.setText(getString(R.string.place) + " " + conference.place);
-        author = ParticipantContent.getAuthorFromID(paper.participantID, getApplicationContext());
+        textHour.setText(getString(R.string.hour) + " " + conference.getHour());
+        textPaperName.setText(getString(R.string.paper) + " " + paper.getTitle());
+        textPlace.setText(getString(R.string.place) + " " + conference.getPlace());
+        author = ParticipantContent.getAuthorFromID(paper.getParticipantID(), getApplicationContext());
         textAutor.setText(getString(R.string.author) + " " + author);
-        chairman = ParticipantContent.getAuthorFromID(conference.chairmanID, getApplicationContext());
+        chairman = ParticipantContent.getAuthorFromID(conference.getChairmanID(), getApplicationContext());
         textChairman.setText(getString(R.string.chairman) + " " + chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        textDate.setText(getString(R.string.date) + " " + df.format(conference.date.getTime()).toString());
+        textDate.setText(getString(R.string.date) + " " + df.format(conference.getDate().getTime()).toString());
     }
 
     private void manageToolbar() {
@@ -109,19 +109,19 @@ public class DetailConference extends AppCompatActivity {
 
     public void schedule() {
         int beginHour, beginMinute, endHour, endMinute;
-        String begin = conference.hour.split("-")[0];
-        String end = conference.hour.split("-")[1];
+        String begin = conference.getHour().split("-")[0];
+        String end = conference.getHour().split("-")[1];
         beginHour = Integer.parseInt(begin.split(":")[0]);
         beginMinute = Integer.parseInt(begin.split(":")[1]);
         endHour = Integer.parseInt(begin.split(":")[0]);
         endMinute = Integer.parseInt(begin.split(":")[1]);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(conference.date);
+        calendar.setTime(conference.getDate());
         calendar.add(Calendar.MONTH, -1);
         Util.addEventToCalendar(this, df.format(calendar.getTime()).toString(), beginHour,
-                beginMinute, endHour, endMinute, conference.title,
-                conference.description, conference.place);
+                beginMinute, endHour, endMinute, conference.getTitle(),
+                conference.getDescription(), conference.getPlace());
     }
 
     @Override

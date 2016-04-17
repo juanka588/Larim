@@ -14,19 +14,17 @@ import com.unal.larim.GUI.DetailConference;
 import com.unal.larim.LN.Util;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ExpandableSessionAdapter extends
-        BaseExpandableListAdapter {
+public class ExpandableSessionAdapter extends BaseExpandableListAdapter {
 
     public int parentsSize;
     private Activity activity;
     private LayoutInflater inflater;
-    private ArrayList<List> hours;
-    private ArrayList<Conference> child;
+    private List<List> hours;
+    private List<Conference> child;
 
-    public ExpandableSessionAdapter(ArrayList<List> hours) {
+    public ExpandableSessionAdapter(List<List> hours) {
         this.hours = hours;
         this.parentsSize = hours.size() - 1;
     }
@@ -41,7 +39,7 @@ public class ExpandableSessionAdapter extends
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
         /*each child represents a paper or conference withs his keywords*/
-        child = (ArrayList<Conference>) hours.get(groupPosition);
+        child = (List<Conference>) hours.get(groupPosition);
         final Conference conference = child.get(childPosition);
         TextView textView = null;
         TextView textView2 = null;
@@ -49,7 +47,7 @@ public class ExpandableSessionAdapter extends
             convertView = inflater.inflate(R.layout.itemsub, parent, false);
         }
         textView = (TextView) convertView.findViewById(R.id.textItem);
-        textView.setText(Util.toCammelCase(conference.title));
+        textView.setText(Util.toCammelCase(conference.getTitle()));
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +58,7 @@ public class ExpandableSessionAdapter extends
             }
         });
         textView2 = (TextView) convertView.findViewById(R.id.textItemSub);
-        textView2.setText(conference.place);
+        textView2.setText(conference.getPlace());
         return convertView;
 
     }
@@ -74,7 +72,7 @@ public class ExpandableSessionAdapter extends
         }
         Conference conference = ((Conference) getChild(groupPosition, 0));
         if (conference != null) {
-            String cad = conference.hour;
+            String cad = conference.getHour();
             CheckedTextView ctv = ((CheckedTextView) convertView);
             ctv.setText("\t\t" + cad + "\n");
             ctv.setChecked(isExpanded);
@@ -85,7 +83,7 @@ public class ExpandableSessionAdapter extends
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        ArrayList<Conference> group = (ArrayList<Conference>) hours.get(groupPosition);
+        List<Conference> group = (List<Conference>) hours.get(groupPosition);
         if (group != null) {
             if (childPosition < group.size()) {
                 return (Conference) group.get(childPosition);

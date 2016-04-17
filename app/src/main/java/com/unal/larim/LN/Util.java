@@ -21,7 +21,6 @@ import com.unal.larim.GUI.MainActivity;
 import com.unal.larim.GUI.WebActivity;
 import com.unal.larim.R;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
@@ -297,29 +296,6 @@ public class Util {
         return cad.trim();
     }
 
-    public static ArrayList<String> parseLine(ArrayList<String[]> datos) {
-        ArrayList<String> salida = new ArrayList<String>();
-        StringBuilder sb = new StringBuilder();
-        for (String[] arr : datos) {
-            for (int i = 0; i < arr.length - 1; i++) {
-                sb.append(arr[i]);
-                sb.append(';');
-            }
-            sb.append(arr[arr.length - 1]);
-            salida.add(sb.toString());
-            sb = new StringBuilder();
-        }
-        return salida;
-    }
-
-    public static ArrayList<String[]> toArray(ArrayList<String> datosLinea) {
-        ArrayList<String[]> salida = new ArrayList<String[]>();
-        for (String string : datosLinea) {
-            String arr[] = string.split(";");
-            salida.add(arr);
-        }
-        return salida;
-    }
 
     public static void addShortcut(Activity act) {
         // Creamos el Intent y apuntamos a nuestra classe principal
@@ -351,6 +327,5 @@ public class Util {
         if (MainActivity.DEBUG) {
             Log.e(tag, msg);
         }
-
     }
 }
