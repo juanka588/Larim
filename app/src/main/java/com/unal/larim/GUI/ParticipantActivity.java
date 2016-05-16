@@ -2,6 +2,7 @@ package com.unal.larim.GUI;
 
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -133,6 +134,12 @@ public class ParticipantActivity extends AppCompatActivity implements OnHeadline
                 return true;
             case R.id.item_twitter:
                 Util.irA("https://twitter.com/search?q=%23LARIM2016&src=typd", this);
+                return true;
+            case R.id.item_youtube:
+                Util.irA("https://www.youtube.com/channel/UCfsNyTfRjoJKD24Xw-PyuuA", this);
+                return true;
+            case R.id.item_credits:
+                startActivity(new Intent(this, CreditsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

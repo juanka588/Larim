@@ -96,6 +96,9 @@ public class NewsActivity extends AppCompatActivity {
      */
     private void handleBundle() {
         Bundle b = this.getIntent().getExtras();
+        if (b==null){
+            return;
+        }
         Notice notice = (Notice) b.getParcelable(getString(R.string.ARG_NOTICE));
         if (notice != null) {
             ContentValues cv = new ContentValues();

@@ -159,6 +159,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unal.larim.GUI.MainActivity"/>
         </activity>
+        <activity
+            android:name=".GUI.CreditsActivity"
+            android:label="@string/title_activity_credits"
+            android:parentActivityName=".GUI.ParticipantActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unal.larim.GUI.ParticipantActivity"/>
+        </activity>
     </application>
 
 </manifest>

@@ -19,7 +19,6 @@ public class CustomCursorSearchAdapter extends SimpleCursorAdapter {
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView texts[] = new TextView[mTo.length];
         for (int i = 0; i < mTo.length; i++) {
             TextView tx = (TextView) view.findViewById(mTo[i]);
             tx.setText(cursor.getString(cursor.getColumnIndex(mOriginalFrom[i])));

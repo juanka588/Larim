@@ -15,7 +15,7 @@
     </style>
 
     <style name="LARIMActionBar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-
+        <item name="android:textViewStyle">@style/TextStyleWhite</item>
     </style>
 
     <style name="TextStyleBlue" parent="@android:style/Widget.Holo.Light.TextView">

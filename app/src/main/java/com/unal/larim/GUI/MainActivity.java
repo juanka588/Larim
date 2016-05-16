@@ -16,7 +16,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.unal.larim.Data.Notice;
 import com.unal.larim.DataSource.NoticeContent;
 import com.unal.larim.DataSource.SponsorContent;
 import com.unal.larim.LN.QuickstartPreferences;
@@ -62,7 +61,6 @@ public class MainActivity extends Activity {
         if (newItems == 0) {
             fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkblue));
         } else {
-            Toast.makeText(getApplicationContext(), "unread: " + newItems, Toast.LENGTH_SHORT).show();
             fab.setBackgroundTintList(getResources().getColorStateList(R.color.darkyellow));
         }
     }
@@ -135,9 +133,9 @@ public class MainActivity extends Activity {
 
     public void news(View view) {
         Intent news = new Intent(this, NewsActivity.class);
-        int r = (int) (Math.random() * 100);
-        news.putExtra("notice", new Notice("1", "Desde Main Activity " + r, "Contenidos " + r,
-                true, "http://www.google.com"));
+//        int r = (int) (Math.random() * 100);
+//        news.putExtra("notice", new Notice("1", "Desde Main Activity " + r, "Contenidos " + r,
+//                true, "http://www.google.com"));
         startActivity(news);
     }
 }

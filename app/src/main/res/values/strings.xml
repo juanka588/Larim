@@ -47,7 +47,7 @@
     <string name="action_settings">Settings</string>
     <string name="today">Hoy:</string>
     <string name="hour">Hora:</string>
-    <string name="paper" translatable="false">Paper:</string>
+    <string name="paper">Paper:</string>
     <string name="place">Lugar:</string>
     <string name="author">Autor:</string>
     <string name="chairman" translatable="false">Chairman:</string>
@@ -93,4 +93,6 @@
     <string name="main_menu_colombia">2016, Colombia Destino Astronómico</string>
     <string name="follows_us_in_twitter">Siguenos en Twitter</string>
     <string name="hotels">Hoteles</string>
+    <string name="watch_in_youtube">Ver en youtube</string>
+    <string name="title_activity_credits">Creditos</string>
 </resources>

@@ -33,7 +33,7 @@
     <string name="network_exception">There is not internet connexion</string>
     <string name="not_application_installed">There is not App to open file</string>
     <string name="organizers">Organizers</string>
-    <string name="paper"></string>
+    <string name="paper">Paper:</string>
     <string name="participant_description">Participant Details</string>
     <string name="participant_description_short">Details</string>
     <string name="participant_search">Search</string>
@@ -73,4 +73,6 @@
     <string name="type">Type:</string>
     <string name="web_site">Web Site</string>
     <string name="hotels">Hotels</string>
+    <string name="watch_in_youtube">Watch in youtube</string>
+    <string name="title_activity_credits">Credits</string>
 </resources>
