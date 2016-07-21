@@ -91,14 +91,14 @@ public class DayFragment extends Fragment {
         return rootView;
     }
 
-    private ArrayList<List> initializeData() {
+    private List<List> initializeData() {
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor c = contentResolver.query(ConferenceContent.CONTENT_URI,
                 null, null, null, ConferenceContent.column_hour_start);
          /*TODO: utilize date and hour filter*/
         String[][] mat = Util.imprimirLista(c);
-        ArrayList<List> hours = new ArrayList<>();
-        ArrayList<Conference> conferences = new ArrayList<>();
+        List<List> hours = new ArrayList<>();
+        List<Conference> conferences = new ArrayList<>();
         Conference conference;
         if (mat.length > 0) {
             String hour = mat[0][3] + "-" + mat[0][4];

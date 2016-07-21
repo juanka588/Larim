@@ -21,8 +21,8 @@ android {
         applicationId "com.unal.larim"
         minSdkVersion 13
         targetSdkVersion 23
-        versionCode 3
-        versionName "2.0"
+        versionCode 4
+        versionName "2.0.1"
 //        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {

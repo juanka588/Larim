@@ -30,7 +30,7 @@ public class CreditsActivityFragment extends Fragment {
         ListView recList = (ListView) root.findViewById(android.R.id.list);
         Context context=root.getContext();
         List<String> content=new ArrayList<>();
-        content.add("Mario A. Higuera G.\nidea,concept and development");
+        content.add("Mario A. Higuera G.\nIdea,concept and development");
         content.add("Andres Granados\niOS Developer");
         content.add("Juan Camilo Rodriguez Duran\nAndroid Developer");
         content.add("Martha Chacon\nGraphical Design");
