@@ -95,4 +95,6 @@
     <string name="hotels">Hoteles</string>
     <string name="watch_in_youtube">Ver en youtube</string>
     <string name="title_activity_credits">Creditos</string>
+    <string name="paraninfo">Paraninfo</string>
+    <string name="derecho_room">Aula maxima de Derecho</string>
 </resources>

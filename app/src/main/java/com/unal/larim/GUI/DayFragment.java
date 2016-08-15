@@ -35,6 +35,14 @@ public class DayFragment extends Fragment {
      */
     public static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = DayFragment.class.getSimpleName();
+    private static final long INIT_DATE = 1475366410;
+    private static final long DAY_LENGTH = 86400;
+    private TextView dayTitle;
+    private TextView currentDay;
+    private TextView dayDate;
+    private ExpandableListView sections;
+    private int selected;
+
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -51,11 +59,6 @@ public class DayFragment extends Fragment {
     public DayFragment() {
     }
 
-    private TextView dayTitle;
-    private TextView currentDay;
-    private TextView dayDate;
-    private ExpandableListView sections;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -70,10 +73,10 @@ public class DayFragment extends Fragment {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date today = Calendar.getInstance().getTime();
         String date = df.format(today);
-        currentDay.setText(getString(R.string.today) + " " + date);
-        int todayInt = ScheduleActivity.selectCurrentDay();
+        currentDay.setText(new StringBuilder().append(getString(R.string.today)).append(" ")
+                .append(date).toString());
         Bundle bundle = this.getArguments();
-        int selected = bundle.getInt(ARG_SECTION_NUMBER);
+        selected = bundle.getInt(ARG_SECTION_NUMBER);
         if (selected == 6) {
             selected = 5;
         }
@@ -83,25 +86,29 @@ public class DayFragment extends Fragment {
                 getActivity());
         sections.setAdapter(adapter);
         dayTitle.setText(ScheduleActivity.getDayTitle(selected, context));
-        int sum = selected - todayInt;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(today);
-        calendar.add(Calendar.DAY_OF_YEAR, sum);
+        long sum = INIT_DATE + DAY_LENGTH * selected;
+        Date day = new Date(sum * 1000);
+        calendar.setTime(day);
         dayDate.setText(df.format(calendar.getTime()));
         return rootView;
     }
 
     private List<List> initializeData() {
+        String condition = new StringBuilder().append(ConferenceContent.column_date).append(">=? AND ")
+                .append(ConferenceContent.column_date).append("<=?").toString();
         ContentResolver contentResolver = getActivity().getContentResolver();
         Cursor c = contentResolver.query(ConferenceContent.CONTENT_URI,
-                null, null, null, ConferenceContent.column_hour_start);
-         /*TODO: utilize date and hour filter*/
+                null, condition,
+                new String[]{String.valueOf(INIT_DATE + DAY_LENGTH * selected),
+                        String.valueOf(INIT_DATE + DAY_LENGTH * (selected + 1))},
+                ConferenceContent.column_hour);
         String[][] mat = Util.imprimirLista(c);
         List<List> hours = new ArrayList<>();
         List<Conference> conferences = new ArrayList<>();
         Conference conference;
         if (mat.length > 0) {
-            String hour = mat[0][3] + "-" + mat[0][4];
+            String hour = new StringBuilder().append(mat[0][3]).append("-").append(mat[0][4]).toString();
             String currentHour;
             for (int i = 0; i < mat.length; i++) {
                 currentHour = mat[i][3] + "-" + mat[i][4];
@@ -110,8 +117,8 @@ public class DayFragment extends Fragment {
                     conferences = new ArrayList<>();
                     hour = currentHour;
                 }
-                conference = new Conference(Long.parseLong(mat[i][0]), mat[i][1], mat[i][2], currentHour, mat[i][5],
-                        Long.parseLong(mat[i][6]), mat[i][7], mat[i][8], mat[i][9]);
+                conference = new Conference(Long.parseLong(mat[i][0]), mat[i][1], mat[i][2],
+                        currentHour, mat[i][5], Long.parseLong(mat[i][6]), mat[i][7], mat[i][8], mat[i][9]);
                 conferences.add(conference);
             }
             hours.add(conferences);

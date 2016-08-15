@@ -34,7 +34,7 @@ public class DetailConference extends AppCompatActivity {
     private TextView textHour;
     private TextView textPaperName;
     private TextView textPlace;
-    private TextView textAutor;
+    private TextView textAuthor;
     private TextView textChairman;
     private WebView pdfConference;
     private Conference conference;
@@ -53,7 +53,7 @@ public class DetailConference extends AppCompatActivity {
         textHour = (TextView) findViewById(R.id.textHour);
         textPaperName = (TextView) findViewById(R.id.textPaperName);
         textPlace = (TextView) findViewById(R.id.textPlace);
-        textAutor = (TextView) findViewById(R.id.textAutor);
+        textAuthor = (TextView) findViewById(R.id.textAutor);
         textChairman = (TextView) findViewById(R.id.textChairman);
         pdfConference = (WebView) findViewById(R.id.pdfConference);
 
@@ -62,7 +62,7 @@ public class DetailConference extends AppCompatActivity {
         contentResolver = getContentResolver();
 
         Bundle b = this.getIntent().getExtras();
-        conference = (Conference) b.getParcelable(getString(R.string.TAG_CONFERENCE));
+        conference = b.getParcelable(getString(R.string.TAG_CONFERENCE));
         populateData();
     }
 
@@ -86,7 +86,7 @@ public class DetailConference extends AppCompatActivity {
         textPaperName.setText(getString(R.string.paper) + " " + paper.getTitle());
         textPlace.setText(getString(R.string.place) + " " + conference.getPlace());
         author = ParticipantContent.getAuthorFromID(paper.getParticipantID(), getApplicationContext());
-        textAutor.setText(getString(R.string.author) + " " + author);
+        textAuthor.setText(getString(R.string.author) + " " + author);
         chairman = ParticipantContent.getAuthorFromID(conference.getChairmanID(), getApplicationContext());
         textChairman.setText(getString(R.string.chairman) + " " + chairman);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -141,7 +141,6 @@ public class DetailConference extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }

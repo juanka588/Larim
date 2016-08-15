@@ -260,7 +260,7 @@ public class LARIMContentProvider extends ContentProvider {
             case conferences:
                 cursor = db.query(getConferenceTableName(),
                         ConferenceContent.column_names,
-                        null, null, null, null, sortOrder);
+                        selection, selectionArgs, null, null, sortOrder);
                 break;
             case conferences_by_date:
                 cursor = db.query(getConferenceTableName(),

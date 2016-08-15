@@ -11,10 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 import com.unal.larim.Adapters.AuditoriumRecyclerViewAdapter;
 import com.unal.larim.Data.AuditoriumPlace;
 import com.unal.larim.LN.Util;
+import com.unal.larim.Listeners.OnSwipeTouchListener;
 import com.unal.larim.R;
 
 import java.util.ArrayList;
@@ -29,6 +31,13 @@ public class AuditoriumActivity extends AppCompatActivity {
     private RecyclerView list;
     private static final String url = "http://cccartagena.com/";
     private CollapsingToolbarLayout collapsingToolbarLayout;
+    private AuditoriumRecyclerViewAdapter adapter;
+    private ImageView toolbarImage;
+    /***
+     * state=0 means venue 1 swipe right allowed
+     * state=1 means venue 2 swipe left allowed
+     */
+    private static int state = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +52,37 @@ public class AuditoriumActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(getApplicationContext(), 2);
         list.setLayoutManager(gridLayoutManager);
-        AuditoriumRecyclerViewAdapter adapter = new AuditoriumRecyclerViewAdapter(populateData(),
-                this);
+        if (state == 0) {
+            adapter = new AuditoriumRecyclerViewAdapter(populateData(), this);
+        } else {
+            adapter = new AuditoriumRecyclerViewAdapter(populateData2(), this);
+        }
         Util.log(TAG, adapter.getItemCount() + "");
         list.setAdapter(adapter);
+        list.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
+
+
+            public void onSwipeRight() {
+                if (state == 0) {
+                    adapter = new AuditoriumRecyclerViewAdapter(populateData2(), AuditoriumActivity.this);
+                    list.setAdapter(adapter);
+                    Util.log(TAG, "right swipe");
+                    state = 1;
+                    toolbarImage.setImageResource(R.drawable.ucartagena2);
+                }
+            }
+
+            public void onSwipeLeft() {
+                if (state == 1) {
+                    adapter = new AuditoriumRecyclerViewAdapter(populateData(), AuditoriumActivity.this);
+                    list.setAdapter(adapter);
+                    Util.log(TAG, "left swipe");
+                    state = 0;
+                    toolbarImage.setImageResource(R.drawable.ccci);
+                }
+            }
+
+        });
     }
 
     private void manageToolbar() {
@@ -68,6 +104,35 @@ public class AuditoriumActivity extends AppCompatActivity {
 //        });
         collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.darkblue));
 //        collapsingToolbarLayout.setStatusBarScrimColor(ContextCompat.getColor(this, R.color.red));
+        toolbarImage = (ImageView) findViewById(R.id.toolbar_background);
+        if (state == 0) {
+            toolbarImage.setImageResource(R.drawable.ccci);
+        } else {
+            toolbarImage.setImageResource(R.drawable.ucartagena2);
+        }
+    }
+
+    private List<AuditoriumPlace> populateData2() {
+        List<AuditoriumPlace> list = new ArrayList<>();
+        String iconsNames[] = new String[]{
+                "paraninfo",
+                "aulmaxderecho",
+        };
+        Context c = getApplicationContext();
+        String titles[] = new String[]{
+                c.getString(R.string.paraninfo),
+                c.getString(R.string.derecho_room),
+        };
+        String images[] = new String[]{
+                "paraninfo.png",
+                "aulmaxderecho.jpg",
+        };
+        for (int i = 0; i < iconsNames.length; i++) {
+            int icon = this.getResources().getIdentifier("drawable/" + iconsNames[i], null,
+                    this.getPackageName());
+            list.add(new AuditoriumPlace(icon, images[i], titles[i]));
+        }
+        return list;
     }
 
     private List<AuditoriumPlace> populateData() {
@@ -110,7 +175,6 @@ public class AuditoriumActivity extends AppCompatActivity {
         }
         return list;
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
