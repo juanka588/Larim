@@ -26,6 +26,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private static final String TAG = ScheduleActivity.class.getSimpleName();
+    public static final String PROGRAM_URL = "http://larim.unal.edu.co/4755/";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -114,12 +115,14 @@ public class ScheduleActivity extends AppCompatActivity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
+            case R.id.action_web:
+                Util.irA(PROGRAM_URL, this);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
 
     }
-
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

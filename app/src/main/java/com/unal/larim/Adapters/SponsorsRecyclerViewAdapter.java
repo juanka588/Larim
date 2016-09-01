@@ -60,7 +60,7 @@ public class SponsorsRecyclerViewAdapter extends RecyclerView.Adapter<SponsorsRe
     }
 
     public void openWeb(int position) {
-        boolean onlyURL = sponsors.get(position).getContent() == null;
+        boolean onlyURL = sponsors.get(position).getContent() == null || "".equals(sponsors.get(position).getContent());
         if (onlyURL) {
             Util.irA(sponsors.get(position).getUrl(), act);
         } else {

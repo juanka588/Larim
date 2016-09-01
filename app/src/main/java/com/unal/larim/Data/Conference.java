@@ -13,6 +13,13 @@ import java.util.Date;
  * Created by JuanCamilo on 20/07/2015.
  */
 public class Conference implements Parcelable {
+
+    public static final int REVIEW_TYPE = 1,
+            INVITED_TYPE = 2,
+            POSTERS_TYPE = 3,
+            PARALLEL_TYPE = 4,
+            WORKSHOP_TYPE = 5,
+            OTHER_TYPE = 1;
     private String title;
     private String place;
     private String hour;
@@ -22,12 +29,13 @@ public class Conference implements Parcelable {
     private long paperID;
     private String initials;
     private String description;
+    private int type;
 
     /*@param title indicates the conference title
       * @param hour text in format HH:MM:SS
       * @param date in format EPOCH*/
     public Conference(long paperID, String title, String place, String hour, String date, long chairmanID
-            , String scheduled, String initials, String description) {
+            , String scheduled, String initials, String description, String type) {
         this.hour = hour;
         this.title = title;
         this.place = place;
@@ -45,6 +53,7 @@ public class Conference implements Parcelable {
         this.paperID = paperID;
         this.initials = initials;
         this.description = description;
+        this.type = Integer.parseInt(type);
 
     }
 
@@ -52,7 +61,7 @@ public class Conference implements Parcelable {
     * @param hour text in number format
     * @param scheduled references if the conference is active or not*/
     public Conference(long paperID, String title, String place, String hour, Date date, long chairmanID
-            , boolean scheduled, String initials, String description) {
+            , boolean scheduled, String initials, String description, String type) {
         this.hour = hour;
         this.title = title;
         this.place = place;
@@ -62,6 +71,7 @@ public class Conference implements Parcelable {
         this.paperID = paperID;
         this.initials = initials;
         this.description = description;
+        this.type = Integer.parseInt(type);
     }
 
     protected Conference(Parcel in) {
@@ -74,6 +84,7 @@ public class Conference implements Parcelable {
         initials = in.readString();
         description = in.readString();
         date = new Date(in.readLong());
+        type = in.readInt();
     }
 
     public static final Creator<Conference> CREATOR = new Creator<Conference>() {
@@ -176,6 +187,15 @@ public class Conference implements Parcelable {
         dest.writeString(initials);
         dest.writeString(description);
         dest.writeLong(date.getTime());
+        dest.writeInt(type);
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }
 

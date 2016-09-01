@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 
 import com.unal.larim.LN.LinnaeusDatabase;
-import com.unal.larim.LN.Util;
 
 import java.util.List;
 
@@ -37,6 +36,8 @@ public class LARIMContentProvider extends ContentProvider {
     public static final int conferences_by_hours_and_date = 502;
 
     public static final int country_by_code = 600;
+
+    public static final int venue_group = 700;
 
     private LinnaeusDatabase ln;
 
@@ -180,7 +181,15 @@ public class LARIMContentProvider extends ContentProvider {
                         String[] selectionArgs, String sortOrder) {
         SQLiteDatabase db = ln.getWritableDatabase();
         Cursor cursor;
+        List<String> pathSegments = uri.getPathSegments();
         switch (sUriMatcher.match(uri)) {
+            case venue_group:
+                cursor = db.query(VenueContent.TABLE_NAME,
+                        VenueContent.COLUMN_NAMES,
+                        VenueContent.GROUP_COLUMN + "=?",
+                        new String[]{pathSegments.get(pathSegments.size() - 1)},
+                        null, null, sortOrder);
+                break;
             case participants:
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
@@ -226,17 +235,15 @@ public class LARIMContentProvider extends ContentProvider {
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case country_by_code:
-                Util.log("URI entro", uri.toString());
                 cursor = db.query(CountryContent.table_name_country,
                         CountryContent.column_names,
                         CountryContent.column_country_code + " like ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case participant_by_column:
-                List<String> list = uri.getPathSegments();
                 cursor = db.query(getParticipantTableName(),
                         ParticipantContent.column_names,
-                        list.get(list.size() - 2) + " = ?",
+                        pathSegments.get(pathSegments.size() - 2) + " = ?",
                         new String[]{"%" + uri.getLastPathSegment() + "%"}, null, null, sortOrder);
                 break;
             case notices:
@@ -269,15 +276,14 @@ public class LARIMContentProvider extends ContentProvider {
                         null, null, sortOrder);
                 break;
             case conferences_by_hours_and_date:
-                List<String> list2 = uri.getPathSegments();
-                int size = list2.size();
+                int size = pathSegments.size();
                 cursor = db.query(getConferenceTableName(),
                         ConferenceContent.column_names,
                         ConferenceContent.column_date
                                 + " =? and "
                                 + ConferenceContent.column_hour_start
                                 + " =?",
-                        new String[]{uri.getLastPathSegment(), list2.get(size - 2)},
+                        new String[]{uri.getLastPathSegment(), pathSegments.get(size - 2)},
                         null, null, sortOrder);
                 break;
             case paper_by_id:
@@ -418,6 +424,8 @@ public class LARIMContentProvider extends ContentProvider {
         matcher.addURI(authority, PaperContent.PAPER_PATH + "/participant/#", paper_by_participantID);
 
         matcher.addURI(authority, NoticeContent.NOTICE_PATH, notices);
+
+        matcher.addURI(authority, VenueContent.VENUE_PATH + "/" + VenueContent.GROUP_COLUMN + "/#", venue_group);
 
         matcher.addURI(authority, ConferenceContent.CONFERENCE_PATH, conferences);
         matcher.addURI(authority, ConferenceContent.CONFERENCE_PATH + "/#", conferences_by_date);

@@ -102,7 +102,7 @@ public class DayFragment extends Fragment {
                 null, condition,
                 new String[]{String.valueOf(INIT_DATE + DAY_LENGTH * selected),
                         String.valueOf(INIT_DATE + DAY_LENGTH * (selected + 1))},
-                ConferenceContent.column_hour);
+                ConferenceContent.column_date);
         String[][] mat = Util.imprimirLista(c);
         List<List> hours = new ArrayList<>();
         List<Conference> conferences = new ArrayList<>();
@@ -118,7 +118,7 @@ public class DayFragment extends Fragment {
                     hour = currentHour;
                 }
                 conference = new Conference(Long.parseLong(mat[i][0]), mat[i][1], mat[i][2],
-                        currentHour, mat[i][5], Long.parseLong(mat[i][6]), mat[i][7], mat[i][8], mat[i][9]);
+                        currentHour, mat[i][5], Long.parseLong(mat[i][6]), mat[i][7], mat[i][8], mat[i][9], mat[i][11]);
                 conferences.add(conference);
             }
             hours.add(conferences);

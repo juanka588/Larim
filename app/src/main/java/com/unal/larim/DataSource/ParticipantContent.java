@@ -36,16 +36,15 @@ public class ParticipantContent implements BaseColumns {
     public final static String TYPE_LOCAL_ORGANIZING_COMMITTEE = "LC";
     public final static String TYPE_REVIEWS_TALK = "RT";
     public final static String TYPE_INVITED_TALK = "IT";
-    public final static String TYPE_EXTERNAL_LOGISTICS_SUPPORT = "EC";
-    public final static String TYPE_INTERNAL_LOGISTICS_SUPPORT = "A";
+    public final static String TYPE_INVITED = "II";
     public final static String TYPE_ASSISTANT = "AA";
     public final static String TYPE_STUDENT = "E";
     public final static String TYPE_PROFESSIONAL = "P";
-    public final static String TYPE_LARIM_SUPPORT = "AL";
+    public final static String TYPE_LARIM_SUPPORT = "A";
     public final static String TYPE_IAU_STAYING = "IAU-E";
     public final static String TYPE_IAU_TICKETS = "IAU-P";
     public final static String TYPE_IAU_INSCRIPTION = "IAU-I";
-    public final static String TYPE_INVITED = "II";
+    public final static String TYPE_IAU_SUPPORT = "M";
     public final static String TYPE_PAYMENT_DATE_1 = "IP1";
     public final static String TYPE_PAYMENT_DATE_2 = "IP2";
     public final static String TYPE_PAYMENT_DATE_3 = "IP3";
@@ -59,16 +58,14 @@ public class ParticipantContent implements BaseColumns {
     public final static String STRING_LOCAL_ORGANIZING_COMMITTEE = "Local Organizing Committee";
     public final static String STRING_REVIEWS_TALK = "Reviews Talks";
     public final static String STRING_INVITED_TALK = "Invited Talks";
-    public final static String STRING_EXTERNAL_LOGISTICS_SUPPORT = "External Logistics Committee";
-    public final static String STRING_INTERNAL_LOGISTICS_SUPPORT = "Internal Logistics Support";
+    public final static String STRING_LOGISTIC_TEAM = "LARIM Logistic Team";
     private static final String STRING_ASSISTANT = "Assistant";
     private static final String STRING_STUDENT = "Student";
     private static final String STRING_PROFESSIONAL = "Professional";
-    private static final String STRING_LARIM_SUPPORT = "LARIM Support";
     private static final String STRING_IAU_STAYING = "Help Staying";
     private static final String STRING_IAU_INSCRIPTION = "Help Inscription";
     private static final String STRING_IAU_TICKETS = "Help tickets";
-    private static final String STRING_INVITED = "Invited";
+    private static final String STRING_IAU_SUPPORT = "IAU Support";
     private static final String STRING_PAYMENT_DATE_1 = "Before 1st august 2015";
     private static final String STRING_PAYMENT_DATE_2 = "Between august 2015-2016";
     private static final String STRING_PAYMENT_DATE_3 = "After 1st august 2016";
@@ -122,12 +119,8 @@ public class ParticipantContent implements BaseColumns {
             return STRING_LOCAL_ORGANIZING_COMMITTEE;
         } else if (cad.equals(TYPE_REVIEWS_TALK)) {
             return STRING_REVIEWS_TALK;
-        } else if (cad.equals(TYPE_INVITED_TALK)) {
+        } else if (cad.equals(TYPE_INVITED_TALK) || cad.equals(TYPE_INVITED)) {
             return STRING_INVITED_TALK;
-        } else if (cad.equals(TYPE_EXTERNAL_LOGISTICS_SUPPORT)) {
-            return STRING_EXTERNAL_LOGISTICS_SUPPORT;
-        } else if (cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)) {
-            return STRING_INTERNAL_LOGISTICS_SUPPORT;
         } else if (cad.equals(TYPE_ASSISTANT)) {
             return STRING_ASSISTANT;
         } else if (cad.equals(TYPE_STUDENT)) {
@@ -135,15 +128,15 @@ public class ParticipantContent implements BaseColumns {
         } else if (cad.equals(TYPE_PROFESSIONAL)) {
             return STRING_PROFESSIONAL;
         } else if (cad.equals(TYPE_LARIM_SUPPORT)) {
-            return STRING_LARIM_SUPPORT;
+            return STRING_LOGISTIC_TEAM;
         } else if (cad.equals(TYPE_IAU_STAYING)) {
             return STRING_IAU_STAYING;
         } else if (cad.equals(TYPE_IAU_INSCRIPTION)) {
             return STRING_IAU_INSCRIPTION;
         } else if (cad.equals(TYPE_IAU_TICKETS)) {
             return STRING_IAU_TICKETS;
-        } else if (cad.equals(TYPE_INVITED)) {
-            return STRING_INVITED;
+        } else if (cad.equals(TYPE_IAU_SUPPORT)) {
+            return STRING_IAU_SUPPORT;
         } else if (cad.equals(TYPE_PAYMENT_DATE_1)) {
             return STRING_PAYMENT_DATE_1;
         } else if (cad.equals(TYPE_PAYMENT_DATE_2)) {
@@ -154,8 +147,6 @@ public class ParticipantContent implements BaseColumns {
             return STRING_DINNER_INVITED;
         } else if (cad.equals(TYPE_DINNER_PAID)) {
             return STRING_DINNER_PAID;
-        } else if (cad.equals(TYPE_INTERNAL_LOGISTICS_SUPPORT)) {
-            return STRING_INTERNAL_LOGISTICS_SUPPORT;
         } else if (cad.equals("null") || cad.equals("")) {
             return STRING_NORMAL;
         }
@@ -178,11 +169,8 @@ public class ParticipantContent implements BaseColumns {
         if (cad.equals(STRING_INVITED_TALK)) {
             return TYPE_INVITED_TALK;
         }
-        if (cad.equals(STRING_EXTERNAL_LOGISTICS_SUPPORT)) {
-            return TYPE_EXTERNAL_LOGISTICS_SUPPORT;
-        }
-        if (cad.equals(STRING_INTERNAL_LOGISTICS_SUPPORT)) {
-            return TYPE_INTERNAL_LOGISTICS_SUPPORT;
+        if (cad.equals(STRING_LOGISTIC_TEAM)) {
+            return TYPE_LARIM_SUPPORT;
         }
         if (cad.equals(STRING_NORMAL)) {
             return TYPE_NORMAL;

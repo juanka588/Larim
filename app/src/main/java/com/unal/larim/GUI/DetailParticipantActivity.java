@@ -44,8 +44,8 @@ public class DetailParticipantActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_participant);
         Bundle b = getIntent().getExtras();
-        participant = (Participant) b.getParcelable(PARTICIPANT_ARG);
-        Util.log(TAG, participant + "");
+        participant = b.getParcelable(PARTICIPANT_ARG);
+        Util.log(TAG, participant.toString());
         participantPhoto = (ImageView) findViewById(R.id.photoPart);
         textName = (TextView) findViewById(R.id.textDetailPartName);
         textEmail = (TextView) findViewById(R.id.textDetailPartEmail);
@@ -56,7 +56,7 @@ public class DetailParticipantActivity extends AppCompatActivity {
         navigator = (WebView) findViewById(R.id.resumeView);
         Picasso.with(this).setIndicatorsEnabled(true);
         Picasso.with(this)
-                .load(BASE_URL+participant.getImage()+".jpg")
+                .load(new StringBuilder().append(BASE_URL).append(participant.getImage()).append(".jpg").toString())
                 .error(R.drawable.no_image)
                 .into(participantPhoto, new Callback() {
                     @Override

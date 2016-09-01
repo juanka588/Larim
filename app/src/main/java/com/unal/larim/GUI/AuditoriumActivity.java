@@ -1,6 +1,5 @@
 package com.unal.larim.GUI;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.NavUtils;
@@ -14,13 +13,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.unal.larim.Adapters.AuditoriumRecyclerViewAdapter;
-import com.unal.larim.Data.AuditoriumPlace;
+import com.unal.larim.DataSource.VenueContent;
 import com.unal.larim.LN.Util;
 import com.unal.larim.Listeners.OnSwipeTouchListener;
 import com.unal.larim.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class AuditoriumActivity extends AppCompatActivity {
@@ -29,7 +25,7 @@ public class AuditoriumActivity extends AppCompatActivity {
 
     private Toolbar mToolbar;
     private RecyclerView list;
-    private static final String url = "http://cccartagena.com/";
+    private static final String CARTAGENA_URL = "http://cccartagena.com/";
     private CollapsingToolbarLayout collapsingToolbarLayout;
     private AuditoriumRecyclerViewAdapter adapter;
     private ImageView toolbarImage;
@@ -52,32 +48,29 @@ public class AuditoriumActivity extends AppCompatActivity {
         GridLayoutManager gridLayoutManager =
                 new GridLayoutManager(getApplicationContext(), 2);
         list.setLayoutManager(gridLayoutManager);
-        if (state == 0) {
-            adapter = new AuditoriumRecyclerViewAdapter(populateData(), this);
-        } else {
-            adapter = new AuditoriumRecyclerViewAdapter(populateData2(), this);
-        }
+        adapter = new AuditoriumRecyclerViewAdapter(VenueContent.getVenue(getApplicationContext(), state), this);
+
         Util.log(TAG, adapter.getItemCount() + "");
         list.setAdapter(adapter);
         list.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-
-
             public void onSwipeRight() {
                 if (state == 0) {
-                    adapter = new AuditoriumRecyclerViewAdapter(populateData2(), AuditoriumActivity.this);
-                    list.setAdapter(adapter);
                     Util.log(TAG, "right swipe");
                     state = 1;
+                    adapter = new AuditoriumRecyclerViewAdapter(VenueContent.getVenue(getApplicationContext(),
+                            state), AuditoriumActivity.this);
+                    list.setAdapter(adapter);
                     toolbarImage.setImageResource(R.drawable.ucartagena2);
                 }
             }
 
             public void onSwipeLeft() {
                 if (state == 1) {
-                    adapter = new AuditoriumRecyclerViewAdapter(populateData(), AuditoriumActivity.this);
-                    list.setAdapter(adapter);
                     Util.log(TAG, "left swipe");
                     state = 0;
+                    adapter = new AuditoriumRecyclerViewAdapter(VenueContent.getVenue(getApplicationContext(),
+                            state), AuditoriumActivity.this);
+                    list.setAdapter(adapter);
                     toolbarImage.setImageResource(R.drawable.ccci);
                 }
             }
@@ -112,69 +105,6 @@ public class AuditoriumActivity extends AppCompatActivity {
         }
     }
 
-    private List<AuditoriumPlace> populateData2() {
-        List<AuditoriumPlace> list = new ArrayList<>();
-        String iconsNames[] = new String[]{
-                "paraninfo",
-                "aulmaxderecho",
-        };
-        Context c = getApplicationContext();
-        String titles[] = new String[]{
-                c.getString(R.string.paraninfo),
-                c.getString(R.string.derecho_room),
-        };
-        String images[] = new String[]{
-                "paraninfo.png",
-                "aulmaxderecho.jpg",
-        };
-        for (int i = 0; i < iconsNames.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + iconsNames[i], null,
-                    this.getPackageName());
-            list.add(new AuditoriumPlace(icon, images[i], titles[i]));
-        }
-        return list;
-    }
-
-    private List<AuditoriumPlace> populateData() {
-        List<AuditoriumPlace> list = new ArrayList<>();
-        String iconsNames[] = new String[]{
-                "audi_getsemani",
-                "fondoinf",
-                "fondoinf",
-                "fondoinf",
-                "registration_port",
-                "salle_201",
-                "salle_303",
-                "salle_304"
-        };
-        Context c = getApplicationContext();
-        String titles[] = new String[]{
-                c.getString(R.string.auditorium),
-                c.getString(R.string.stage_1),
-                c.getString(R.string.stage_2),
-                c.getString(R.string.stage_3),
-                c.getString(R.string.registration_port),
-                c.getString(R.string.saloon_201),
-                c.getString(R.string.saloon_303),
-                c.getString(R.string.saloon_304)
-        };
-        String images[] = new String[]{
-                "getsemani.jpg",
-                "nivel_1.jpg",
-                "nivel_2.jpg",
-                "nivel_3.jpg",
-                "registration_port.jpg",
-                "salle_201.jpg",
-                "salle_303.png",
-                "salle_304.jpg"
-        };
-        for (int i = 0; i < iconsNames.length; i++) {
-            int icon = this.getResources().getIdentifier("drawable/" + iconsNames[i], null,
-                    this.getPackageName());
-            list.add(new AuditoriumPlace(icon, images[i], titles[i]));
-        }
-        return list;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -189,7 +119,7 @@ public class AuditoriumActivity extends AppCompatActivity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.ItemWEB:
-                Util.irA(url, this);
+                Util.irA(CARTAGENA_URL, this);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
