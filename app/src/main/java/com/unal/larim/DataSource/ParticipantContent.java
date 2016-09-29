@@ -33,6 +33,7 @@ public class ParticipantContent implements BaseColumns {
 
     public final static String TYPE_NORMAL = "-";
     public final static String TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE = "SC";
+    public final static String TYPE_EXTERNAL_ORGANIZING_COMMITTEE = "EC";
     public final static String TYPE_LOCAL_ORGANIZING_COMMITTEE = "LC";
     public final static String TYPE_REVIEWS_TALK = "RT";
     public final static String TYPE_INVITED_TALK = "IT";
@@ -56,8 +57,10 @@ public class ParticipantContent implements BaseColumns {
     public static final String STRING_NORMAL = "Normal";
     public final static String STRING_SCIENTIFIC_ORGANIZING_COMMITTEE = "Scientific Organizing Committee";
     public final static String STRING_LOCAL_ORGANIZING_COMMITTEE = "Local Organizing Committee";
+    public final static String STRING_EXTERNAL_ORGANIZING_COMMITTEE = "External Organizing Committee";
     public final static String STRING_REVIEWS_TALK = "Reviews Talks";
     public final static String STRING_INVITED_TALK = "Invited Talks";
+    public final static String STRING_INVITED = "Invited";
     public final static String STRING_LOGISTIC_TEAM = "LARIM Logistic Team";
     private static final String STRING_ASSISTANT = "Assistant";
     private static final String STRING_STUDENT = "Student";
@@ -119,10 +122,12 @@ public class ParticipantContent implements BaseColumns {
             return STRING_LOCAL_ORGANIZING_COMMITTEE;
         } else if (cad.equals(TYPE_REVIEWS_TALK)) {
             return STRING_REVIEWS_TALK;
-        } else if (cad.equals(TYPE_INVITED_TALK) || cad.equals(TYPE_INVITED)) {
+        } else if (cad.equals(TYPE_INVITED_TALK)) {
             return STRING_INVITED_TALK;
         } else if (cad.equals(TYPE_ASSISTANT)) {
             return STRING_ASSISTANT;
+        } else if (cad.equals(TYPE_INVITED)) {
+            return STRING_INVITED;
         } else if (cad.equals(TYPE_STUDENT)) {
             return STRING_STUDENT;
         } else if (cad.equals(TYPE_PROFESSIONAL)) {
@@ -147,6 +152,8 @@ public class ParticipantContent implements BaseColumns {
             return STRING_DINNER_INVITED;
         } else if (cad.equals(TYPE_DINNER_PAID)) {
             return STRING_DINNER_PAID;
+        } else if (cad.equals(TYPE_EXTERNAL_ORGANIZING_COMMITTEE)) {
+            return STRING_EXTERNAL_ORGANIZING_COMMITTEE;
         } else if (cad.equals("null") || cad.equals("")) {
             return STRING_NORMAL;
         }
@@ -160,8 +167,8 @@ public class ParticipantContent implements BaseColumns {
         if (cad.equals(STRING_SCIENTIFIC_ORGANIZING_COMMITTEE)) {
             return TYPE_SCIENTIFIC_ORGANIZING_COMMITTEE;
         }
-        if (cad.equals(STRING_LOCAL_ORGANIZING_COMMITTEE)) {
-            return TYPE_LOCAL_ORGANIZING_COMMITTEE;
+        if (cad.equals(STRING_EXTERNAL_ORGANIZING_COMMITTEE)) {
+            return TYPE_EXTERNAL_ORGANIZING_COMMITTEE;
         }
         if (cad.equals(STRING_REVIEWS_TALK)) {
             return TYPE_REVIEWS_TALK;

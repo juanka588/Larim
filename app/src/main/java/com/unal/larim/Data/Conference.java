@@ -19,7 +19,7 @@ public class Conference implements Parcelable {
             POSTERS_TYPE = 3,
             PARALLEL_TYPE = 4,
             WORKSHOP_TYPE = 5,
-            OTHER_TYPE = 1;
+            OTHER_TYPE = 0;
     private String title;
     private String place;
     private String hour;

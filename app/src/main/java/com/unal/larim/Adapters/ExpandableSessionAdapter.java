@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.unal.larim.Data.Conference;
@@ -43,6 +44,7 @@ public class ExpandableSessionAdapter extends BaseExpandableListAdapter {
         final Conference conference = child.get(childPosition);
         TextView textView = null;
         TextView textView2 = null;
+        ImageView imageView = null;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.itemsub, parent, false);
         }
@@ -59,8 +61,28 @@ public class ExpandableSessionAdapter extends BaseExpandableListAdapter {
         });
         textView2 = (TextView) convertView.findViewById(R.id.textItemSub);
         textView2.setText(conference.getPlace());
+        imageView = (ImageView) convertView.findViewById(R.id.icon);
+        imageView.setBackgroundResource(getColor(conference.getType()));
         return convertView;
 
+    }
+
+    private int getColor(int type) {
+        switch (type) {
+            case Conference.INVITED_TYPE:
+                return R.color.invited_color;
+            case Conference.OTHER_TYPE:
+                return R.color.black;
+            case Conference.REVIEW_TYPE:
+                return R.color.review_color;
+            case Conference.POSTERS_TYPE:
+                return R.color.posters_color;
+            case Conference.PARALLEL_TYPE:
+                return R.color.parallel_color;
+            case Conference.WORKSHOP_TYPE:
+                return R.color.workshop_color;
+        }
+        return R.color.darkblue;
     }
 
 

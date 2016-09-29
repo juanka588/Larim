@@ -65,7 +65,8 @@ public class MyGcmListenerService extends GcmListenerService {
          * that a message was received.
          */
         if (url.equals(UPDATE_TAG)) {
-            /*TODO: fetch from server*/
+            JSONParser jp = new JSONParser(getApplicationContext());
+            jp.parseJSON();
         } else {
             sendNotification(title, message, url);
         }

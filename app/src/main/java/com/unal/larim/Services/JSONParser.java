@@ -18,6 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by JuanCamilo on 05/10/2015.
@@ -75,28 +77,40 @@ public class JSONParser {
         JSONArray participants = object.getJSONArray("registered");
         int size = participants.length();
         Util.log(TAG, "size: " + size);
+        List<ContentValues> cvs = new ArrayList<>();
+        ContentValues cv;
+        JSONObject participant;
+        String name, email, institution, country, type;
+        int id;
         for (int i = 0; i < size; i++) {
-            JSONObject participant = participants.getJSONObject(i);
-            int id = participant.getInt(ParticipantContent._ID);
-            String name = participant.getString(ParticipantContent.column_name);
-            String email = participant.getString(ParticipantContent.column_email);
-            String institution = participant.getString(ParticipantContent.column_institution);
-            String country = participant.getString(ParticipantContent.column_country_code);
-            String type = participant.getString(ParticipantContent.column_type);
+            participant = participants.getJSONObject(i);
+            id = participant.getInt(ParticipantContent._ID);
+            name = participant.getString(ParticipantContent.column_name);
+            email = participant.getString(ParticipantContent.column_email);
+            institution = participant.getString(ParticipantContent.column_institution);
+            country = participant.getString(ParticipantContent.column_country_code);
+            /**
+             * TODO: change for ParticipantContent.column_type
+             */
+            type = participant.getString("conventions");
 
-            ContentValues cv = new ContentValues();
+            cv = new ContentValues();
             cv.put(ParticipantContent._ID, id);
             cv.put(ParticipantContent.column_name, name);
             cv.put(ParticipantContent.column_email, email);
             cv.put(ParticipantContent.column_institution, institution);
             cv.put(ParticipantContent.column_country_code, country);
             cv.put(ParticipantContent.column_type, type);
-
-            ContentResolver cr = mContext.getContentResolver();
-            cr.insert(ParticipantContent.CONTENT_URI, cv);
-
+            /**
+             * temporal fix must ask giovanni
+             */
+            cv.put(ParticipantContent.column_resume, "");
+            cv.put(ParticipantContent.column_image, id);
+            cvs.add(cv);
             Util.log(TAG, name);
         }
+        ContentResolver cr = mContext.getContentResolver();
+        cr.bulkInsert(ParticipantContent.CONTENT_URI, cvs.toArray(new ContentValues[cvs.size()]));
 
     }
 

@@ -14,4 +14,9 @@
     <item name="darkred" type="color">#FFCC0000</item>
     <item name="white" type="color">@android:color/white</item>
     <item name="black" type="color">@android:color/black</item>
+    <item name="invited_color" type="color">#000080</item>
+    <item name="review_color" type="color">#C39408</item>
+    <item name="posters_color" type="color">#DB3F3F</item>
+    <item name="parallel_color" type="color">#009E69</item>
+    <item name="workshop_color" type="color">#E46A0D</item>
 </resources>
